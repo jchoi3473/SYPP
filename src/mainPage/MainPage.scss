@@ -1,0 +1,46 @@
+.mainpage-container{
+    margin-left: 18;
+    margin-right: 18;
+}
+
+.MuiRating-root.star {
+    background: transparent !important;
+    color: rgb(200,0,0);
+    cursor: pointer;
+    display: inline-flex;
+    position: relative;
+    font-size: 1.5rem;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.MuiRating-iconEmpty.emptyStar {
+    color: rgba(0, 0, 0, 1) !important;
+    background-color: rgba(0, 0, 0, 1) !important;
+
+    /* border: solid; */
+}
+
+.MuiRating-iconFilled.filledStar{
+    color: rgba(200, 0, 0, 0.7) !important;
+}
+
+.taskTitles{
+    position: relative;
+    left: 95px;
+    display: flex;
+    width: 522px;
+    justify-content: space-evenly;
+}
+.taskEntity{
+    font-size: 10px;
+    color: #ffffff;
+}
+
+.selectedTitle{
+    margin-top: 11px;
+    color: rgba(255, 255, 255, 0.87);
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 15px;
+}

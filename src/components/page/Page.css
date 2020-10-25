@@ -1,0 +1,27 @@
+
+.circle-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 35px;
+    padding: 0;
+}
+
+.other-circles {
+    display: inline-flex;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.3);    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .circle{
+    display: inline-flex;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.87);    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;  
+  }
+
