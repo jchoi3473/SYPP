@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import ProgressBar from '../components/progress/ProgressBar'
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import ModalBox from './../components/addApp/ModalBox'
+import './../components/addApp/Modalbox.css'
 import './../components/progress/Progress.css'
-import MainPageComponents from './MainPageComponents'
-import Progress from './Progress'
-import './MainPage.scss'
+import ApplicationListComponents from './ApplicationListComponents'
+import ApplicationListProgress from './ApplicationListProgress'
+import './ApplicationList.scss'
 import {updateFilteredProgress} from '../redux/filteredProgress-reducer/filteredProgressAction'
 
 import {connect} from 'react-redux'
@@ -63,10 +62,15 @@ render(){
 
 
     return(
+        <div>
         <div className ="mainpage-container">
         {categoryDivided()}
-        <MainPageComponents options = {radioValue} onChange = {this.onChange}/>
-        <Progress toApplicationDetail = {this.props.toApplicationDetail}/>
+        <ApplicationListComponents options = {radioValue} onChange = {this.onChange}/>
+        <ApplicationListProgress toApplicationDetail = {this.props.toApplicationDetail}/>
+        </div>
+        <div className = 'modalButton'>
+            <ModalBox/>
+        </div>
         </div>
     )
 }

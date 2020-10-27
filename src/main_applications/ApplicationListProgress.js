@@ -3,12 +3,11 @@ import ProgressBar from '../components/progress/ProgressBar'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import './../components/progress/Progress.css'
-import './MainPage.scss'
+import './ApplicationList.scss'
 // import Rating from "@material-ui/lab/Rating";
  import Rating from 'react-rating';
 import {setApps, requestProgress, postProgress} from '../redux/progress-reducer/progressAction'
 import {connect} from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'font-awesome/css/font-awesome.min.css';
 
 

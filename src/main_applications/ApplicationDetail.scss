@@ -1,0 +1,72 @@
+.button-container-applicationDetail{
+    /* display: inline-block; */
+    // margin-left: 5px;
+    margin-right: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.radio-button-container-applicationDetail{
+    padding-top: 3px;
+    // min-width: 65px;
+    min-height: 24px;
+}
+
+
+.btn-secondary.applicationDetialButtonGroups{
+    border-radius: 10px;
+    min-height: 24px ;
+    padding-left: 10px;
+    padding-right: 10px;
+    // min-width: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #ffffff;
+}
+
+.textTitle{
+    color: #ffffff;
+    font-size: 12px;
+}
+.companyName{
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.titleContainer{
+    display: flex;
+    align-items: center;
+}
+.button-back{
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+.angleLeft{
+    color: #ffffff;
+    font-size: 20px;
+    &:hover{
+        cursor: pointer;
+    }
+}
+.applicationDetailContactsTitle{
+    display: flex;
+}
+.applicationDetailTextTitle{
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+}
+.applicationDetailTextBody{
+    font-size: 11px;
+    color: #ffffff;
+}
+.applicationDetailContactsContainer{
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    max-width: 500px;
+    &:hover{
+        background: rgba(255, 255, 255, 0.3);
+    }
+}

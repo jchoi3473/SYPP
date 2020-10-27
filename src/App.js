@@ -1,7 +1,8 @@
 import React, {Component, useState} from 'react';
 import ModalBox from './components/addApp/ModalBox.js';
-import ApplicationList from './mainPage/ApplicationList'
-import Applications from './mainPage/Applications'
+import ApplicationList from './main_applications/ApplicationList'
+import Applications from './main_applications/Applications'
+import MainPage from './main/MainPage'
 import {connect} from 'react-redux'
 import {requestProgress} from './redux/progress-reducer/progressAction'
 import {setSelectedCategories} from './redux/addApp-reducer/addAppAction'
@@ -45,10 +46,7 @@ class App extends Component {
       this.props.updateFilteredProgress(this.props.apps);
     return (
       <div className="App">
-        <Applications/>
-        <div className = 'modalButton'>
-          <ModalBox/>
-        </div>
+       <MainPage/>
       </div>
     );  
   }

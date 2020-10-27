@@ -61,8 +61,7 @@ function CategoryButtons(props) {
       else if(e.currentTarget.value === '1'){
         setRadioValue('1')
         props.updateButtonValue('1')
-
-        updateFilteredProgressTitle("Starred")
+        props.updateFilteredProgressTitle("Starred")
         for(var i=0;i<props.apps.length;i++){
           if(props.apps[i].Detail.IsFavorite) 
             filtered = filtered.concat(props.apps[i])
