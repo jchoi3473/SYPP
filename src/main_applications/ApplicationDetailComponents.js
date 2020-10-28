@@ -7,6 +7,7 @@ import './../components/radio/RadioButtons.css'
 import './ApplicationDetail.scss'
 
 import ApplicationDetailContacts from './../main_applications_components/ApplicationDetailContacts'
+import ApplicationDetailNotes from './../main_applications_components/ApplicationDetailNotes'
 
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
@@ -62,7 +63,11 @@ function ApplicationDetailComponents(props){
             case '1':
                 return (
                     <div>
-                        <textarea value = {textValue} onChange = {onChangeTextArea}>????</textarea>
+                        {
+                            props.applicationDetail.Notes.map((note) =>(
+                                <ApplicationDetailNotes Note = {note}/>
+                            ))
+                        }
                     </div>
                 )
             case '2':
