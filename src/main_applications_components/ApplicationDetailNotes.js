@@ -4,6 +4,11 @@ import { CharacterMetadata, RichUtils, ContentBlock, genKey, ContentState, Edito
 import { Editor } from 'react-draft-wysiwyg';
 import 'draft-js/dist/Draft.css';
 import './ApplicationDetailNotes.scss'
+import './../main_applications/ApplicationDetail.scss'
+
+import { faListAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
 import {List, Repeat} from 'immutable'
 import {connect} from 'react-redux'
 
@@ -20,8 +25,6 @@ const mapStatetoProps = state => {
 class ApplicationDetailNotes extends React.Component {
     constructor(props) {
         super(props);
-        const input = ['foo', 'bar', 'baz'];
-        this.myHandleReturn = this.myHandleReturn.bind(this);
         const contentBlocksArray = []
         for (var i=0;i<this.props.Note.Contents.length;i++){
             if(this.props.Note.Contents.length !== 0){
@@ -51,9 +54,7 @@ class ApplicationDetailNotes extends React.Component {
         };
       }
     
-    myHandleReturn(e) {
-        console.log(e.currentContent)
-    }
+
       _handleChange = (editorState) => {
         this.setState({ editorState });
         console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array)
@@ -62,12 +63,15 @@ class ApplicationDetailNotes extends React.Component {
     
       render() {
         return (
-          <div className="container-root">
+          <div className="ApplicationDetailNote-container">
+            <div className="ApplicationDetailNote-title-container">
+            <FontAwesomeIcon className = "notes" icon={faListAlt}/>  
+            <div className = "applicationDetailTextTitle">{this.props.Note.Detail.Title}</div>
+            </div>
             <Editor 
               toolbarHidden
               editorClassName="editor-class"
               editorState={this.state.editorState}
-              handleReturn={this.myHandleReturn}
               onEditorStateChange={this._handleChange}
             />
           </div>
