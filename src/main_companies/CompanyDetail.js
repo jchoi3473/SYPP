@@ -9,13 +9,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import ApplicationDetailComponents from './ApplicationDetailComponents'
 import {connect} from 'react-redux'
-import updateApplicationDetail from './../redux/applicationDetail-reducer/ApplicationDetailAction'
+import updateApplicationDetail from '../redux/applicationDetail-reducer/ApplicationDetailAction'
 
 const mapStatetoProps = state => {
     return{
         // apps: state.progress.applications,
-        filteredProgress: state.filteredProgress.applications,
-        applicationDetail : state.applicationDetail.application
+        companies: state.companies.companies,
     }
 }
 const mapDispatchToProps= dispatch =>{
@@ -24,7 +23,7 @@ const mapDispatchToProps= dispatch =>{
     }
 }
 
-export class ApplicationDetail extends Component{
+export class CompanyDetail extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -67,4 +66,4 @@ export class ApplicationDetail extends Component{
         )
     }
 }
-export default connect(mapStatetoProps, mapDispatchToProps)(ApplicationDetail)
+export default connect(mapStatetoProps, mapDispatchToProps)(CompanyDetail)

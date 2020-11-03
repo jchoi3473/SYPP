@@ -97,7 +97,6 @@ export class Progress extends Component{
                 {
                     (searchFilteredProgress.length > 0)?
                     searchFilteredProgress.map((data) => (
-                            
                             <div className = "progress-all">
                                 <div className = "starContainer">
                                 <Rating className ="starIcon" applicationName = {data.applicationID} stop={1} initialRating = {data.Detail.IsFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.applicationID)}
@@ -105,11 +104,12 @@ export class Progress extends Component{
                                 fullSymbol = "fa fa-star starSize starIcon"
                                  />
                                 </div>
+                                    <div>{console.log(data)}</div>
                                     <div className = "application-name" onClick = {e => this.props.toApplicationDetail(data.Detail.applicationID)}>
                                     <div className = "progress-company">{data.Detail.CompanyName}</div>
                                     <div className = "progress-position">{data.Detail.PositionName}</div>
                                     </div>
-                                <ProgressBar applicationID = {data.Detail.applicationID} applied = {data.applied} dates = {data.Tasks} onClickAdd = {this.onClickAdd}/>
+                                <ProgressBar applicationID = {data.Detail.applicationID} applied = {data.applied} dates = {data.Tasks} details = {data.Detail.Status[0]} onClickAdd = {this.onClickAdd}/>
                             </div>
                             )):undefined
                 }

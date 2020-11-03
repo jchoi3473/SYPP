@@ -23,7 +23,7 @@ const mapDispatchToProps= dispatch =>{
     }
 }
 
-export class MainPage extends Component{
+export class ApplicationList extends Component{
 
     onChange = (value) => {
         console.log(value)
@@ -77,4 +77,4 @@ render(){
 
 
 }
-export default connect(mapStatetoProps, mapDispatchToProps)(MainPage)
+export default connect(mapStatetoProps, mapDispatchToProps)(ApplicationList)
