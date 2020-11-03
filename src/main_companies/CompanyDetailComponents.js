@@ -55,7 +55,7 @@ function CompanyDetailComponents(props){
                 return (
                     <div>
                         {
-                            props.applicationDetail.Notes.map((note) =>(
+                            props.companyDetail.Notes.map((note) =>(
                                 <ApplicationDetailNotes Note = {note}/>
                             ))
                         }
@@ -64,7 +64,7 @@ function CompanyDetailComponents(props){
             case '2':
                 return (
                 <div>
-                    {props.applicationDetail.Contacts.map((data) => (
+                    {props.companyDetail.Contacts.map((data) => (
                         <ApplicationDetailContacts contact = {data}/>
                     ))
                     }

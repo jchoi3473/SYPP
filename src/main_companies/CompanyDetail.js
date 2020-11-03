@@ -7,7 +7,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-import ApplicationDetailComponents from './ApplicationDetailComponents'
+import CompanyDetailComponents from './CompanyDetailComponents'
 import {connect} from 'react-redux'
 import updateApplicationDetail from '../redux/applicationDetail-reducer/ApplicationDetailAction'
 
@@ -27,22 +27,21 @@ export class CompanyDetail extends Component{
     constructor(props){
         super(props);
         this.state = {
-            application : ''
+            company : ''
         }
     }
     componentDidMount(){
-        var application = {}
-        for(var i=0;i<this.props.filteredProgress.length;i++){
-            if(this.props.filteredProgress[i].applicationID === this.props.applicationID){
-                application = this.props.filteredProgress[i]
+        var company = {}
+        for(var i=0;i<this.props.companies.length;i++){
+            if(this.props.companies[i].companyID === this.props.companyID){
+                company = this.props.companies[i]
             console.log("sjfoqwpfjpoqjsop")
             }
         }
         this.setState({
-            application 
+            company 
         })
-        console.log(this.props.applicationID)
-        this.props.updateApplicationDetail(application)
+        // this.props.updateApplicationDetail(application)
     }
     
     render()
@@ -53,12 +52,11 @@ export class CompanyDetail extends Component{
                 <div>
                     <div className = 'titleContainer'>
                     {/* <button className = "button-back" onClick = {this.props.toApplicationList}> */}
-                    <FontAwesomeIcon className = "angleLeft" icon={faAngleLeft} onClick ={e => this.props.toApplicationList()}/>  
+                    <FontAwesomeIcon className = "angleLeft" icon={faAngleLeft} onClick ={e => this.props.toCompanyList()}/>  
                                       {/* </button> */}
-                    <div className = "textTitle companyName">{this.state.application.Detail.CompanyName}</div>
-                    <div className = "textTitle positionName">{this.state.application.Detail.PositionName}</div>
+                    <div className = "textTitle companyName">{this.state.company.Detail.CompanyName}</div>
                     </div>
-                <ApplicationDetailComponents/>
+                <CompanyDetailComponents companyDetail = {this.state.company}/>
                 </div>          
                 :undefined
                 }

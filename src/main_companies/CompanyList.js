@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import ModalBox from '../components/addApp/ModalBox'
-import './../components/addApp/Modalbox.css'
 import './../components/progress/Progress.css'
-import ApplicationListComponents from './CompanyListComponents'
-import ApplicationListProgress from './ApplicationListProgress'
+import CompanyListComponents from './CompanyListComponents'
 import './ApplicationList.scss'
-import {updateFilteredProgress} from '../redux/filteredProgress-reducer/filteredProgressAction'
 
 import {connect} from 'react-redux'
 
@@ -30,11 +26,8 @@ render(){
 
     return(
         <div>
-        <div className ="company-container">
-            
-        </div>
-        <div className = 'modalButton'>
-            <ModalBox/>
+        <div className ="company-container" onClick = {e => this.props.toApplicationDetail(data.Detail.applicationID)}>
+
         </div>
         </div>
     )
