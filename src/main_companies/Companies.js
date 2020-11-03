@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-
+import CompanyList from './CompanyList'
 import CompanyDetail from './CompanyDetail';
-import CompanyList, { CompanyList } from './CompanyList'
 
 import {connect} from 'react-redux'
 import {updateFilteredProgress} from '../redux/filteredProgress-reducer/filteredProgressAction'
-import CompanyDetail from './CompanyDetail';
 
 const mapStatetoProps = state => {
     return{
@@ -45,6 +43,7 @@ export class Companies extends Component {
     
     render(){
         const{step} = this.state;
+        console.log(step)
         switch(step){
             case 1:
                 return(

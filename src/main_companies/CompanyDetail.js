@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import './../components/progress/Progress.css'
-import './ApplicationList.scss'
-import './ApplicationDetail.scss'
 import 'font-awesome/css/font-awesome.min.css';
 
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
@@ -9,23 +6,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import CompanyDetailComponents from './CompanyDetailComponents'
 import {connect} from 'react-redux'
-import updateApplicationDetail from '../redux/applicationDetail-reducer/ApplicationDetailAction'
+
 
 const mapStatetoProps = state => {
     return{
-        // apps: state.progress.applications,
         companies: state.companies.companies,
     }
 }
-const mapDispatchToProps= dispatch =>{
-    return {
-        updateApplicationDetail: (applications) => dispatch(updateApplicationDetail(applications)),
-    }
-}
+
 
 export class CompanyDetail extends Component{
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
         this.state = {
             company : ''
         }
@@ -39,21 +31,21 @@ export class CompanyDetail extends Component{
             }
         }
         this.setState({
-            company 
+            company: company 
         })
+        console.log(this.state.company)
         // this.props.updateApplicationDetail(application)
     }
     
     render()
     {
+        console.log(this.props.companyID)
         return(
             <div>
-                {this.state.application != ''?
+                {this.state.company != ''?
                 <div>
                     <div className = 'titleContainer'>
-                    {/* <button className = "button-back" onClick = {this.props.toApplicationList}> */}
-                    <FontAwesomeIcon className = "angleLeft" icon={faAngleLeft} onClick ={e => this.props.toCompanyList()}/>  
-                                      {/* </button> */}
+                    <FontAwesomeIcon className = "angleLeft" icon={faAngleLeft} onClick ={(e) => this.props.toCompanyList()}/>  
                     <div className = "textTitle companyName">{this.state.company.Detail.CompanyName}</div>
                     </div>
                 <CompanyDetailComponents companyDetail = {this.state.company}/>
@@ -64,4 +56,4 @@ export class CompanyDetail extends Component{
         )
     }
 }
-export default connect(mapStatetoProps, mapDispatchToProps)(CompanyDetail)
+export default connect(mapStatetoProps, null)(CompanyDetail)

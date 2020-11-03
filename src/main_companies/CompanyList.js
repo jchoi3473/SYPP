@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import './../components/progress/Progress.css'
 import CompanyListComponents from './CompanyListComponents'
-import './ApplicationList.scss'
 
 import {connect} from 'react-redux'
 
@@ -12,27 +10,47 @@ const mapStatetoProps = state => {
         companies: state.companies.companies,
     }
 }
-const mapDispatchToProps= dispatch =>{
-    return {
-        updateFilteredProgress: (applications) => dispatch(updateFilteredProgress(applications)),
-    }
-}
 
 export class CompanyList extends Component{
+    constructor(){
+        super();
+        this.state =  {
+            searchField:''
+        }
+      }
+      onSearchChange = (e) =>{
+        this.setState({
+            searchField: e.target.value
+        })
+        console.log(this.state.searchField)
+      }
 
    
 
-render(){
+    render(){
+        const searchFilteredProgress = this.props.companies.filter(company => {
+            return (company.Detail.CompanyName.toLowerCase().includes(this.state.searchField.toLowerCase()))
+          })
+        return(
+            <div>
+            <div className ="searchBox-container">
+            <input 
+            className ="searchBox"
+            type='search' 
+            placeholder = '  Search application'
+            onChange = {e => this.onSearchChange(e)}
+            value = {this.state.searchField}
+            />
+            </div>
+            {
+               (searchFilteredProgress.length > 0)?
+               searchFilteredProgress.map((data) => (
+               <div onClick = {() => this.props.toCompanyDetail(data.companyID)}>{data.Detail.CompanyName}</div>
+               )):undefined
+            }
+          </div>
+        )
+    }
 
-    return(
-        <div>
-        <div className ="company-container" onClick = {e => this.props.toApplicationDetail(data.Detail.applicationID)}>
-
-        </div>
-        </div>
-    )
 }
-
-
-}
-export default connect(mapStatetoProps, mapDispatchToProps)(CompanyList)
+export default connect(mapStatetoProps, null)(CompanyList)

@@ -4,7 +4,6 @@ import {requestProgress} from '../redux/progress-reducer/progressAction'
 import {setSelectedCategories} from '../redux/addApp-reducer/addAppAction'
 import {updateFilteredProgress} from '../redux/filteredProgress-reducer/filteredProgressAction'
 import './../components/radio/RadioButtons.css'
-import './ApplicationDetail.scss'
 
 import ApplicationDetailContacts from '../main_applications_components/ApplicationDetailContacts'
 import ApplicationDetailNotes from '../main_applications_components/ApplicationDetailNotes'
@@ -107,11 +106,6 @@ function CompanyDetailComponents(props){
             </ButtonGroup>
 
             {display()}
-
-
-
-
-        
       </div>
     );  
 }
