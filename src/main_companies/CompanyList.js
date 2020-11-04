@@ -37,7 +37,7 @@ export class CompanyList extends Component{
             <input 
             className ="searchBox"
             type='search' 
-            placeholder = '  Search application'
+            placeholder = '  Search company'
             onChange = {e => this.onSearchChange(e)}
             value = {this.state.searchField}
             />
