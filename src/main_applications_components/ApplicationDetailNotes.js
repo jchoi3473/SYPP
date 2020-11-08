@@ -23,7 +23,6 @@ const mapStatetoProps = state => {
   }
   const {hasCommandModifier} = KeyBindingUtil;
   
-  
 
 class ApplicationDetailNotes extends React.Component {
     constructor(props) {
@@ -60,31 +59,38 @@ class ApplicationDetailNotes extends React.Component {
       currentBlockIndex = () => this.state.editorState.getCurrentContent().getBlockMap().keySeq().findIndex(k => k === this.currentBlockKey())
       
       myKeyBindingFn = (e) => {
-        // if (e.keyCode === 13) {
-        //   console.log(this.currentBlockIndex())
-        //     if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].depth == 0 && this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].text === ""){
-        //       console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].text)
-        //       console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].depth)
-        //     return console.log(this.currentBlockKey());
-        //   }
-        //     else{
-        //       return getDefaultKeyBinding(e);
-        //     }
-        //   // return console.log(this.currentBlockKey());
-        // }
-        // else if(e.keyCode === 9){
-        //   return getDefaultKeyBinding(e);
-        // }
-        return getDefaultKeyBinding(e);
-      }
-      handleChange = e => {
-        this._handleChange(editorState)
-      }
+        switch (e.keyCode) {
+          case 9: // TAB
 
-      _handleChange = (editorState) => {
-        console.log(editorState)
-          this.setState({ editorState });
+            const newEditorState = RichUtils.onTab(
+              e,
+              this.state.editorState,
+              1 /* maxDepth */,
+            );
+            if (newEditorState !== this.state.editorState) {
+              this.setState({
+                editorState: newEditorState
+              })
+              return null;
+            }
+          default: 
+            return getDefaultKeyBinding(e);      
       }
+    }
+        //       console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].depth)
+    _handleChange = (editorState) => {
+      console.log(RichUtils.getCurrentBlockType(
+        editorState
+      ))
+      if(RichUtils.getCurrentBlockType(editorState) !== 'unordered-list-item'){
+        const newEditorState = RichUtils.toggleBlockType(editorState, 'unordered-list-item')
+        this.setState({editorState: newEditorState})
+      }
+      else{
+        this.setState({ editorState});
+      }
+    }
+
      
     
       render() {
@@ -99,12 +105,7 @@ class ApplicationDetailNotes extends React.Component {
               editorClassName="editor-class"
               editorState={this.state.editorState}
               onEditorStateChange={this._handleChange}
-              onChange = {e => {
-                if (e.keyCode === 13){
-                  console.log('triggered')
-                }
-              }}
-              // keyBindingFn={this.myKeyBindingFn}
+              keyBindingFn={this.myKeyBindingFn}
             />
           </div>
         );

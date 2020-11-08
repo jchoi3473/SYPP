@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { CharacterMetadata, RichUtils, ContentBlock, genKey, ContentState, EditorState, convertFromRaw, contentBlocks} from 'draft-js';
+import {getDefaultKeyBinding, KeyBindingUtil, getSelection, getCurrentContent, editorState, changeDepth, keyBindingFn} from 'draft-js';
+
 import { Editor } from 'react-draft-wysiwyg';
 import 'draft-js/dist/Draft.css';
 import './ApplicationDetailNotes.scss'
@@ -45,9 +47,16 @@ class ApplicationDetailFollowUp extends React.Component {
     
 
       _handleChange = (editorState) => {
-        this.setState({ editorState });
-        console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array)
-
+        console.log(RichUtils.getCurrentBlockType(
+          editorState
+        ))
+        if(RichUtils.getCurrentBlockType(editorState) !== 'unordered-list-item'){
+          const newEditorState = RichUtils.toggleBlockType(editorState, 'unordered-list-item')
+          this.setState({editorState: newEditorState})
+        }
+        else{
+          this.setState({ editorState});
+        }
       }
     
       render() {
