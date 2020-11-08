@@ -36,7 +36,6 @@ export class ApplicationDetail extends Component{
         for(var i=0;i<this.props.filteredProgress.length;i++){
             if(this.props.filteredProgress[i].applicationID === this.props.applicationID){
                 application = this.props.filteredProgress[i]
-            console.log("sjfoqwpfjpoqjsop")
             }
         }
         this.setState({

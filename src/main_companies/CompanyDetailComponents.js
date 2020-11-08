@@ -7,7 +7,7 @@ import './../components/radio/RadioButtons.css'
 
 import ApplicationDetailContacts from '../main_applications_components/ApplicationDetailContacts'
 import ApplicationDetailNotes from '../main_applications_components/ApplicationDetailNotes'
-
+import ApplicationDetailFollowUp from './../main_applications_components/ApplicationDetailFollowUp'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
@@ -71,7 +71,11 @@ function CompanyDetailComponents(props){
                 )
             case '3':
                 return (
-                    <div>{radioName}</div>
+                    <div>{
+                        props.companyDetail.FollowUps.map((FollowUp) =>(
+                            <ApplicationDetailFollowUp FollowUp = {FollowUp}/>
+                        ))
+                    }</div>
                 )
             case '4':
                 return (
