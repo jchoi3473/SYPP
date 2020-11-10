@@ -8,6 +8,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Moment from 'moment';
 import NewTask from '../newTask/NewTask.js'
+import ReactTooltip from "react-tooltip";
 
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {connect} from 'react-redux'
@@ -31,6 +32,7 @@ export class ProgressBar extends Component{
         this.state = {
             step: 1,
             show: false,
+            toolTip: false
         }
     }
 
@@ -125,11 +127,18 @@ export class ProgressBar extends Component{
                                     ((date.showDate)?
                                         ((date.Status)?
                                             <div className = "application-status-container">
-                                                <div className="applicationFirst completed" onClick = {()=>this.handleCompleted(date)}></div>
+                        
+                                                <div className="applicationFirst completed"  
+                                                data-for="progressTip"
+                                                data-tip = ''
+                                                onClick = {()=>this.handleCompleted(date)}></div>
                                                 <div className="date-font">{Moment(date.Time).format('MMM DD')}</div>
                                             </div>: 
                                             <div className = "application-status-container">
-                                                <div className="applicationFirst notCompleted" onClick = {()=>this.handleCompleted(date)}></div>
+                                                <div className="applicationFirst notCompleted" 
+                                                data-for="progressTip"
+                                                data-tip = ''
+                                                onClick = {()=>this.handleCompleted(date)}></div>
                                                 <div className="date-font">{Moment(date.Time).format('MMM DD')}</div>
                                             </div>)
                                     : undefined):undefined
@@ -158,6 +167,16 @@ export class ProgressBar extends Component{
                             <NewTask onClickSave = {this.onClickSave} applicationID = {this.props.applicationID}/>
                         </div>
                     </Modal>
+                    <ReactTooltip
+                    id= "progressTip"
+                    className = "extraClass colorFix colorFixBottom colorFixBottomBefore colorFixBottomAfter"
+                    effect='solid'
+                    delayHide={100}
+                    place={'bottom'}
+                    disable	={false}
+                    >
+                        <div>Idontknow</div>
+                    </ReactTooltip>
                 </div>
         )
     }

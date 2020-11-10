@@ -44,7 +44,25 @@ class ApplicationDetailFollowUp extends React.Component {
           editorState: EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray))
         };
       }
-    
+      myKeyBindingFn = (e) => {
+        switch (e.keyCode) {
+          case 9: // TAB
+
+            const newEditorState = RichUtils.onTab(
+              e,
+              this.state.editorState,
+              1 /* maxDepth */,
+            );
+            if (newEditorState !== this.state.editorState) {
+              this.setState({
+                editorState: newEditorState
+              })
+              return null;
+            }
+          default: 
+            return getDefaultKeyBinding(e);      
+      }
+    }
 
       _handleChange = (editorState) => {
         console.log(RichUtils.getCurrentBlockType(
@@ -71,6 +89,7 @@ class ApplicationDetailFollowUp extends React.Component {
               editorClassName="editor-class"
               editorState={this.state.editorState}
               onEditorStateChange={this._handleChange}
+              keyBindingFn={this.myKeyBindingFn}
             />
           </div>
         );

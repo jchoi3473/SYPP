@@ -52,7 +52,7 @@ function CategoryButtons(props) {
       var filtered = [] 
       if(e.currentTarget.value === '0'){
         filtered = props.apps
-        props.updateFilteredProgressTitle("")
+        props.updateFilteredProgressTitle("All")
         setRadioValue('0')
         props.updateButtonValue('0')
 
