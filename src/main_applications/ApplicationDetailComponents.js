@@ -9,6 +9,7 @@ import './ApplicationDetail.scss'
 import ApplicationDetailContacts from './../main_applications_components/ApplicationDetailContacts'
 import ApplicationDetailNotes from './../main_applications_components/ApplicationDetailNotes'
 import ApplicationDetailFollowUp from './../main_applications_components/ApplicationDetailFollowUp'
+import ApplicationDetailChecklists from './../main_applications_components/ApplicationDetailChecklists'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
@@ -91,7 +92,13 @@ function ApplicationDetailComponents(props){
                 )
             case '4':
                 return (
-                    <div>{radioName}</div>
+                    <div>
+                    {
+                        props.applicationDetail.Checklists.map((checklist) =>(
+                            <ApplicationDetailChecklists Checklist = {checklist}/>
+                        ))
+                    }
+                    </div>
                 )
         }
         
