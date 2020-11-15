@@ -13,7 +13,7 @@ import updateApplicationDetail from './../redux/applicationDetail-reducer/Applic
 
 const mapStatetoProps = state => {
     return{
-        // apps: state.progress.applications,
+        apps: state.progress.applications,
         filteredProgress: state.filteredProgress.applications,
         applicationDetail : state.applicationDetail.application
     }
@@ -33,16 +33,17 @@ export class ApplicationDetail extends Component{
     }
     componentDidMount(){
         var application = {}
-        for(var i=0;i<this.props.filteredProgress.length;i++){
-            if(this.props.filteredProgress[i].applicationID === this.props.applicationID){
-                application = this.props.filteredProgress[i]
+        for(var i=0;i<this.props.apps.length;i++){
+            if(this.props.apps[i].applicationID=== this.props.applicationID){
+                application = this.props.apps[i]
             }
         }
         this.setState({
-            application 
+            application : application
         })
         console.log(this.props.applicationID)
-        this.props.updateApplicationDetail(application)
+        console.log(application)
+        // this.props.updateApplicationDetail(application)
     }
     
     render()
@@ -58,7 +59,7 @@ export class ApplicationDetail extends Component{
                     <div className = "textTitle companyName">{this.state.application.Detail.CompanyName}</div>
                     <div className = "textTitle positionName">{this.state.application.Detail.PositionName}</div>
                     </div>
-                <ApplicationDetailComponents/>
+                <ApplicationDetailComponents applicationDetail = {this.state.application}/>
                 </div>          
                 :undefined
                 }

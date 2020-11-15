@@ -7,7 +7,12 @@ import 'draft-js/dist/Draft.css';
 import './ApplicationDetailNotes.scss'
 import './../main_applications/ApplicationDetail.scss'
 import './ApplicationDetailChecklists.scss'
-import { faListAlt } from "@fortawesome/free-solid-svg-icons";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+
+import { faListAlt} from "@fortawesome/free-solid-svg-icons";
+import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // import { Checkbox } from 'semantic-ui-react'
 
@@ -15,14 +20,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {getDefaultKeyBinding, KeyBindingUtil, getSelection, getCurrentContent, editorState, changeDepth, keyBindingFn} from 'draft-js';
 import {connect} from 'react-redux'
 
-const mapStatetoProps = state => {
-    return{
-        apps: state.progress.applications,
-        pending: state.progress.isPending,
-        categories: state.categories.categories, 
-        applicationDetail : state.applicationDetail.application
-    }
-  }
+
   const {hasCommandModifier} = KeyBindingUtil;
   
 
@@ -56,26 +54,60 @@ class ApplicationDetailChecklists extends React.Component {
       currentBlockKey = () => this.state.editorState.getSelection().getStartKey()
       
       currentBlockIndex = () => this.state.editorState.getCurrentContent().getBlockMap().keySeq().findIndex(k => k === this.currentBlockKey())
-      
+      myKeyBindingFn = (e) => {
+        if (e.keyCode === 13) {
+          console.log(this.currentBlockIndex())
+            if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].depth == 0 && this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].text === ""){
+              console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].text)
+              console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].depth)
+            return console.log(this.currentBlockKey());
+          }
+            else{
+              return getDefaultKeyBinding(e);
+            }
+        }
+      }
     //   myKeyBindingFn = (e) => {
-    //     switch (e.keyCode) {
-    //       case 9: // TAB
-
-    //         const newEditorState = RichUtils.onTab(
-    //           e,
-    //           this.state.editorState,
-    //           1 /* maxDepth */,
-    //         );
-    //         if (newEditorState !== this.state.editorState) {
-    //           this.setState({
-    //             editorState: newEditorState
-    //           })
-    //           return null;
+    //     if (e.keyCode === 13) {
+    //       console.log(this.currentBlockIndex())
+    //         var tempCheckbox = 
+    //         [
+    //             ...this.state.checkboxState.slice(0, this.currentBlockIndex()),
+    //             {
+    //                 checklistID: this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][0],
+    //                 checkboxBoolean: false
+    //             },
+    //             ...this.state.checkboxState.slice(this.currentBlockIndex())
+    //         ]
+    //         this.setState({
+    //         checkboxState : tempCheckbox
+    //         })
+    //         return getDefaultKeyBinding(e);
+    //     }
+    //     else if (e.keyCode === 8) {
+    //         if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length < this.state.checkboxState.length){
+    //             console.log("triggered")
+    //             var tempCheckbox = []
+    //             for(var i = 0; i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
+    //                 for(var j=0;j< this.state.checkboxState.length;j++){
+    //                     if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0]===this.state.checkboxState[j].checklistID){
+    //                         tempCheckbox.push(this.state.checkboxState[j])
+    //                     }
+    //                 }
+    //             }
+    //            this.setState({
+    //             checkboxState : tempCheckbox
+    //            })
     //         }
-    //       default: 
-    //         return getDefaultKeyBinding(e);      
-    //   }
+    //         return getDefaultKeyBinding(e);
+
+    //       }
+    //       else{
+    //           return getDefaultKeyBinding(e);
+    //       }
     // }
+    
+
     onCheckBoxClick = (checkboxID) => {
         var tempCheckbox = this.state.checkboxState
         for(var i=0;i<this.state.checkboxState.length;i++){
@@ -89,14 +121,9 @@ class ApplicationDetailChecklists extends React.Component {
     }
 
     _handleChange = (editorState) => {
-      console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array)
-      if(RichUtils.getCurrentBlockType(editorState) !== 'unstyled'){
-        const newEditorState = RichUtils.toggleBlockType(editorState, 'unstyled')
-        this.setState({editorState: newEditorState})
-      }
-      else{
+        console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array)
+      
         this.setState({editorState});
-      }
 
     //   if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length !== this.state.checkboxState.length){
         //   var tempCheckbox = this.state.checkboxState;
@@ -135,22 +162,36 @@ class ApplicationDetailChecklists extends React.Component {
             checkboxState : tempCheckbox
            })
         }
-        console.log(this.state.checkboxState)        
+        this.setState({})
+        console.log("checkbox" + this.state.checkboxState)        
     }
 
      
     
       render() {
         return (
-          <div className="ApplicationDetailNote-container">
+          <div className="ApplicationDetailNote-container ">
             <div className="ApplicationDetailNote-title-container">
             <FontAwesomeIcon className = "notes" icon={faListAlt}/>  
             <div className = "applicationDetailTextTitle">{this.props.Checklist.Detail.Title}</div>
             </div>
+            <div className = "ApplicationDetailChecklists-container">
             <div className = "CheckList-Container">
             {
+                // className = "Checkbox-padding checkbox-root checkboxIcomButton-root Icon-root Checkbox-Checked" 
                 this.state.checkboxState.map((checkbox) => (
-                    <Checkbox size = "small" className = "Checkbox-padding checkbox-root checkboxIcomButton-root Icon-root Checkbox-Checked" classes = "Icon-root"checked = {checkbox.checkboxBoolean} onChange = {() => this.onCheckBoxClick(checkbox.checklistID)}/>
+                    // <FormGroup row>
+                    <FormControlLabel 
+                    className = "FormRoot"
+                    control = {
+                    <Checkbox 
+                    icon=  {<FontAwesomeIcon className = "CheckBox-icon" icon={faSquare}/> }
+                    checkedIcon= {<FontAwesomeIcon className = "CheckBox-icon checked" icon={faCheckSquare}/> }
+                    className = "Checkbox-padding Checkbox-padding2"
+                    checked = {checkbox.checkboxBoolean} 
+                    onChange = {() => this.onCheckBoxClick(checkbox.checklistID)}/>}
+                    />
+                    // </FormGroup>
                 ))
             }
             </div>
@@ -163,8 +204,9 @@ class ApplicationDetailChecklists extends React.Component {
             //   keyBindingFn={this.myKeyBindingFn}
             />
             </div>
+            </div>
           </div>
         );
       }
 }
-export default connect(mapStatetoProps, null)(ApplicationDetailChecklists)
+export default connect(null, null)(ApplicationDetailChecklists)

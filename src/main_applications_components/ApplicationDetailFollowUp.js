@@ -10,18 +10,10 @@ import './../main_applications/ApplicationDetail.scss'
 
 import { faListAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-
-import {List, Repeat} from 'immutable'
+import Moment from 'moment';
 import {connect} from 'react-redux'
 
-const mapStatetoProps = state => {
-    return{
-        apps: state.progress.applications,
-        pending: state.progress.isPending,
-        categories: state.categories.categories, 
-        applicationDetail : state.applicationDetail.application
-    }
-  }
+
 
 
 class ApplicationDetailFollowUp extends React.Component {
@@ -83,6 +75,7 @@ class ApplicationDetailFollowUp extends React.Component {
             <div className="ApplicationDetailNote-title-container">
             {/* <FontAwesomeIcon className = "notes" icon={faListAlt}/>   */}
             <div className = "applicationDetailTextTitle">{this.props.FollowUp.Personnel.Title}</div>
+            <div className = "EventDateTime">{Moment(this.props.FollowUp.Time).format('MMM DD, YYYY') + Moment(this.props.FollowUp.Time).fromNow()}</div>
             </div>
             <Editor 
               toolbarHidden
@@ -95,4 +88,4 @@ class ApplicationDetailFollowUp extends React.Component {
         );
       }
 }
-export default connect(mapStatetoProps, null)(ApplicationDetailFollowUp)
+export default connect(null, null)(ApplicationDetailFollowUp)

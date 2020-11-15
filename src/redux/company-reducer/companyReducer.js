@@ -37,8 +37,6 @@ export const progressReducer  = (state = INITIAL_STATE, action) =>{
             }
         case 'POST_COMPANY_FAILED':
             return Object.assign({}, state, {error: action.payload, isPending: false})
-
-        
         default:
             return state;
     } 

@@ -6,6 +6,7 @@ import {updateFilteredProgress} from './../redux/filteredProgress-reducer/filter
 import './../components/radio/RadioButtons.css'
 import './ApplicationDetail.scss'
 
+import ApplicationDetailEvents from './../main_applications_components/ApplicationDetailEvents'
 import ApplicationDetailContacts from './../main_applications_components/ApplicationDetailContacts'
 import ApplicationDetailNotes from './../main_applications_components/ApplicationDetailNotes'
 import ApplicationDetailFollowUp from './../main_applications_components/ApplicationDetailFollowUp'
@@ -20,7 +21,7 @@ const mapStatetoProps = state => {
       apps: state.progress.applications,
       pending: state.progress.isPending,
       categories: state.categories.categories, 
-      applicationDetail : state.applicationDetail.application
+    //   applicationDetail : state.applicationDetail.application
   }
 }
 
@@ -59,7 +60,13 @@ function ApplicationDetailComponents(props){
         switch(radioValue){
             case '0':
                 return (
-                    <div>{radioName}</div>
+                    <div>
+                        {
+                            props.applicationDetail.Events.map((event) =>(
+                                <ApplicationDetailEvents Event = {event}/>
+                            ))
+                        }
+                    </div>
                 )
             case '1':
                 return (

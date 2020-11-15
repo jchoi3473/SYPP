@@ -4,11 +4,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import './../main_applications/ApplicationDetail.scss'
 
-const mapStatetoProps = state => {
-    return{
-        applicationDetail : state.applicationDetail.application
-    }
-  }
+
 
 function ApplicationDetailContacts(props){
     const [radioValue, setRadioValue] = useState('0');
@@ -50,7 +46,6 @@ function ApplicationDetailContacts(props){
                         <div className = "applicationDetailTextTitle">{props.contact.PersonalDetail.Firstname}</div>
                         <div className = "applicationDetailTextTitle">{props.contact.PersonalDetail.Lastname}</div>
                         <div className = "applicationDetailTextTitle">{props.contact.PersonalDetail.Title}</div>
-                        <div className = "applicationDetailTextTitle">{props.contact.PersonalDetail.Company}</div>
                     </div>
                     <ButtonGroup toggle className = {props.classContainerProps}>
                     {radios.map((radio, idx) => (
@@ -80,4 +75,4 @@ function ApplicationDetailContacts(props){
         </div>
     )
 }
-export default connect(mapStatetoProps,null)(ApplicationDetailContacts)
+export default connect(null,null)(ApplicationDetailContacts)

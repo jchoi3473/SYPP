@@ -1,6 +1,6 @@
-export const setCompany = (apps) => ({
-    type: 'SET_APPS',
-    payload: apps
+export const setCompany = (companies) => ({
+    type: 'SET_COMPANY',
+    payload: companies
 });  
 
 export const requestCompany = () => (dispatch) => {

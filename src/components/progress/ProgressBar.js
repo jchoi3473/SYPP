@@ -32,8 +32,23 @@ export class ProgressBar extends Component{
         this.state = {
             step: 1,
             show: false,
-            toolTip: false
+            toolTip: false,
+            Title : "",
+            completed : false,
         }
+    }
+
+    handleTitleCompleted = (title) =>{
+        this.setState({
+            completed: true,
+            Title : title
+        })
+    }
+    handleTitleNotCompleted = (title) =>{
+        this.setState({
+            completed: false,
+            Title : title
+        })
     }
 
     handleCompleted = (date) => {
@@ -131,14 +146,16 @@ export class ProgressBar extends Component{
                                                 <div className="applicationFirst completed"  
                                                 data-for="progressTip"
                                                 data-tip = ''
-                                                onClick = {()=>this.handleCompleted(date)}></div>
+                                                onClick = {()=>this.handleCompleted(date)}
+                                                onMouseEnter = {() => this.handleTitleCompleted(date.Title)}></div>
                                                 <div className="date-font">{Moment(date.Time).format('MMM DD')}</div>
                                             </div>: 
                                             <div className = "application-status-container">
                                                 <div className="applicationFirst notCompleted" 
                                                 data-for="progressTip"
                                                 data-tip = ''
-                                                onClick = {()=>this.handleCompleted(date)}></div>
+                                                onClick = {()=>this.handleCompleted(date)}
+                                                onMouseEnter = {() => this.handleTitleNotCompleted(date.Title)}></div>
                                                 <div className="date-font">{Moment(date.Time).format('MMM DD')}</div>
                                             </div>)
                                     : undefined):undefined
@@ -169,13 +186,13 @@ export class ProgressBar extends Component{
                     </Modal>
                     <ReactTooltip
                     id= "progressTip"
-                    className = "extraClass colorFix colorFixBottom colorFixBottomBefore colorFixBottomAfter"
+                    className = { this.state.completed? "Completed extraClass colorFix colorFixBottom colorFixBottomBefore colorFixBottomAfter":"NotCompleted extraClass colorFix colorFixBottom colorFixBottomBefore colorFixBottomAfter"}
                     effect='solid'
-                    delayHide={100}
+                    delayHide={250}
                     place={'bottom'}
                     disable	={false}
                     >
-                        <div>Idontknow</div>
+                        <div>{this.state.Title}</div>
                     </ReactTooltip>
                 </div>
         )

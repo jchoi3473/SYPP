@@ -53,3 +53,39 @@
     margin-right: 5px;
     margin-left: 10px;
 }
+
+.extraClass {
+    padding: 0;
+    font-size: 10px !important;
+    color: black !important;
+    margin-top: 15px !important;
+    pointer-events: auto !important;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 10px;
+    // background-color: # !important;
+    &:hover {
+    visibility: visible !important;
+    background-color: transparent;
+    opacity: 1 !important;
+    }
+    &.place-bottom {
+        &:after {
+        background-color: transparent !important;
+        border-left-color: transparent !important;
+        color: transparent;
+        border-color: transparent !important;
+        border-bottom-color: transparent !important;
+        }
+        &::before {
+        background-color: transparent;
+        border-bottom-color: transparent !important;
+        }
+    }
+}
+.Completed {
+    background-color: #94CE4B !important;
+}
+.NotCompleted{
+    background-color: #FFD600 !important;
+}

@@ -1,43 +1,42 @@
-.MuiCheckbox-root.checkbox-root{
-    color: #ffffff;
+.MuiCheckbox-root.Checkbox-padding{
+    padding: 0 !important;
 }
-.MuiIconButton-root.checkboxIcomButton-root {
-    flex: 0 0 auto;
-    color: rgb(42, 42, 42) !important;
-    /* padding: 12px; */
-    // overflow: visible;
-    /* font-size: 3.5rem !important; */
-    background-color: rgb(255,255,255);
-    font-size: 0.5rem !important;
-    width: 2em;
-    height: 2em;
-    text-align: center;
-    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    border-radius: 10%;
-    border: #ffffff;
-}
-
-.MuiSvgIcon-root.Icon-root{
-    fill: rgb(42,42,42);
-    // /* background: #fffffF; */
-    border: solid white;
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    font-size: 0.5rem !important;
-    transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    flex-shrink: 0;
-    user-select: none;
-    border: white;
-}
-.MuiCheckbox-colorSecondary.Mui-checked.Checkbox-Checked {
-    // color: #FFFFFF !important;
-    background-color: #ffffff;
-}
-.PrivateSwitchBase-root-3.Checkbox-padding{
+.jss3.Checkbox-padding2{
     padding: 0 !important;
 }
 
 .CheckBox-root{
     // background-color: rgb(42,42,42);
+}
+
+.CheckList-Container{
+    display: flex;
+    // justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 20px;
+    // margin-top: -1px;
+}
+.Editor-Container{
+    display: inline block;
+    width: 470px;
+}
+.ApplicationDetailChecklists-container{
+    display: flex
+}
+
+.CheckBox-icon{
+    // background-color: #ffffff;
+    color: white;;
+    // margin: 0;
+    // margin-top: 0.5px;
+    font-size: 12px;
+    // fill: white;
+    padding: 0 !important;
+    // border: #ffffff solid;
+}
+
+.MuiFormControlLabel-root.FormRoot{
+    margin: 0;
+    padding: 0 !important;
 }
