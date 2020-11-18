@@ -1,29 +1,32 @@
 {
   "manifest_version": 2,
-  "name": "React Chrome Extension Boilerplate",
-  "description": "A template of a React Chrome extension",
+
+  "name": "My Extension",
+  "description": "This extension is a starting point to create a real Chrome extension",
   "version": "1.0.0",
-  "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo512.png"
-    },
+  "background": {
+    "scripts": [
+        "background.js"
+    ],
+    "persistent": true
+},
   "browser_action": {
     "default_icon": "favicon.ico",
+    "default_popup": "index.html",
     "default_title": "React Chrome Extension Boilerplate"
+
   },
-  "background": {
-    "scripts": ["./jquery-3.5.1.min.js", "background.js"]
+ "icons": {
+  "16": "logo192.png",
+  "48": "logo192.png",
+  "128": "logo512.png"
   },
-  "content_scripts": [{
-    "matches": ["<all_urls>"],
-    "all_frames": true,
-    "js": [
-      "./content.js",
-      "./jquery-3.5.1.min.js"
-    ],
-    "run_at": "document_end"
-  }],
+  "content_scripts": [
+    {
+        "matches": ["<all_urls>"],
+        "js": [ "jquery-3.5.1.min.js","content.js" ]
+    }
+],
   "permissions": [
     "activeTab"
   ],

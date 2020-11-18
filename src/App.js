@@ -10,8 +10,7 @@ import {updateFilteredProgress} from './redux/filteredProgress-reducer/filteredP
 import {requestCompany} from './redux/company-reducer/companyAction'
 import './App.css';
 
-import ModalProvider from './ModalProvider'
-import Modal from './Modal'
+
 
 
 const mapStatetoProps = state => {
@@ -46,16 +45,12 @@ class App extends Component {
     this.props.setSelectedCategories(newCategory)
   }
 
-
-
-
   render(){
       this.props.updateFilteredProgress(this.props.apps);
     return (
-
-       <ModalProvider>
-      <Modal />
-    </ModalProvider>
+      <div className="App">
+       <MainPage/>
+      </div>
     );  
   }
 }
