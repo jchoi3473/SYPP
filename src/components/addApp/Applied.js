@@ -29,7 +29,7 @@ const Button = withStyles({
 
 export class Applied extends Component{
     state = {
-        option: ''
+        option: '1'
         }
 
     onChange = (value) => {

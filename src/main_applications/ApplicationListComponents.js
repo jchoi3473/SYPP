@@ -52,7 +52,7 @@ function CategoryButtons(props) {
       var filtered = [] 
       if(e.currentTarget.value === '0'){
         filtered = props.apps
-        props.updateFilteredProgressTitle("")
+        props.updateFilteredProgressTitle("All")
         setRadioValue('0')
         props.updateButtonValue('0')
 
@@ -156,9 +156,10 @@ function CategoryButtons(props) {
                     {radio.name}
                   </div>
                 </ToggleButton>
+
                 <ReactTooltip
                   id={(radioValue !== 0&&radioValue.value !== 1)?"radioTip":""}
-                  className = "extraClass colorFix colorFixBottom colorFixBottomBefore colorFixBottomAfter"
+                  className = "CategoryBox colorFix colorFixBottom colorFixBottomBefore colorFixBottomAfter"
                   effect='solid'
                   delayHide={100}
                   place={'bottom'}

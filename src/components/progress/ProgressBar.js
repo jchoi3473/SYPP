@@ -8,6 +8,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Moment from 'moment';
 import NewTask from '../newTask/NewTask.js'
+import ReactTooltip from "react-tooltip";
 
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {connect} from 'react-redux'
@@ -31,7 +32,23 @@ export class ProgressBar extends Component{
         this.state = {
             step: 1,
             show: false,
+            toolTip: false,
+            Title : "",
+            completed : false,
         }
+    }
+
+    handleTitleCompleted = (title) =>{
+        this.setState({
+            completed: true,
+            Title : title
+        })
+    }
+    handleTitleNotCompleted = (title) =>{
+        this.setState({
+            completed: false,
+            Title : title
+        })
     }
 
     handleCompleted = (date) => {
@@ -43,7 +60,6 @@ export class ProgressBar extends Component{
                     
                     if(apps[i].Tasks[j].midTaskID === date.midTaskID){
                         apps[i].Tasks[j].Status = !apps[i].Tasks[j].Status
-                        console.log("here?")
                         break;
                     }
                 }
@@ -51,7 +67,24 @@ export class ProgressBar extends Component{
         }
         this.props.setApps(apps)
         this.setState({})
-        
+    }
+
+    handleCompletedApplied = () => {
+        console.log("Clicked")
+        const apps = this.props.filteredProgress
+        for(var i=0;i<apps.length;i++){
+            if(apps[i].applicationID === this.props.applicationID){
+                // for(var j=0;j<apps[i].Tasks.length;j++){
+                    
+                //     if(apps[i].Tasks[j].midTaskID === date.midTaskID){
+                        apps[i].Detail.Status[0].Status = !apps[i].Detail.Status[0].Status
+                        // break;
+                //     }
+                // }
+            }
+        }
+        this.props.setApps(apps)
+        this.setState({})
     }
 
 
@@ -81,26 +114,27 @@ export class ProgressBar extends Component{
     //use if clause to determine what color to use.
     render(){
         const dates = this.props.dates
+        const detailStatus = this.props.details
         const sortedDates = dates.sort((a, b) => a.Time - b.Time)
         return(
                 <div className = "progressbar-container">
                     <div className = "progressLine"/>
                         <div className = "progress-outer-container">
-                        
                         {
-                        sortedDates.map((date) => (
-                            (date.Title==="Applied")?
-                                ((date.Status)?
+                        // sortedDates.map((date) => (
+                        //     (date != null)?
+                                (detailStatus.Status)?
                                     <div className = "application-status-container">
-                                        <div className="applicationFirst completed" onClick = {()=>this.handleCompleted(date)}></div>
-                                        <div className="date-font">{Moment(date.Time).format('MMM DD')}</div>
+                                        <div className="applicationFirst completed" onClick = {()=>this.handleCompletedApplied()}></div>
+                                        <div className="date-font">{Moment(detailStatus.Time).format('MMM DD')}</div>
                                     </div>:
                                     <div className = "application-status-container">
-                                        <div className="applicationFirst notCompleted" onClick = {()=>this.handleCompleted(date)}></div>
-                                        <div className="date-font">{Moment(date.Time).format('MMM DD')}</div>
-                                    </div>):                                  
-                                    undefined
-                        ))}
+                                        <div className="applicationFirst notCompleted" onClick = {()=>this.handleCompletedApplied()}></div>
+                                        <div className="date-font">{Moment(detailStatus.Time).format('MMM DD')}</div>
+                                    </div>
+                            // :undefined
+                        // ))
+                        }
                             <div className ="progress-inner-container">
                             {
                             sortedDates.map((date) => (
@@ -108,11 +142,20 @@ export class ProgressBar extends Component{
                                     ((date.showDate)?
                                         ((date.Status)?
                                             <div className = "application-status-container">
-                                                <div className="applicationFirst completed" onClick = {()=>this.handleCompleted(date)}></div>
+                        
+                                                <div className="applicationFirst completed"  
+                                                data-for="progressTip"
+                                                data-tip = ''
+                                                onClick = {()=>this.handleCompleted(date)}
+                                                onMouseEnter = {() => this.handleTitleCompleted(date.Title)}></div>
                                                 <div className="date-font">{Moment(date.Time).format('MMM DD')}</div>
                                             </div>: 
                                             <div className = "application-status-container">
-                                                <div className="applicationFirst notCompleted" onClick = {()=>this.handleCompleted(date)}></div>
+                                                <div className="applicationFirst notCompleted" 
+                                                data-for="progressTip"
+                                                data-tip = ''
+                                                onClick = {()=>this.handleCompleted(date)}
+                                                onMouseEnter = {() => this.handleTitleNotCompleted(date.Title)}></div>
                                                 <div className="date-font">{Moment(date.Time).format('MMM DD')}</div>
                                             </div>)
                                     : undefined):undefined
@@ -141,6 +184,16 @@ export class ProgressBar extends Component{
                             <NewTask onClickSave = {this.onClickSave} applicationID = {this.props.applicationID}/>
                         </div>
                     </Modal>
+                    <ReactTooltip
+                    id= "progressTip"
+                    className = { this.state.completed? "Completed extraClass colorFix colorFixBottom colorFixBottomBefore colorFixBottomAfter":"NotCompleted extraClass colorFix colorFixBottom colorFixBottomBefore colorFixBottomAfter"}
+                    effect='solid'
+                    delayHide={250}
+                    place={'bottom'}
+                    disable	={false}
+                    >
+                        <div>{this.state.Title}</div>
+                    </ReactTooltip>
                 </div>
         )
     }

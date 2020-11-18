@@ -1,16 +1,13 @@
 import React, {Component, useState} from 'react';
 import {connect} from 'react-redux'
-import {requestProgress} from './../redux/progress-reducer/progressAction'
-import {setSelectedCategories} from './../redux/addApp-reducer/addAppAction'
-import {updateFilteredProgress} from './../redux/filteredProgress-reducer/filteredProgressAction'
+import {requestProgress} from '../redux/progress-reducer/progressAction'
+import {setSelectedCategories} from '../redux/addApp-reducer/addAppAction'
+import {updateFilteredProgress} from '../redux/filteredProgress-reducer/filteredProgressAction'
 import './../components/radio/RadioButtons.css'
-import './ApplicationDetail.scss'
 
-import ApplicationDetailEvents from './../main_applications_components/ApplicationDetailEvents'
-import ApplicationDetailContacts from './../main_applications_components/ApplicationDetailContacts'
-import ApplicationDetailNotes from './../main_applications_components/ApplicationDetailNotes'
+import ApplicationDetailContacts from '../main_applications_components/ApplicationDetailContacts'
+import ApplicationDetailNotes from '../main_applications_components/ApplicationDetailNotes'
 import ApplicationDetailFollowUp from './../main_applications_components/ApplicationDetailFollowUp'
-import ApplicationDetailChecklists from './../main_applications_components/ApplicationDetailChecklists'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
@@ -18,22 +15,13 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
 const mapStatetoProps = state => {
   return{
-      apps: state.progress.applications,
-      pending: state.progress.isPending,
-      categories: state.categories.categories, 
-    //   applicationDetail : state.applicationDetail.application
+    companies: state.companies.companies,
+    applicationDetail : state.applicationDetail.application
   }
 }
 
-const mapDispatchToProps= dispatch =>{
-  return {
-      onRequestProgress: () => dispatch(requestProgress()),
-      setSelectedCategories: (categories) => dispatch(setSelectedCategories(categories)),
-      updateFilteredProgress: (applications) => dispatch(updateFilteredProgress(applications)),
-  }
-}
 
-function ApplicationDetailComponents(props){
+function CompanyDetailComponents(props){
     const [radioValue, setRadioValue] = useState('0');
     const [radioName, setRadioName] = useState('Events');
     const radios =  
@@ -60,19 +48,13 @@ function ApplicationDetailComponents(props){
         switch(radioValue){
             case '0':
                 return (
-                    <div>
-                        {
-                            props.applicationDetail.Events.map((event) =>(
-                                <ApplicationDetailEvents Event = {event}/>
-                            ))
-                        }
-                    </div>
+                    <div>{radioName}</div>
                 )
             case '1':
                 return (
                     <div>
                         {
-                            props.applicationDetail.Notes.map((note) =>(
+                            props.companyDetail.Notes.map((note) =>(
                                 <ApplicationDetailNotes Note = {note}/>
                             ))
                         }
@@ -81,7 +63,7 @@ function ApplicationDetailComponents(props){
             case '2':
                 return (
                 <div>
-                    {props.applicationDetail.Contacts.map((data) => (
+                    {props.companyDetail.Contacts.map((data) => (
                         <ApplicationDetailContacts contact = {data}/>
                     ))
                     }
@@ -89,23 +71,15 @@ function ApplicationDetailComponents(props){
                 )
             case '3':
                 return (
-                    <div>
-                         {
-                            props.applicationDetail.FollowUps.map((FollowUp) =>(
-                                <ApplicationDetailFollowUp FollowUp = {FollowUp}/>
-                            ))
-                        }
-                    </div>
+                    <div>{
+                        props.companyDetail.FollowUps.map((FollowUp) =>(
+                            <ApplicationDetailFollowUp FollowUp = {FollowUp}/>
+                        ))
+                    }</div>
                 )
             case '4':
                 return (
-                    <div>
-                    {
-                        props.applicationDetail.Checklists.map((checklist) =>(
-                            <ApplicationDetailChecklists Checklist = {checklist}/>
-                        ))
-                    }
-                    </div>
+                    <div>{radioName}</div>
                 )
         }
         
@@ -136,13 +110,8 @@ function ApplicationDetailComponents(props){
             </ButtonGroup>
 
             {display()}
-
-
-
-
-        
       </div>
     );  
 }
 
-export default connect(mapStatetoProps,mapDispatchToProps)(ApplicationDetailComponents);
+export default connect(mapStatetoProps,null)(CompanyDetailComponents);

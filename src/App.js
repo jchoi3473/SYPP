@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import {requestProgress} from './redux/progress-reducer/progressAction'
 import {setSelectedCategories} from './redux/addApp-reducer/addAppAction'
 import {updateFilteredProgress} from './redux/filteredProgress-reducer/filteredProgressAction'
+import {requestCompany} from './redux/company-reducer/companyAction'
 import './App.css';
 
 
@@ -25,6 +26,7 @@ const mapDispatchToProps= dispatch =>{
       onRequestProgress: () => dispatch(requestProgress()),
       setSelectedCategories: (categories) => dispatch(setSelectedCategories(categories)),
       updateFilteredProgress: (applications) => dispatch(updateFilteredProgress(applications)),
+      onRequestCompany: () => dispatch(requestCompany())
   }
 }
 
@@ -32,6 +34,7 @@ class App extends Component {
   
   async componentDidMount() {
     const apps = await this.props.onRequestProgress();
+    const companies = await this.props.onRequestCompany();
     var newCategory = [];
     for (var i=0;i<this.props.categories.length;i++){
       newCategory = newCategory.concat({

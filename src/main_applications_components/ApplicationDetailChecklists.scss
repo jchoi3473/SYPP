@@ -1,0 +1,42 @@
+.MuiCheckbox-root.Checkbox-padding{
+    padding: 0 !important;
+}
+.jss3.Checkbox-padding2{
+    padding: 0 !important;
+}
+
+.CheckBox-root{
+    // background-color: rgb(42,42,42);
+}
+
+.CheckList-Container{
+    display: flex;
+    // justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 20px;
+    // margin-top: -1px;
+}
+.Editor-Container{
+    display: inline block;
+    width: 470px;
+}
+.ApplicationDetailChecklists-container{
+    display: flex
+}
+
+.CheckBox-icon{
+    // background-color: #ffffff;
+    color: white;;
+    // margin: 0;
+    // margin-top: 0.5px;
+    font-size: 12px;
+    // fill: white;
+    padding: 0 !important;
+    // border: #ffffff solid;
+}
+
+.MuiFormControlLabel-root.FormRoot{
+    margin: 0;
+    padding: 0 !important;
+}

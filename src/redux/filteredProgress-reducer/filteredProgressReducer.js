@@ -2,7 +2,7 @@
 const INITIAL_STATE = {
         //key1: interview, key2: date key3: etc...
     applications:[],
-    selectedTitle: '',
+    selectedTitle: 'All',
     selectedButtonValue: '0',
 }
 

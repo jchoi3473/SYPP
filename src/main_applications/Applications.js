@@ -26,7 +26,6 @@ export class Applications extends Component {
     }
 
     componentDidMount(){
-        console.log("TRIGGERED?")
         this.props.updateFilteredProgress(this.props.apps)
     }
 

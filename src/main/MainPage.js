@@ -1,6 +1,7 @@
 import React, {Component, useState} from 'react';
 import ModalBox from './../components/addApp/ModalBox.js';
 import Applications from './../main_applications/Applications'
+import Companies from './../main_companies/Companies'
 import {connect} from 'react-redux'
 import {requestProgress} from './../redux/progress-reducer/progressAction'
 import {setSelectedCategories} from './../redux/addApp-reducer/addAppAction'
@@ -43,14 +44,20 @@ function MainPage(props){
     }
 
     const display = () =>{
-        console.log(radioValue)
         if(radioValue === '0'){
             return (
                 <div>
                     <Applications/>
                 </div>
             )
-        }else {
+        }else if(radioValue === '1'){
+          return(
+              <div>
+                <Companies />
+              </div>
+          )
+        }     
+        else {
             return(
                 <div>more to go</div>
             )
