@@ -21,37 +21,37 @@ function ApplicationDetailContacts(props){
         switch(radioValue) {
             case '0' :
                 return(
-                    <div className = "applicationDetailTextBody">
+                    <div className = "sypp-applicationDetailTextBody">
                         {props.contact.Email.Email}
                     </div>
                 )
             case '1' :
                 return(
-                    <div className = "applicationDetailTextBody">
+                    <div className = "sypp-applicationDetailTextBody">
                         {props.contact.Phone.PhoneNumber}
                     </div>
                 )
             case '2' :
                 return(
-                    <div className = "applicationDetailTextBody">
+                    <div className = "sypp-applicationDetailTextBody">
                     more to decide</div>
                 )
         }
     }
     return(
         <div>
-            <div className = "applicationDetailContactsContainer">
+            <div className = "sypp-applicationDetailContactsContainer">
                 <div>
-                    <div className = "applicationDetailContactsTitle">
-                        <div className = "applicationDetailTextTitle">{props.contact.PersonalDetail.Firstname}</div>
-                        <div className = "applicationDetailTextTitle">{props.contact.PersonalDetail.Lastname}</div>
-                        <div className = "applicationDetailTextTitle">{props.contact.PersonalDetail.Title}</div>
+                    <div className = "sypp-applicationDetailContactsTitle">
+                        <div className = "sypp-applicationDetailTextTitle">{props.contact.PersonalDetail.Firstname}</div>
+                        <div className = "sypp-applicationDetailTextTitle">{props.contact.PersonalDetail.Lastname}</div>
+                        <div className = "sypp-applicationDetailTextTitle">{props.contact.PersonalDetail.Title}</div>
                     </div>
                     <ButtonGroup toggle className = {props.classContainerProps}>
                     {radios.map((radio, idx) => (
-                        <div className="button-container-applicationDetail">
+                        <div className="sypp-button-container-applicationDetail">
                             <ToggleButton
-                            className={"applicationDetialButtonGroups activeChange hoverChange text"}
+                            className={"sypp-applicationDetialButtonGroups sypp-activeChange sypp-hoverChange sypp-text"}
                             key={idx}
                             type="radio"
                             variant="secondary"
@@ -60,7 +60,7 @@ function ApplicationDetailContacts(props){
                             checked={radioValue === radio.value}
                             onChange={(e) => radioChange(e, radioValue)}
                             >
-                            <div className = "radio-button-container-applicationDetail" name = {radio.name} value = {radio.value}>
+                            <div className = "sypp-radio-button-container-applicationDetail" name = {radio.name} value = {radio.value}>
                                 {radio.name}
                             </div>
                             </ToggleButton>

@@ -93,17 +93,17 @@ class ApplicationDetailEvents extends React.Component {
     }
       render() {
         return (
-          <div className="ApplicationDetailNote-container EventContainer" onClick={console.log("triggered")} on>
-            <FontAwesomeIcon className = "notes" icon={faListAlt}/> 
-            <div className = "EventDetailContainer">
+          <div className="sypp-ApplicationDetailNote-container sypp-EventContainer" onClick={console.log("triggered")} on>
+            <FontAwesomeIcon className = "sypp-notes" icon={faListAlt}/> 
+            <div className = "sypp-EventDetailContainer">
             {/* <div className="ApplicationDetailNote-title-container"> */}
-              <div className = "applicationDetailTextTitle">{this.props.Event.Detail.Title}</div>
-              <div className = "EventDateTime">{Moment(this.props.Event.Detail.Time).format('MMM DD, YYYY - h:mma')}</div>
-              <div className = "EventDateTime">{this.props.Event.Detail.Location}</div>
+              <div className = "sypp-applicationDetailTextTitle">{this.props.Event.Detail.Title}</div>
+              <div className = "sypp-EventDateTime">{Moment(this.props.Event.Detail.Time).format('MMM DD, YYYY - h:mma')}</div>
+              <div className = "sypp-EventDateTime">{this.props.Event.Detail.Location}</div>
             {/* </div> */}
             <Editor 
               toolbarHidden
-              editorClassName="editor-class"
+              editorClassName="sypp-editor-class"
               editorState={this.state.editorState}
               onEditorStateChange={this._handleChange}
               keyBindingFn={this.myKeyBindingFn}

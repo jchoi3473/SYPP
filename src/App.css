@@ -1,14 +1,8 @@
-.App {
+.sypp-App {
   width: 540px;
   height: 600px;
   background: #121212;
   position: relative;
+  z-index: 1;
   -webkit-app-region: drag;
-
-}
-.modalButton{
-  position: absolute;
-  bottom: 25px;
-  left: 25px;
-  margin: 0;
 }

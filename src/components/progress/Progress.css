@@ -1,8 +1,8 @@
-.progressbar-container{
+.sypp-progressbar-container{
     display: inline-block;
     text-align: center;
 }
-.progressLine{
+.sypp-progressLine{
     display: inline-flex;
     margin: 0 auto;
     width: 265px;
@@ -11,29 +11,29 @@
     margin-bottom: -13px;
     background-color: rgba(255, 255, 255, 0.5);
 }
-.progress-outer-container{
+.sypp-progress-outer-container{
     margin:0 auto;
     display: flex;
     justify-content: center;
 }
-.progress-inner-container{
+.sypp-progress-inner-container{
     display: flex;
     justify-content: center;
     width: 240px;
 }
 
-.completed{
+.sypp-completed{
     background: #94CE4B;
 
 }
-.notCompleted{
+.sypp-notCompleted{
     background: #FFD600;
 
 }
-.green{
+.sypp-green{
     background: #94CE4B;
 }
-.MuiFab-root.addTask{
+.MuiFab-root.sypp-addTask{
     display: inline-flex;
     font-size: 5px;
     height: 15px !important;
@@ -51,7 +51,7 @@
     min-width: 0;
 }
 
-.MuiSvgIcon-root.sizeChange{
+.MuiSvgIcon-root.sypp-sizeChange{
     height: 1.3em;
     width: 1.3em;
     padding: 0;
@@ -63,13 +63,13 @@
     text-align: center;
     color: rgb(65,65,65);
 }  
-.date-font{
+.sypp-date-font{
     font-size: 5px;
     margin: 0;
     padding: 0;
     color: rgba(255,255,255,.6);
 }
-.application-status-container{
+.sypp-application-status-container{
     display: block;
     text-align: center;
     margin-top: 4px;
@@ -77,14 +77,14 @@
     height: 32px;
 }
 
-.application-result-container{
+.sypp-application-result-container{
     display: block;
     text-align: center;
     margin-top: 4px;
     width: 30px;
     height: 32px;
 }
-.progress-position{
+.sypp-progress-position{
     margin: 0;
     font-size: 12px;
     min-width: 160px;
@@ -92,14 +92,14 @@
     color: rgba(255,255,255,.87);
 
 }
-.progress-company{
+.sypp-progress-company{
     margin-bottom: -4;
     font-size: 12px;
     font-weight: bold;
     color: rgba(255,255,255,.87);
 
 }
-.searchBox{
+.sypp-searchBox{
     width: 510px;
     height: 20px;
     font-size: 11px;

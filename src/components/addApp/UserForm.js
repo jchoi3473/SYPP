@@ -105,8 +105,8 @@ export class UserForm extends Component {
                         <Page pageNumber ={this.state.step} pageCount = {[1,2,3,4]}/>
                         <InterviewDate 
                         />
-                        <div className="next-button-container">
-                            <button className = "button-next" onClick={this.onSaveButton}>Save</button>
+                        <div className="sypp-next-button-container">
+                            <button className = "sypp-button-next" onClick={this.onSaveButton}>Save</button>
                         </div>
                     </div>
                 )

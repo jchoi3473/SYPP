@@ -218,7 +218,7 @@ export class ChipAutocomplete extends Component {
       if (showSuggestions && userInput) {
         if (filteredSuggestions.length) {
           suggestionsListComponent = (
-            <ul>
+            <ul className = "sypp-ul">
               {filteredSuggestions.map((suggestion, index) => {
                 return (
                   <button class ="suggestion chipbutton" key={suggestion} onClick={onClick}>

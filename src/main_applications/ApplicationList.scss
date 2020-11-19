@@ -1,9 +1,9 @@
-.mainpage-container{
+.sypp-mainpage-container{
     margin-left: 18;
     margin-right: 18;
 }
 
-.MuiRating-root.star {
+.MuiRating-root.sypp-star {
     background: transparent !important;
     color: rgb(200,0,0);
     cursor: pointer;
@@ -14,30 +14,30 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-.MuiRating-iconEmpty.emptyStar {
+.MuiRating-iconEmpty.sypp-emptyStar {
     color: rgba(0, 0, 0, 1) !important;
     background-color: rgba(0, 0, 0, 1) !important;
 
     /* border: solid; */
 }
 
-.MuiRating-iconFilled.filledStar{
+.MuiRating-iconFilled.sypp-filledStar{
     color: rgba(200, 0, 0, 0.7) !important;
 }
 
-.taskTitles{
+.sypp-taskTitles{
     position: relative;
     left: 95px;
     display: flex;
     width: 522px;
     justify-content: space-evenly;
 }
-.taskEntity{
+.sypp-taskEntity{
     font-size: 10px;
     color: #ffffff;
 }
 
-.selectedTitle{
+.sypp-selectedTitle{
     margin-top: 11px;
     color: rgba(255, 255, 255, 0.87);
     font-weight: bold;
@@ -45,4 +45,24 @@
     margin-left: 15px;
 }
 
-
+.sypp-modalButton{
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    z-index: 5;
+}
+.sypp-detail-add-button{
+    z-index: 99;
+    width: 44px;
+    height: 44px;
+    border-radius: 26px;
+    border: none;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}

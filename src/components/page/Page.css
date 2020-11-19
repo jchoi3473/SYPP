@@ -1,5 +1,5 @@
 
-.circle-container{
+.sypp-circle-container{
     display: flex;
     justify-content: center;
     margin-top: 40px;
@@ -7,7 +7,7 @@
     padding: 0;
 }
 
-.other-circles {
+.sypp-other-circles {
     display: inline-flex;
     width: 10px;
     height: 10px;
@@ -16,7 +16,7 @@
     margin-right: 10px;
   }
 
-  .circle{
+  .sypp-circle{
     display: inline-flex;
     width: 10px;
     height: 10px;

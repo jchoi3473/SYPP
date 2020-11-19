@@ -41,13 +41,13 @@ export class InterviewDate extends Component{
       ]
         return(
         <div>
-            <div className="modal-text">When did you apply?</div>
+            <div className="sypp-modal-text">When did you apply?</div>
                 <CalendarComponent
                   calendarChange={this.onChangeDate}
                 />
-            <div className="modal-text">Display this date on timeline?</div>
-            <div className = "button-choice-container">
-              <div className = "radio-container">
+            <div className="sypp-modal-text">Display this date on timeline?</div>
+            <div className = "sypp-button-choice-container">
+              <div className = "sypp-radio-container">
               <RadioButtons options = {radioValue} onChange = {this.onChange} isDisabled = {false}/>
               </div>
             </div>

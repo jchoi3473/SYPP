@@ -34,10 +34,10 @@ const ModalBox = (props) => {
             show={show}
             onHide={handleClose}
             centered
-            dialogClassName = "ModalMain"
+            dialogClassName = "sypp-ModalMain"
             >
-                <div className = 'Modal-container'>
-                    <button className ="button-close" onClick={handleClose}>X</button>
+                <div className = 'sypp-Modal-container'>
+                    <button className ="sypp-button-close" onClick={handleClose}>X</button>
                     <UserForm handleClose = {handleClose}/>
                 </div>
             </Modal>

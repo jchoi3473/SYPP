@@ -1,4 +1,4 @@
-.button-container-applicationDetail{
+.sypp-button-container-applicationDetail{
     /* display: inline-block; */
     // margin-left: 5px;
     margin-right: 10px;
@@ -6,14 +6,14 @@
     margin-bottom: 2px;
 }
 
-.radio-button-container-applicationDetail{
+.sypp-radio-button-container-applicationDetail{
     padding-top: 3px;
     // min-width: 65px;
     min-height: 24px;
 }
 
 
-.btn-secondary.applicationDetialButtonGroups{
+.btn-secondary.sypp-applicationDetialButtonGroups{
     border-radius: 10px;
     min-height: 24px ;
     padding-left: 10px;
@@ -24,45 +24,49 @@
     color: #ffffff;
 }
 
-.textTitle{
+.sypp-textTitle{
     color: #ffffff;
     font-size: 12px;
 }
-.companyName{
+.sypp-companyName{
     font-weight: bold;
     margin-left: 10px;
     margin-right: 10px;
 }
-.titleContainer{
+.sypp-titleContainer{
     display: flex;
     align-items: center;
 }
-.button-back{
+.sypp-button-back{
     display: inline-block;
     padding: 0;
     margin: 0;
     border: none;
 }
-.angleLeft{
+.sypp-angleLeft{
     color: #ffffff;
     font-size: 20px;
     &:hover{
         cursor: pointer;
     }
 }
-.applicationDetailContactsTitle{
+.sypp-applicationDetailContactsTitle{
     display: flex;
 }
-.applicationDetailTextTitle{
+.sypp-applicationDetailTextTitle{
     font-size: 12px;
     font-weight: bold;
     color: #ffffff;
 }
-.applicationDetailTextBody{
+.sypp-applicationDetailTextSubTitle{
+    font-size: 10px;
+    color: #ffffff;
+}
+.sypp-applicationDetailTextBody{
     font-size: 11px;
     color: #ffffff;
 }
-.applicationDetailContactsContainer{
+.sypp-applicationDetailContactsContainer{
     background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     max-width: 500px;

@@ -21,9 +21,9 @@ export class NewDate extends Component{
                 <CalendarComponent
                   calendarChange={this.props.calendarChange}
                 />
-                <div className="modal-text">Display this date on timeline?</div>
-                <div className = "button-choice-container">
-                    <div className = "radio-container">
+                <div className="sypp-modal-text">Display this date on timeline?</div>
+                <div className = "sypp-button-choice-container">
+                    <div className = "sypp-radio-container">
                     <RadioButtons options = {radioValue} onChange = {this.onChange}/>
                 </div>
                 </div>

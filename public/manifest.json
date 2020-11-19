@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "My Extension",
+  "name": "SYPP",
   "description": "This extension is a starting point to create a real Chrome extension",
   "version": "1.0.0",
   "background": {
@@ -13,7 +13,7 @@
   "browser_action": {
     "default_icon": "favicon.ico",
     "default_popup": "index.html",
-    "default_title": "React Chrome Extension Boilerplate"
+    "default_title": "SYPP Production"
 
   },
  "icons": {

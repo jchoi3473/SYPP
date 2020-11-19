@@ -90,9 +90,9 @@ function CompanyDetailComponents(props){
       <div>
           <ButtonGroup toggle className = {props.classContainerProps}>
           {radios.map((radio, idx) => (
-            <div className="button-container-applicationDetail">
+            <div className="sypp-button-container-applicationDetail">
                 <ToggleButton
-                className={"applicationDetialButtonGroups activeChange hoverChange text"}
+                className={"sypp-applicationDetialButtonGroups sypp-activeChange sypp-hoverChange sypp-text"}
                 key={idx}
                 type="radio"
                 variant="secondary"
@@ -101,7 +101,7 @@ function CompanyDetailComponents(props){
                 checked={radioValue === radio.value}
                 onChange={(e) => radioChange(e, radioValue)}
                 >
-                  <div className = "radio-button-container-applicationDetail" name = {radio.name} value = {radio.value}>
+                  <div className = "sypp-radio-button-container-applicationDetail" name = {radio.name} value = {radio.value}>
                     {radio.name}
                   </div>
                 </ToggleButton>

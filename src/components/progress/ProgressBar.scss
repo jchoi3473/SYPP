@@ -1,4 +1,4 @@
-.applicationFirst{
+.sypp-applicationFirst{
     position: relative;
     display: inline-flex;
     height: 15px ;
@@ -9,52 +9,51 @@
     }
 }
 
-.progress-all{
+.sypp-progress-all{
     margin: 0 auto;
     display: flex;
     justify-content: space-evenly;
-    border-radius: 30px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    align-items: center;
+    border-radius: 5px;
+    // padding-top: 5px;
+    // padding-bottom: 5px;
     &:hover {
-        background: rgba(255, 255, 255, 0.15);
+        border: 2px solid rgba(194, 219, 255, 1);
+        background: rgba(156, 193, 249, 0.2);
     }
     width: 510px;
+    height: 44px;
     margin-top: 2.5px;
     margin-bottom: 2.5px;
 }
-.application-name{
-//   position: absolute;
-//   top: 50%;
-//   -ms-transform: translateY(-50%);
-//   transform: translateY(-50%);
+.sypp-application-name{
   min-width: 160px;
   max-width: 160px;
   &:hover{
     cursor: pointer;
   }
 }
-.application-name-container{
+.sypp-application-name-container{
     position: relative;
     min-width: 160px;
     max-width: 160px;
 }
-.starIcon{
+.sypp-starIcon{
     color: rgba(255,255,255,.87) !important;
 }
 
-.starSize{
+.sypp-starSize{
     font-size: 0.8em !important;
 }
 
-.starContainer{
+.sypp-starContainer{
     display: flex;
     align-items: center;
     margin-right: 5px;
     margin-left: 10px;
 }
 
-.extraClass {
+.sypp-extraClass {
     padding: 0;
     font-size: 10px !important;
     color: black !important;
@@ -83,9 +82,9 @@
         }
     }
 }
-.Completed {
+.sypp-Completed {
     background-color: #94CE4B !important;
 }
-.NotCompleted{
+.sypp-NotCompleted{
     background-color: #FFD600 !important;
 }

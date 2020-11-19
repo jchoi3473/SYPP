@@ -1,4 +1,4 @@
-.button-container{
+.sypp-button-container{
     /* display: inline-block; */
     margin-left: 5px;
     margin-right: 5px;
@@ -7,7 +7,10 @@
 }
 
 
-.btn-secondary.mainButtonGroups{
+.btn-secondary.sypp-mainButtonGroups{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px;
     min-height: 28;
     min-width: 104;

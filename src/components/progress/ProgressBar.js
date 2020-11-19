@@ -117,59 +117,59 @@ export class ProgressBar extends Component{
         const detailStatus = this.props.details
         const sortedDates = dates.sort((a, b) => a.Time - b.Time)
         return(
-                <div className = "progressbar-container">
-                    <div className = "progressLine"/>
-                        <div className = "progress-outer-container">
+                <div className = "sypp-progressbar-container">
+                    <div className = "sypp-progressLine"/>
+                        <div className = "sypp-progress-outer-container">
                         {
                         // sortedDates.map((date) => (
                         //     (date != null)?
                                 (detailStatus.Status)?
-                                    <div className = "application-status-container">
-                                        <div className="applicationFirst completed" onClick = {()=>this.handleCompletedApplied()}></div>
-                                        <div className="date-font">{Moment(detailStatus.Time).format('MMM DD')}</div>
+                                    <div className = "sypp-application-status-container">
+                                        <div className="sypp-applicationFirst sypp-completed" onClick = {()=>this.handleCompletedApplied()}></div>
+                                        <div className="sypp-date-font">{Moment(detailStatus.Time).format('MMM DD')}</div>
                                     </div>:
-                                    <div className = "application-status-container">
-                                        <div className="applicationFirst notCompleted" onClick = {()=>this.handleCompletedApplied()}></div>
-                                        <div className="date-font">{Moment(detailStatus.Time).format('MMM DD')}</div>
+                                    <div className = "sypp-application-status-container">
+                                        <div className="sypp-applicationFirst sypp-notCompleted" onClick = {()=>this.handleCompletedApplied()}></div>
+                                        <div className="sypp-date-font">{Moment(detailStatus.Time).format('MMM DD')}</div>
                                     </div>
                             // :undefined
                         // ))
                         }
-                            <div className ="progress-inner-container">
+                            <div className ="sypp-progress-inner-container">
                             {
                             sortedDates.map((date) => (
                                 (date.Title!=="Applied")?
                                     ((date.showDate)?
                                         ((date.Status)?
-                                            <div className = "application-status-container">
+                                            <div className = "sypp-application-status-container">
                         
-                                                <div className="applicationFirst completed"  
+                                                <div className="sypp-applicationFirst sypp-completed"  
                                                 data-for="progressTip"
                                                 data-tip = ''
                                                 onClick = {()=>this.handleCompleted(date)}
                                                 onMouseEnter = {() => this.handleTitleCompleted(date.Title)}></div>
-                                                <div className="date-font">{Moment(date.Time).format('MMM DD')}</div>
+                                                <div className="sypp-date-font">{Moment(date.Time).format('MMM DD')}</div>
                                             </div>: 
-                                            <div className = "application-status-container">
-                                                <div className="applicationFirst notCompleted" 
+                                            <div className = "sypp-application-status-container">
+                                                <div className="sypp-applicationFirst sypp-notCompleted" 
                                                 data-for="progressTip"
                                                 data-tip = ''
                                                 onClick = {()=>this.handleCompleted(date)}
                                                 onMouseEnter = {() => this.handleTitleNotCompleted(date.Title)}></div>
-                                                <div className="date-font">{Moment(date.Time).format('MMM DD')}</div>
+                                                <div className="sypp-date-font">{Moment(date.Time).format('MMM DD')}</div>
                                             </div>)
                                     : undefined):undefined
                             ))
                             }
-                            <div className = "application-status-container">
-                                <Fab variant="round" className = "addTask" onClick={this.handleShow}>
-                                    <AddIcon className = "sizeChange"/>
+                            <div className = "sypp-application-status-container">
+                                <Fab variant="round" className = "sypp-addTask" onClick={this.handleShow}>
+                                    <AddIcon className = "sypp-sizeChange"/>
                                 </Fab>
                             </div>
                             </div>
-                            <div className = "application-result-container">
-                            <Fab variant="round" className = "addTask" onClick={this.props.onClickAdd}>
-                                    <AddIcon className = "sizeChange"/>
+                            <div className = "sypp-application-result-container">
+                            <Fab variant="round" className = "sypp-addTask" onClick={this.props.onClickAdd}>
+                                    <AddIcon className = "sypp-sizeChange"/>
                             </Fab>
                             </div>
                     </div>
@@ -177,16 +177,16 @@ export class ProgressBar extends Component{
                     show={this.state.show}
                     onHide={this.handleClose}
                     centered
-                    dialogClassName = "ModalMain"
+                    dialogClassName = "sypp-ModalMain"
                     >    
-                        <div className = 'Modal-container'>
-                            <button className ="button-close" onClick={this.handleClose}>X</button>
+                        <div className = 'sypp-Modal-container'>
+                            <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
                             <NewTask onClickSave = {this.onClickSave} applicationID = {this.props.applicationID}/>
                         </div>
                     </Modal>
                     <ReactTooltip
                     id= "progressTip"
-                    className = { this.state.completed? "Completed extraClass colorFix colorFixBottom colorFixBottomBefore colorFixBottomAfter":"NotCompleted extraClass colorFix colorFixBottom colorFixBottomBefore colorFixBottomAfter"}
+                    className = { this.state.completed? "sypp-Completed sypp-extraClass sypp-colorFix sypp-colorFixBottom sypp-colorFixBottomBefore sypp-colorFixBottomAfter":"sypp-NotCompleted sypp-extraClass sypp-colorFix sypp-colorFixBottom sypp-colorFixBottomBefore sypp-colorFixBottomAfter"}
                     effect='solid'
                     delayHide={250}
                     place={'bottom'}

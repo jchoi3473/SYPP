@@ -94,15 +94,15 @@ export class RoleLocationAdd extends Component{
     render(){
         return(
             <div>
-                <div className ="category-container">
-                    <div className="modal-text">Let's categorize this applicaiton!</div>
-                    <div className="modal-text">Feel free to leave categories empty if desired!</div>
-                    <Scroll className = "scroll">
+                <div className ="sypp-category-container">
+                    <div className="sypp-modal-text">Let's categorize this applicaiton!</div>
+                    <div className="sypp-modal-text">Feel free to leave categories empty if desired!</div>
+                    <Scroll className = "sypp-scroll">
                     {   
                         this.props.categories.map((data) => (
                         <div>
                             <ChipAutocomplete
-                            className ="modal-input position"
+                            className ="sypp-modal-input sypp-position"
                             name = {data.name}
                             key = {data.index}
                             index = {data.index}
@@ -112,7 +112,7 @@ export class RoleLocationAdd extends Component{
                         </div>
                         ))
                     }
-                    <button className ="create-category" onClick = {this.handleShow}>
+                    <button className ="sypp-create-category" onClick = {this.handleShow}>
                         + New Category
                     </button>
                     </Scroll>
@@ -121,18 +121,18 @@ export class RoleLocationAdd extends Component{
                     show={this.state.show}
                     onHide={this.handleClose}
                     centered
-                    dialogClassName = "Modal-Category"
+                    dialogClassName = "sypp-Modal-Category"
                 >
-                    <div className ="submodal-container">
-                        <div className="modal-text">What's your new category?</div>
+                    <div className ="sypp-submodal-container">
+                        <div className="sypp-modal-text">What's your new category?</div>
                         <input 
-                        className ="modal-input newCategory"
+                        className ="sypp-modal-input sypp-newCategory"
                         placeholder = "Category Name"
                         value={this.state.userInput}
                         onChange = {this.onChange}
                         />
-                        <div className="next-button-container">
-                            <button className ="button-next" 
+                        <div className="sypp-next-button-container">
+                            <button className ="sypp-button-next" 
                             onClick = {this.onClick}
                             disabled = {this.state.userInput.length<1}>
                                 Save
@@ -141,11 +141,11 @@ export class RoleLocationAdd extends Component{
                     </div>
                 </Modal>
 
-                <div className = "next-button-container">
-                <button className = "button-prev" onClick = {this.back}>
+                <div className = "sypp-next-button-container">
+                <button className = "sypp-button-prev" onClick = {this.back}>
                     Prev
                 </button>
-                <button className ="button-next" onClick = {this.continue}>
+                <button className ="sypp-button-next" onClick = {this.continue}>
                     Next
                 </button>
                 </div>

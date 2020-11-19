@@ -62,18 +62,18 @@ export class Applied extends Component{
             ]
         return(
             <div>
-                <div className ="applied-container">
-                    <div className="modal-text">Have you applied yet?</div>
-                    <div className = "radio-container">
+                <div className ="sypp-applied-container">
+                    <div className="sypp-modal-text">Have you applied yet?</div>
+                    <div className = "sypp-radio-container">
                     <RadioButtons options = {radioValue} onChange = {this.onChange} isDisabled = {false}/>
                     </div>
                 </div>
             <br/>
-            <div className ="next-button-container">
-                <button className = "button-prev" onClick = {this.back}>
+            <div className ="sypp-next-button-container">
+                <button className = "sypp-button-prev" onClick = {this.back}>
                     Prev
                 </button>
-                <button className ="button-next" onClick = {this.continue}>
+                <button className ="sypp-button-next" onClick = {this.continue}>
                     Next
                 </button>
             </div>

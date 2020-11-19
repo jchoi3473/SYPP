@@ -1,4 +1,4 @@
-.radio{
+.sypp-radio{
     margin-top: 10px;
     display: flex;
     align-items: center;
@@ -6,7 +6,7 @@
     flex-direction: column !important;
 }
 
-.customizeInputField{
+.sypp-customizeInputField{
     display: flex;
     text-align: center;
     margin: 0 auto;

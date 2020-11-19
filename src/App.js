@@ -10,7 +10,8 @@ import {updateFilteredProgress} from './redux/filteredProgress-reducer/filteredP
 import {requestCompany} from './redux/company-reducer/companyAction'
 import './App.css';
 
-
+import ModalProvider from './ModalProvider'
+import Modal from './Modal'
 
 
 const mapStatetoProps = state => {
@@ -30,6 +31,8 @@ const mapDispatchToProps= dispatch =>{
   }
 }
 
+
+
 class App extends Component {
   
   async componentDidMount() {
@@ -48,11 +51,14 @@ class App extends Component {
   render(){
       this.props.updateFilteredProgress(this.props.apps);
     return (
-      <div className="App">
-       <MainPage/>
+      <div className = "sypp-App">
+      <MainPage/>
       </div>
     );  
   }
 }
 
 export default connect(mapStatetoProps,mapDispatchToProps)(App);
+       {/* <ModalProvider>
+        <Modal />
+      </ModalProvider> */}

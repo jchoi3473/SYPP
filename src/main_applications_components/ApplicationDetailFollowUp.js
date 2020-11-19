@@ -71,15 +71,16 @@ class ApplicationDetailFollowUp extends React.Component {
     
       render() {
         return (
-          <div className="ApplicationDetailNote-container">
-            <div className="ApplicationDetailNote-title-container">
+          <div className="sypp-ApplicationDetailNote-container">
+            <div className="sypp-ApplicationDetailFollowup-title-container">
             {/* <FontAwesomeIcon className = "notes" icon={faListAlt}/>   */}
-            <div className = "applicationDetailTextTitle">{this.props.FollowUp.Personnel.Title}</div>
-            <div className = "EventDateTime">{Moment(this.props.FollowUp.Time).format('MMM DD, YYYY') + Moment(this.props.FollowUp.Time).fromNow()}</div>
+              <div className = "sypp-applicationDetailTextTitle">{this.props.FollowUp.Personnel.Firstname +" "+this.props.FollowUp.Personnel.Lastname}</div>
+              <div className = "sypp-applicationDetailTextSubTitle">{this.props.FollowUp.Personnel.Title}</div>
+              <div className = "sypp-EventDateTime">{Moment(this.props.FollowUp.Time).format('MMM DD, YYYY') + Moment(this.props.FollowUp.Time).fromNow()}</div>
             </div>
             <Editor 
               toolbarHidden
-              editorClassName="editor-class"
+              editorClassName="sypp-editor-class"
               editorState={this.state.editorState}
               onEditorStateChange={this._handleChange}
               keyBindingFn={this.myKeyBindingFn}

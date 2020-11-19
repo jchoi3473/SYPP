@@ -1,4 +1,4 @@
-.border{
+.sypp-border{
     display: block;
     padding-right: 5px;
     padding-left: 20px;
@@ -11,20 +11,20 @@
     border-radius: 26px;
 }
 
-.label-text{
+.sypp-label-text{
     /* padding: 0px; */
     /* display: inline-block; */
     /* margin-top: 10px; */
     font-size: 12px;
     color: #ffffff;
 }
-.label-container{
+.sypp-label-container{
     display: inline-block;
     /* display: flex; */
     width: 80px;
 }
 
-.accoridon-container{
+.sypp-accoridon-container{
     display: grid;
     padding: 0;
     margin: 0 auto;
@@ -32,7 +32,7 @@
     grid-template-columns: 1fr 2.7fr;
 }
 
-.container-suggestion{
+.sypp-container-suggestion{
     background-color: transparent;
     display: inline;
     padding: 0px;
@@ -40,7 +40,7 @@
     margin-right: 15%;
 }
 
-.suggestion{
+.sypp-suggestion{
     background-color: transparent;
     display: inline-block;
     margin-left: 3px;
@@ -54,7 +54,7 @@
     border-color: transparent;
 }
 
-ul{
+.sypp-ul{
     display: inline;
     margin:0px;
     padding: 0px;

@@ -44,9 +44,9 @@ export class CompanyDetail extends Component{
             <div>
                 {this.state.company != ''?
                 <div>
-                    <div className = 'titleContainer'>
+                    <div className = 'sypp-titleContainer'>
                     <FontAwesomeIcon className = "angleLeft" icon={faAngleLeft} onClick ={(e) => this.props.toCompanyList()}/>  
-                    <div className = "textTitle companyName">{this.state.company.Detail.CompanyName}</div>
+                    <div className = "sypp-textTitle sypp-companyName">{this.state.company.Detail.CompanyName}</div>
                     </div>
                 <CompanyDetailComponents companyDetail = {this.state.company}/>
                 </div>          

@@ -44,20 +44,20 @@ export class NextStep extends Component{
         ]
         return(
             <div>
-                <div className="modal-text">What is the next step?</div>
-                <div  className = "radio">
-                    <RadioButtons options = {radioValue} onChange = {this.onChange} classContainerProps = "button-group-container" buttonContainerProps = "button-props" 
+                <div className="sypp-modal-text">What is the next step?</div>
+                <div  className = "sypp-radio">
+                    <RadioButtons options = {radioValue} onChange = {this.onChange} classContainerProps = "sypp-button-group-container" buttonContainerProps = "sypp-button-props" 
                     isDisabled = {this.state.disabled}/>
                 </div>
                 <input
-                        className ="customizeInputField"
-                        placeholder="Customize Step Name"
+                        className ="sypp-customizeInputField"
+                        placeholder="sypp-Customize sypp-Step sypp-Name"
                         onChange = {e => this.onUserInput(e)}
                         value={this.state.userInput}
                     />
 
-                <div className ="next-button-container">
-                    <button className ="button-next" onClick = {this.continue}>
+                <div className ="sypp-next-button-container">
+                    <button className ="sypp-button-next" onClick = {this.continue}>
                         Next
                     </button>
                 </div>

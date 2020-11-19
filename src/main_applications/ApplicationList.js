@@ -40,18 +40,7 @@ export class ApplicationList extends Component{
             boolean = false;
         }   // this.props.setDates(newDates)
     }
-    handleMouseUp = (e) => {
-        setTimeout( function() {
-            this.setState({
-                value : window.getSelection().toString()
-            })
-        }.bind(this)
-        ,300)
-        console.log("triggered")
-        console.log(e.target.value)
-        // e.preventDefault()
-       
-    }
+
 render(){
     const radioValue =    
         [ 
@@ -78,19 +67,32 @@ render(){
 
     return(
         <div>
-        <div className ="mainpage-container">
-            <input onBlur = {this.handleMouseUp} value = {this.state.value}/> 
+        <div className ="sypp-mainpage-container">
         {categoryDivided()}
         <ApplicationListComponents options = {radioValue} onChange = {this.onChange}/>
         <ApplicationListProgress toApplicationDetail = {this.props.toApplicationDetail}/>
         </div>
-        <div className = 'modalButton'>
+        <div className = 'sypp-modalButton'>
             <ModalBox/>
         </div>
         </div>
     )
 }
-
-
 }
 export default connect(mapStatetoProps, mapDispatchToProps)(ApplicationList)
+
+
+//will use this at later production. Function that will help crawl data by highlighting
+{/* <input onBlur = {this.handleMouseUp} value = {this.state.value}/>  */}
+
+// handleMouseUp = (e) => {
+//     setTimeout( function() {
+//         this.setState({
+//             value : window.getSelection().toString()
+//         })
+//     }.bind(this)
+//     ,300)
+//     console.log("triggered")
+//     console.log(e.target.value)
+//     // e.preventDefault()
+// }

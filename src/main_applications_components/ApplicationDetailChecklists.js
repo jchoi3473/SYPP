@@ -170,24 +170,24 @@ class ApplicationDetailChecklists extends React.Component {
     
       render() {
         return (
-          <div className="ApplicationDetailNote-container ">
-            <div className="ApplicationDetailNote-title-container">
-            <FontAwesomeIcon className = "notes" icon={faListAlt}/>  
-            <div className = "applicationDetailTextTitle">{this.props.Checklist.Detail.Title}</div>
+          <div className="sypp-ApplicationDetailNote-container ">
+            <div className="sypp-ApplicationDetailNote-title-container">
+            <FontAwesomeIcon className = "sypp-notes" icon={faListAlt}/>  
+            <div className = "sypp-applicationDetailTextTitle">{this.props.Checklist.Detail.Title}</div>
             </div>
-            <div className = "ApplicationDetailChecklists-container">
-            <div className = "CheckList-Container">
+            <div className = "sypp-ApplicationDetailChecklists-container">
+            <div className = "sypp-CheckList-Container">
             {
                 // className = "Checkbox-padding checkbox-root checkboxIcomButton-root Icon-root Checkbox-Checked" 
                 this.state.checkboxState.map((checkbox) => (
                     // <FormGroup row>
                     <FormControlLabel 
-                    className = "FormRoot"
+                    className = "sypp-FormRoot"
                     control = {
                     <Checkbox 
-                    icon=  {<FontAwesomeIcon className = "CheckBox-icon" icon={faSquare}/> }
-                    checkedIcon= {<FontAwesomeIcon className = "CheckBox-icon checked" icon={faCheckSquare}/> }
-                    className = "Checkbox-padding Checkbox-padding2"
+                    icon=  {<FontAwesomeIcon className = "sypp-CheckBox-icon" icon={faSquare}/> }
+                    checkedIcon= {<FontAwesomeIcon className = "sypp-CheckBox-icon sypp-checked" icon={faCheckSquare}/> }
+                    className = "sypp-Checkbox-padding sypp-Checkbox-padding2"
                     checked = {checkbox.checkboxBoolean} 
                     onChange = {() => this.onCheckBoxClick(checkbox.checklistID)}/>}
                     />
@@ -195,10 +195,10 @@ class ApplicationDetailChecklists extends React.Component {
                 ))
             }
             </div>
-            <div className = "Editor-Container">
+            <div className = "sypp-Editor-Container">
             <Editor 
               toolbarHidden
-              editorClassName="editor-class"
+              editorClassName="sypp-editor-class"
               editorState={this.state.editorState}
               onEditorStateChange={this._handleChange}
             //   keyBindingFn={this.myKeyBindingFn}

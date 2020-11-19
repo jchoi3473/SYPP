@@ -1,52 +1,52 @@
-.button{
+.sypp-button{
     display: flex;
     margin: 0;
     padding: 0;
 }
-.Modal-align{
+.sypp-Modal-align{
     top: 20%;
     left: 20%;
 }
-.no-border{
+.sypp-no-border{
     border:none;
 }
 
-.ModalMain{
+.sypp-ModalMain{
     width: 320px !important;
     height: 320px;
     margin: 0 auto;
     padding: 0;
 }
-.radio-container{
+.sypp-radio-container{
     display: flex;
     justify-content: space-evenly;
     margin: 0 auto;
     /* text-align: center; */
 }
 
-.Modal-Category{
+.sypp-Modal-Category{
     width: 250px !important;
     margin: 0 auto;
     padding: 0;
 }
-.submodal-container{
+.sypp-submodal-container{
     height: 150px;
     padding-top: 30px;
     background: #292929;}
 
-.Modal-container{
+.sypp-Modal-container{
     /* display: block; */
     margin: 0;
     padding: 0;
     max-width: 320px;
     min-height: 320px;
     background: #292929;}
-.modal-text{
+.sypp-modal-text{
     text-align: center;
     font-size: 12px;
     color: #ffffff;
 }
-.modal-input{
+.sypp-modal-input{
     display: block;
     justify-self: center;
     margin:0 auto; 
@@ -64,7 +64,7 @@
     font-size: 12px;
 }
 
-.button-close{
+.sypp-button-close{
     position: absolute;
     font-size: 5px;
     right: 15px;
@@ -74,7 +74,7 @@
     color: rgba(255, 255, 255, 0.87);
 }
 
-.button-next{
+.sypp-button-next{
     display: inline-flex;
     margin:0; 
     padding: 0;
@@ -83,7 +83,7 @@
     font-size: 12px;
     color: rgba(255, 255, 255, 0.87);
 }
-.button-prev{
+.sypp-button-prev{
     display: inline-flex;
     margin-right : 20px; 
     padding: 0;
@@ -93,21 +93,21 @@
     color: rgba(255, 255, 255, 0.87);
 }
 
-.next-button-container{
+.sypp-next-button-container{
     width: 100%;
     position: absolute;
     text-align: center;
     bottom: 10px;
 }
-.Calendar-container{
+.sypp-Calendar-container{
     padding: 20px ;
     padding-top: 0;
 }
-.Calendar-main{
+.sypp-Calendar-main{
     background: white;
 }    
 
-.create-category{
+.sypp-create-category{
     padding: 0px;
     margin-left: 10%;
     display: flex;
@@ -116,29 +116,29 @@
     background: none;
     color: rgba(255, 255, 255, 0.87);
 }
-.category-container{
+.sypp-category-container{
     display: block;
     margin-top: 3%;
 }
-.newCategory{
+.sypp-newCategory{
     width: 200px !important;
 }
 
-.applied-container{
+.sypp-applied-container{
     margin: 0 auto;
     margin-top: 25%;
     display: block;
     justify-content: center;
 }
 
-.button-choice-container{
+.sypp-button-choice-container{
     display: flex;
     justify-content: center;
     margin-top: 10;
     margin-bottom: 50px;
 }
 
-.MuiButton-root.button-choice{
+.MuiButton-root.sypp-button-choice{
     padding: 0;
     margin: 5px;
     min-width: 55 !important;
@@ -152,6 +152,6 @@
     text-transform: none;
 }
 
-.MuiButton-contained.changeShadow{
+.MuiButton-contained.sypp-changeShadow{
     box-shadow: none;
 }	

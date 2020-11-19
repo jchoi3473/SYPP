@@ -1,12 +1,12 @@
-.EventDateTime{
-    color: #ffffff;
+.sypp-EventDateTime{
+    color: rgba(255, 233, 214, 1);
     font-size: 11px;
 }
 
-.EventDetailContainer{
+.sypp-EventDetailContainer{
     display: flex;
     flex-direction: column;
 }
-.EventContainer{
+.sypp-EventContainer{
     display: flex;
 }

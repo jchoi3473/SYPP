@@ -39,9 +39,9 @@ class CompanyListComponents extends Component {
 
       return (
           <div>
-            <div className ="searchBox-container">
+            <div className ="sypp-searchBox-container">
             <input 
-            className ="searchBox"
+            className ="sypp-searchBox"
             type='search' 
             placeholder = '  Search application'
             onChange = {e => this.onSearchChange(e)}

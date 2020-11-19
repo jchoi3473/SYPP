@@ -100,8 +100,8 @@ export class NewTask extends Component {
                         date = {this.state.date}
                         onInterviewOptionChange = {this.onInterviewOptionChange}
                         />
-                        <div className="next-button-container">
-                            <button className = "button-next" 
+                        <div className="sypp-next-button-container">
+                            <button className = "sypp-button-next" 
                             onClick={this.onClick} >
                                 Save
                             </button>

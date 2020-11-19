@@ -13,7 +13,14 @@ import {getDefaultKeyBinding, KeyBindingUtil, keyBindingFn} from 'draft-js';
 import {connect} from 'react-redux'
 
 const {hasCommandModifier} = KeyBindingUtil;
-  
+const mapStatetoProps = state => {
+  return{
+      apps: state.progress.applications,
+      pending: state.progress.isPending,
+      categories: state.categories.categories, 
+      applicationDetail : state.applicationDetail.application
+  }
+}
 
 class ApplicationDetailNotes extends React.Component {
     constructor(props) {
@@ -79,27 +86,56 @@ class ApplicationDetailNotes extends React.Component {
       }
     }
     //Make a server call here, use currentstate and convert back to the original note property
-    onHandleBlur = (e) =>{
+    //after editting the note, will need to save this to the server. 
+    onHandleBlurBody = (e) =>{
       console.log("blurred?")
       console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array) 
       console.log(this.props.Note.noteID)
+      var newNoteContent = [{
+        noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
+        Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
+        Contents_Text : []
+      }];
 
+      var tracker = 0;
+        for(var i=0;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
+          if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth === 0){
+            newNoteContent.push({
+              noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
+              Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
+              Contents_Text : []
+            })
+            tracker++;
+          }
+          else{
+            newNoteContent[tracker].Contents_Text.push(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
+          }
+        }
     }
 
+    // {
+    //   "noteContentsID": "14023531-8c8c-42e3-bc14-f3724aff0872",
+    //   "Header": "Header 0",
+    //   "Contents_Text": [
+    //     "Header 0 - Contentx_Text0",
+    //     "Header 0 - Contentx_Text1",
+    //     "Header 0 - Contentx_Text2"
+    //   ]
+    // },
      
     
       render() {
         return (
-          <div className="ApplicationDetailNote-container">
-            <div className="ApplicationDetailNote-title-container">
-            <FontAwesomeIcon className = "notes" icon={faListAlt}/>  
-            <div className = "applicationDetailTextTitle">{this.props.Note.Detail.Title}</div>
+          <div className="sypp-ApplicationDetailNote-container">
+            <div className="sypp-ApplicationDetailNote-title-container">
+            <FontAwesomeIcon className = "sypp-notes" icon={faListAlt}/>  
+            <div className = "sypp-applicationDetailTextTitle">{this.props.Note.Detail.Title}</div>
             </div>
-            <div onBlur = {this.onHandleBlur}
+            <div onBlur = {this.onHandleBlurBody}
 >
             <Editor 
               toolbarHidden
-              editorClassName="editor-class"
+              editorClassName="sypp-editor-class"
               editorState={this.state.editorState}
               onEditorStateChange={this._handleChange}
               keyBindingFn={this.myKeyBindingFn}
@@ -109,4 +145,4 @@ class ApplicationDetailNotes extends React.Component {
         );
       }
 }
-export default connect(null, null)(ApplicationDetailNotes)
+export default connect(mapStatetoProps, null)(ApplicationDetailNotes)

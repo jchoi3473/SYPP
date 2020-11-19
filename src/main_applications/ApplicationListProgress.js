@@ -79,35 +79,35 @@ export class Progress extends Component{
 
         return(
             <div>
-            <div className ="searchBox-container">
+            <div className ="sypp-searchBox-container">
             <input 
-            className ="searchBox"
+            className ="sypp-searchBox"
             type='search' 
             placeholder = '  Search application'
             onChange = {e => this.onSearchChange(e)}
             value = {this.state.searchField}
             />
             </div>
-            {this.props.selectedTitle !== ""? <div className ="selectedTitle">{this.props.selectedTitle}</div>:undefined}
-            <div className = "taskTitles">
-                <div className="taskEntity">Apply</div>
-                <div className="taskEntity">Task</div>
-                <div className="taskEntity">Result</div>
+            {this.props.selectedTitle !== ""? <div className ="sypp-selectedTitle">{this.props.selectedTitle}</div>:undefined}
+            <div className = "sypp-taskTitles">
+                <div className="sypp-taskEntity">Apply</div>
+                <div className="sypp-taskEntity">Task</div>
+                <div className="sypp-taskEntity">Result</div>
             </div>
                 {
                     (searchFilteredProgress.length > 0)?
                     searchFilteredProgress.map((data) => (
-                            <div className = "progress-all">
-                                <div className = "starContainer">
-                                <Rating className ="starIcon" applicationName = {data.applicationID} stop={1} initialRating = {data.Detail.IsFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.applicationID)}
+                            <div className = "sypp-progress-all">
+                                <div className = "sypp-starContainer">
+                                <Rating className ="sypp-starIcon" applicationName = {data.applicationID} stop={1} initialRating = {data.Detail.IsFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.applicationID)}
                                 emptySymbol="fa fa-star-o starSize starIcon"
                                 fullSymbol = "fa fa-star starSize starIcon"
                                  />
                                 </div>
                                     <div>{console.log(data)}</div>
-                                    <div className = "application-name" onClick = {e => this.props.toApplicationDetail(data.Detail.applicationID)}>
-                                    <div className = "progress-company">{data.Detail.CompanyName}</div>
-                                    <div className = "progress-position">{data.Detail.PositionName}</div>
+                                    <div className = "sypp-application-name" onClick = {e => this.props.toApplicationDetail(data.Detail.applicationID)}>
+                                    <div className = "sypp-progress-company">{data.Detail.CompanyName}</div>
+                                    <div className = "sypp-progress-position">{data.Detail.PositionName}</div>
                                     </div>
                                 <ProgressBar applicationID = {data.Detail.applicationID} applied = {data.applied} dates = {data.Tasks} details = {data.Detail.Status[0]} onClickAdd = {this.onClickAdd}/>
                             </div>

@@ -99,10 +99,10 @@ function CategoryButtons(props) {
       }
 
     return(
-      <div className = "tooltip-container">
+      <div className = "sypp-tooltip-container">
       { 
         temp.map((entity) => (
-        <button className = "subCategory-button" name = {entity} onClick ={e => onClickButton(e)}>{entity}</button>
+        <button className = "sypp-subCategory-button" name = {entity} onClick ={e => onClickButton(e)}>{entity}</button>
         ))
       }
       </div>
@@ -138,9 +138,9 @@ function CategoryButtons(props) {
     return (
         <ButtonGroup toggle className = {props.classContainerProps}>
           {radios.map((radio, idx) => (
-              <div className="button-container">
+              <div className="sypp-button-container">
                 <ToggleButton
-                className={"colorChange activeChange hoverChange text " + props.buttonContainerProps}
+                className={"sypp-colorChange sypp-activeChange sypp-hoverChange sypp-text " + props.buttonContainerProps}
                 key={idx}
                 type="radio"
                 variant="secondary"
@@ -152,14 +152,14 @@ function CategoryButtons(props) {
                 data-tip = ''
                 onMouseEnter = {e => handleChange(e)}
                 >
-                  <div className = "radio-button-container" name = {radio.name} value = {radio.value}>
+                  <div className = "sypp-radio-button-container" name = {radio.name} value = {radio.value}>
                     {radio.name}
                   </div>
                 </ToggleButton>
 
                 <ReactTooltip
                   id={(radioValue !== 0&&radioValue.value !== 1)?"radioTip":""}
-                  className = "CategoryBox colorFix colorFixBottom colorFixBottomBefore colorFixBottomAfter"
+                  className = "sypp-CategoryBox sypp-colorFix sypp-colorFixBottom sypp-colorFixBottomBefore sypp-colorFixBottomAfter"
                   effect='solid'
                   delayHide={100}
                   place={'bottom'}

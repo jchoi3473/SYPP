@@ -16,10 +16,10 @@ export class CalendarComponent extends Component{
 
     render(){
         return(
-            <div className = 'Calendar-container'>
+            <div className = 'sypp-Calendar-container'>
                 <Calendar
-                className = "main changeMargin changeSize calendarColor currentDay"
-                tileClassName =" customTile background changeFocus "
+                className = "sypp-main sypp-changeMargin sypp-changeSize sypp-calendarColor sypp-currentDay"
+                tileClassName ="sypp-customTile sypp-background sypp-changeFocus "
                 onChange={this.onChange}
                 value={this.state.date}
                 />

@@ -55,9 +55,9 @@ export class CompanyList extends Component{
           })
         return(
             <div>
-            <div className ="searchBox-container">
+            <div className ="sypp-searchBox-container">
             <input 
-            className ="searchBox"
+            className ="sypp-searchBox"
             type='search' 
             placeholder = '  Search company'
             onChange = {e => this.onSearchChange(e)}
@@ -67,12 +67,12 @@ export class CompanyList extends Component{
             {
               (searchFilteredProgress.length > 0)?
               searchFilteredProgress.map((data) => (
-                <div className = "Company-container">
-                  <Rating className ="starIcon" companyName = {data.companyID} stop={1} initialRating = {data.Detail.IsFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.companyID)}
+                <div className = "sypp-Company-container">
+                  <Rating className ="sypp-starIcon" companyName = {data.companyID} stop={1} initialRating = {data.Detail.IsFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.companyID)}
                   emptySymbol="fa fa-star-o starSize starIcon"
                   fullSymbol = "fa fa-star starSize starIcon"
                   />
-                <div className = "CompanyList" onClick = {() => this.props.toCompanyDetail(data.companyID)}>{data.Detail.CompanyName}</div>
+                <div className = "sypp-CompanyList" onClick = {() => this.props.toCompanyDetail(data.companyID)}>{data.Detail.CompanyName}</div>
                 </div>
               )):undefined
             }

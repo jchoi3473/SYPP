@@ -21,10 +21,10 @@ function RadioButtons(props) {
     return (
         <ButtonGroup toggle className = {props.classContainerProps}>
           {radios.map((radio, idx) => (
-              <div className="button-container button-towButtons-container">
+              <div className="sypp-button-container sypp-button-towButtons-container">
                 {props.isDisabled?
                 <ToggleButton
-                className={"colorChange activeChange hoverChange text1 twoButtons " + props.buttonContainerProps}
+                className={"sypp-colorChange sypp-activeChange sypp-hoverChange sypp-text1 sypp-twoButtons " + props.buttonContainerProps}
                 key={idx}
                 type="radio"
                 variant="secondary"
@@ -37,7 +37,7 @@ function RadioButtons(props) {
                 {radio.name}
                 </ToggleButton>:
                 <ToggleButton
-                className={"colorChange activeChange hoverChange text1 twoButtons " + props.buttonContainerProps}
+                className={"sypp-colorChange sypp-activeChange sypp-hoverChange sypp-text1 sypp-twoButtons " + props.buttonContainerProps}
                 key={idx}
                 type="radio"
                 variant="secondary"
