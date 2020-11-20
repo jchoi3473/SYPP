@@ -36,10 +36,16 @@ class ApplicationDetailFollowUp extends React.Component {
           editorState: EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray))
         };
       }
+      currentBlockKey = () => this.state.editorState.getSelection().getStartKey()
+      currentBlockIndex = () => this.state.editorState.getCurrentContent().getBlockMap().keySeq().findIndex(k => k === this.currentBlockKey())
+      
       myKeyBindingFn = (e) => {
         switch (e.keyCode) {
           case 9: // TAB
-
+            if(this.currentBlockIndex() == 0){
+              return undefined
+            }
+            else {
             const newEditorState = RichUtils.onTab(
               e,
               this.state.editorState,
@@ -50,7 +56,8 @@ class ApplicationDetailFollowUp extends React.Component {
                 editorState: newEditorState
               })
               return null;
-            }
+              } 
+           }
           default: 
             return getDefaultKeyBinding(e);      
       }
@@ -68,6 +75,33 @@ class ApplicationDetailFollowUp extends React.Component {
           this.setState({ editorState});
         }
       }
+      onHandleBlurBody = (e) =>{
+        console.log("blurred?")
+        console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array) 
+        console.log(this.props.Note.noteID)
+        var newNoteContent = [{
+          noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
+          Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
+          Contents_Text : []
+        }];
+  
+        var tracker = 0;
+          for(var i=1;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
+            if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth === 0){
+              tracker++;
+              newNoteContent.push({
+                noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
+                Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
+                Contents_Text : []
+              })
+            }
+            else{
+              newNoteContent[tracker].Contents_Text.push(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
+            }
+          }
+          console.log(newNoteContent)
+          this.props.onSaveNote(newNoteContent, this.props.Note.noteID)
+      }
     
       render() {
         return (
@@ -78,6 +112,7 @@ class ApplicationDetailFollowUp extends React.Component {
               <div className = "sypp-applicationDetailTextSubTitle">{this.props.FollowUp.Personnel.Title}</div>
               <div className = "sypp-EventDateTime">{Moment(this.props.FollowUp.Time).format('MMM DD, YYYY') + Moment(this.props.FollowUp.Time).fromNow()}</div>
             </div>
+            <div onBlur = {this.onHandleBlurBody}>
             <Editor 
               toolbarHidden
               editorClassName="sypp-editor-class"
@@ -85,6 +120,7 @@ class ApplicationDetailFollowUp extends React.Component {
               onEditorStateChange={this._handleChange}
               keyBindingFn={this.myKeyBindingFn}
             />
+            </div>
           </div>
         );
       }

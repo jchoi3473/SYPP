@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import './../main_applications/ApplicationDetail.scss'
-
+import ApplicationDetailContactsNotes from './ApplicationDetailContactsNotes'
 
 
 function ApplicationDetailContacts(props){
@@ -16,6 +16,9 @@ function ApplicationDetailContacts(props){
         ]
     const radioChange = (e) =>{
         setRadioValue(e.target.value)
+    }
+    const onSaveNote = (noteContent) =>{
+        props.onSaveConvoNote(noteContent, props.contact.contactID)
     }
     const display = () =>{
         switch(radioValue) {
@@ -34,7 +37,8 @@ function ApplicationDetailContacts(props){
             case '2' :
                 return(
                     <div className = "sypp-applicationDetailTextBody">
-                    more to decide</div>
+                        <ApplicationDetailContactsNotes Convo = {props.contact.Convo} onSaveNote = {onSaveNote}/>
+                    </div>
                 )
         }
     }

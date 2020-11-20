@@ -221,7 +221,7 @@ export class ChipAutocomplete extends Component {
             <ul className = "sypp-ul">
               {filteredSuggestions.map((suggestion, index) => {
                 return (
-                  <button class ="suggestion chipbutton" key={suggestion} onClick={onClick}>
+                  <button class ="sypp-suggestion sypp-chipbutton" key={suggestion} onClick={onClick}>
                     {suggestion}
                   </button>
                 );
@@ -238,11 +238,11 @@ export class ChipAutocomplete extends Component {
           timeout: 600
         }}>
           <AccordionSummary>
-            <div className = "accoridon-container">
-                <div className = 'label-container'>
-                  <div className="label-text">{this.props.name}</div>
+            <div className = "sypp-accoridon-container">
+                <div className = 'sypp-label-container'>
+                  <div className="sypp-label-text">{this.props.name}</div>
                 </div>
-                <div className ="border" onClick = {this.onClickAccordion}>
+                <div className ="sypp-border" onClick = {this.onClickAccordion}>
                     <ChipInput
                     value={this.props.selectedCategories[this.props.selectedCategories.map(
                       function(e){
@@ -259,9 +259,9 @@ export class ChipAutocomplete extends Component {
             </div>
             </AccordionSummary>
             <AccordionDetails>
-                <div className = "container-suggestion">
+                <div className = "sypp-container-suggestion">
                 {suggestionsListComponent}
-                <button className = "suggestion" 
+                <button className = "sypp-suggestion" 
                   onClick={this.newSuggestion}
                   disabled = {this.state.userInput.length<1}
                 >Create</button>

@@ -1,51 +1,57 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { RichUtils, ContentBlock, genKey, ContentState, EditorState, convertFromRaw, contentBlocks} from 'draft-js';
+import { RichUtils, ContentBlock, genKey, ContentState, EditorState} from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'draft-js/dist/Draft.css';
 import './ApplicationDetailNotes.scss'
 import './../main_applications/ApplicationDetail.scss'
-import './ApplicationDetailEvents.scss'
+
 import { faListAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Moment from 'moment';
 
-
-import {getDefaultKeyBinding, KeyBindingUtil, getSelection, getCurrentContent, editorState, changeDepth, keyBindingFn} from 'draft-js';
+import {getDefaultKeyBinding, KeyBindingUtil, keyBindingFn} from 'draft-js';
+import {setApps} from './../redux/progress-reducer/progressAction'
 import {connect} from 'react-redux'
+import { setCompany } from '../redux/company-reducer/companyAction';
 
+const {hasCommandModifier} = KeyBindingUtil;
 const mapStatetoProps = state => {
-    return{
-        apps: state.progress.applications,
-        pending: state.progress.isPending,
-        categories: state.categories.categories, 
-        applicationDetail : state.applicationDetail.application
-    }
+  return{
+      apps: state.progress.applications,
+      pending: state.progress.isPending,
+      categories: state.categories.categories, 
+      applicationDetail : state.applicationDetail.application
   }
-  const {hasCommandModifier} = KeyBindingUtil;
-  
+}
+const mapDispatchToProps= dispatch =>{
+  return {
+      setApps: (applications) => dispatch(setApps(applications)),
+      setCompany : (companies) => dispatch(setCompany(companies))
+  }
+}
 
-class ApplicationDetailEvents extends React.Component {
+
+class ApplicationDetailContactsNotes extends React.Component {
     constructor(props) {
         super(props);
         const contentBlocksArray = []
-        for (var i=0;i<this.props.Event.Contents.length;i++){
-            if(this.props.Event.Contents.length !== 0){
+        for (var i=0;i<this.props.Convo.length;i++){
+            if(this.props.Convo.length !== 0){
                 contentBlocksArray.push(
                     new ContentBlock({
-                        key: this.props.Event.Contents[i].eventContentsID,
+                        key: this.props.Convo[i].noteContentsID,
                         type: 'unordered-list-item',
                         depth: 0,
-                        text: this.props.Event.Contents[i].Header
+                        text: this.props.Convo[i].Header
                       })
                 )
-                for(var j=0;j<this.props.Event.Contents[i].Contents_Text.length;j++){
+                for(var j=0;j<this.props.Convo[i].Contents_Text.length;j++){
                     contentBlocksArray.push(
                         new ContentBlock({
                             key: genKey(),
                             type: 'unordered-list-item',
                             depth: 1,
-                            text: this.props.Event.Contents[i].Contents_Text[j]
+                            text: this.props.Convo[i].Contents_Text[j]
                           })
                     )
                 }
@@ -63,20 +69,20 @@ class ApplicationDetailEvents extends React.Component {
         switch (e.keyCode) {
           case 9: // TAB
             if(this.currentBlockIndex() == 0){
-              return undefined
+                return undefined
             }
             else {
             const newEditorState = RichUtils.onTab(
-              e,
-              this.state.editorState,
-              1 /* maxDepth */,
+                e,
+                this.state.editorState,
+                1 /* maxDepth */,
             );
             if (newEditorState !== this.state.editorState) {
-              this.setState({
+                this.setState({
                 editorState: newEditorState
-              })
-              return null;
-              }
+                })
+                return null;
+                }
             }
           default: 
             return getDefaultKeyBinding(e);      
@@ -92,20 +98,20 @@ class ApplicationDetailEvents extends React.Component {
         this.setState({ editorState});
       }
     }
-
+    //Make a server call here, use currentstate and convert back to the original note property
+    //after editting the note, will need to save this to the server. 
     onHandleBlurBody = (e) =>{
       var newNoteContent = [{
-        eventContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
+        noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
         Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
         Contents_Text : []
       }];
-
       var tracker = 0;
         for(var i=1;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
           if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth === 0){
             tracker++;
             newNoteContent.push({
-              eventContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
+              noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
               Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
               Contents_Text : []
             })
@@ -114,21 +120,11 @@ class ApplicationDetailEvents extends React.Component {
             newNoteContent[tracker].Contents_Text.push(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
           }
         }
-        console.log(newNoteContent)
-
-        this.props.onSaveEventNote(newNoteContent, this.props.Event.eventID)
+        this.props.onSaveNote(newNoteContent)
     }
 
       render() {
         return (
-          <div className="sypp-ApplicationDetailNote-container sypp-EventContainer" onClick={console.log("triggered")} on>
-            <FontAwesomeIcon className = "sypp-notes" icon={faListAlt}/> 
-            <div className = "sypp-EventDetailContainer">
-            {/* <div className="ApplicationDetailNote-title-container"> */}
-              <div className = "sypp-applicationDetailTextTitle">{this.props.Event.Detail.Title}</div>
-              <div className = "sypp-EventDateTime">{Moment(this.props.Event.Detail.Time).format('MMM DD, YYYY - h:mma')}</div>
-              <div className = "sypp-EventDateTime">{this.props.Event.Detail.Location}</div>
-            {/* </div> */}
             <div onBlur = {this.onHandleBlurBody}>
             <Editor 
               toolbarHidden
@@ -138,9 +134,7 @@ class ApplicationDetailEvents extends React.Component {
               keyBindingFn={this.myKeyBindingFn}
             />
             </div>
-            </div>
-          </div>
         );
       }
 }
-export default connect(mapStatetoProps, null)(ApplicationDetailEvents)
+export default connect(mapStatetoProps, mapDispatchToProps)(ApplicationDetailContactsNotes)

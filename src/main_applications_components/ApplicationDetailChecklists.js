@@ -120,10 +120,10 @@ class ApplicationDetailChecklists extends React.Component {
         }
     }
 
-    _handleChange = (editorState) => {
-        console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array)
-      
+    _handleChange = (editorState) => {      
         this.setState({editorState});
+        console.log("editor state = ")
+        console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array)
 
     //   if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length !== this.state.checkboxState.length){
         //   var tempCheckbox = this.state.checkboxState;
@@ -176,7 +176,7 @@ class ApplicationDetailChecklists extends React.Component {
             <div className = "sypp-applicationDetailTextTitle">{this.props.Checklist.Detail.Title}</div>
             </div>
             <div className = "sypp-ApplicationDetailChecklists-container">
-            <div className = "sypp-CheckList-Container">
+            <div className = "sypp-CheckList-Container" style = {{"height":""+this.state.checkboxState.length*16.363333333}}>
             {
                 // className = "Checkbox-padding checkbox-root checkboxIcomButton-root Icon-root Checkbox-Checked" 
                 this.state.checkboxState.map((checkbox) => (

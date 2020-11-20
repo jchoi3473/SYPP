@@ -10,7 +10,9 @@ import { faListAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import {getDefaultKeyBinding, KeyBindingUtil, keyBindingFn} from 'draft-js';
+import {setApps} from './../redux/progress-reducer/progressAction'
 import {connect} from 'react-redux'
+import { setCompany } from '../redux/company-reducer/companyAction';
 
 const {hasCommandModifier} = KeyBindingUtil;
 const mapStatetoProps = state => {
@@ -21,6 +23,13 @@ const mapStatetoProps = state => {
       applicationDetail : state.applicationDetail.application
   }
 }
+const mapDispatchToProps= dispatch =>{
+  return {
+      setApps: (applications) => dispatch(setApps(applications)),
+      setCompany : (companies) => dispatch(setCompany(companies))
+  }
+}
+
 
 class ApplicationDetailNotes extends React.Component {
     constructor(props) {
@@ -59,7 +68,10 @@ class ApplicationDetailNotes extends React.Component {
       myKeyBindingFn = (e) => {
         switch (e.keyCode) {
           case 9: // TAB
-
+            if(this.currentBlockIndex() == 0){
+              return undefined
+            }
+            else {
             const newEditorState = RichUtils.onTab(
               e,
               this.state.editorState,
@@ -71,6 +83,7 @@ class ApplicationDetailNotes extends React.Component {
               })
               return null;
             }
+          }
           default: 
             return getDefaultKeyBinding(e);      
       }
@@ -98,19 +111,21 @@ class ApplicationDetailNotes extends React.Component {
       }];
 
       var tracker = 0;
-        for(var i=0;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
+        for(var i=1;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
           if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth === 0){
+            tracker++;
             newNoteContent.push({
               noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
               Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
               Contents_Text : []
             })
-            tracker++;
           }
           else{
             newNoteContent[tracker].Contents_Text.push(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
           }
         }
+        console.log(newNoteContent)
+        this.props.onSaveNote(newNoteContent, this.props.Note.noteID)
     }
 
     // {
@@ -131,8 +146,7 @@ class ApplicationDetailNotes extends React.Component {
             <FontAwesomeIcon className = "sypp-notes" icon={faListAlt}/>  
             <div className = "sypp-applicationDetailTextTitle">{this.props.Note.Detail.Title}</div>
             </div>
-            <div onBlur = {this.onHandleBlurBody}
->
+            <div onBlur = {this.onHandleBlurBody}>
             <Editor 
               toolbarHidden
               editorClassName="sypp-editor-class"
@@ -145,4 +159,4 @@ class ApplicationDetailNotes extends React.Component {
         );
       }
 }
-export default connect(mapStatetoProps, null)(ApplicationDetailNotes)
+export default connect(mapStatetoProps, mapDispatchToProps)(ApplicationDetailNotes)

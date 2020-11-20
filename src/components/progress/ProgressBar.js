@@ -186,7 +186,7 @@ export class ProgressBar extends Component{
                     </Modal>
                     <ReactTooltip
                     id= "progressTip"
-                    className = { this.state.completed? "sypp-Completed sypp-extraClass sypp-colorFix sypp-colorFixBottom sypp-colorFixBottomBefore sypp-colorFixBottomAfter":"sypp-NotCompleted sypp-extraClass sypp-colorFix sypp-colorFixBottom sypp-colorFixBottomBefore sypp-colorFixBottomAfter"}
+                    className = { this.state.completed? "sypp-Completed sypp-extraClass ":"sypp-NotCompleted sypp-extraClass"}
                     effect='solid'
                     delayHide={250}
                     place={'bottom'}

@@ -1,8 +1,9 @@
 import React, {Component, useState} from 'react';
 import {connect} from 'react-redux'
-import {requestProgress} from './../redux/progress-reducer/progressAction'
+import {requestProgress, setApps} from './../redux/progress-reducer/progressAction'
 import {setSelectedCategories} from './../redux/addApp-reducer/addAppAction'
 import {updateFilteredProgress} from './../redux/filteredProgress-reducer/filteredProgressAction'
+
 import './../components/radio/RadioButtons.css'
 import './ApplicationDetail.scss'
 
@@ -13,7 +14,7 @@ import ApplicationDetailFollowUp from './../main_applications_components/Applica
 import ApplicationDetailChecklists from './../main_applications_components/ApplicationDetailChecklists'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
-
+import ReactTooltip from 'react-tooltip'
 
 
 const mapStatetoProps = state => {
@@ -21,7 +22,6 @@ const mapStatetoProps = state => {
       apps: state.progress.applications,
       pending: state.progress.isPending,
       categories: state.categories.categories, 
-    //   applicationDetail : state.applicationDetail.application
   }
 }
 
@@ -30,6 +30,7 @@ const mapDispatchToProps= dispatch =>{
       onRequestProgress: () => dispatch(requestProgress()),
       setSelectedCategories: (categories) => dispatch(setSelectedCategories(categories)),
       updateFilteredProgress: (applications) => dispatch(updateFilteredProgress(applications)),
+      setApps : (applications) => dispatch(setApps(applications))
   }
 }
 
@@ -56,6 +57,45 @@ function ApplicationDetailComponents(props){
     const onChangeTextArea = (e) =>{
         setTextValue(e.target.value)
     }
+    const onSaveNote  = (noteContent, noteID) => {
+        var applications = props.apps;
+        for(var i=0;i<applications.length;i++){
+            if(applications[i].applicationID === props.applicationDetail.applicationID){
+                for(var j=0; j < props.applicationDetail.Notes.length;j++){
+                    if(props.applicationDetail.Notes[j].noteID === noteID){
+                        applications[i].Notes[j].Contents = noteContent
+                    }
+                }
+            }
+        }
+        props.setApps(applications)
+    }
+    const onSaveConvoNote = (noteContent, contactID) => {
+        var applications = props.apps;
+        for(var i=0;i<applications.length;i++){
+            if(applications[i].applicationID === props.applicationDetail.applicationID){
+                for(var j=0; j < props.applicationDetail.Contacts.length;j++){
+                    if(props.applicationDetail.Contacts[j].contactID === contactID){
+                        applications[i].Contacts[j].Convo = noteContent
+                    }
+                }
+            }
+        }
+        props.setApps(applications)
+    }   
+    const onSaveEventNote  = (noteContent, eventID) => {
+        var applications = props.apps;
+        for(var i=0;i<applications.length;i++){
+            if(applications[i].applicationID === props.applicationDetail.applicationID){
+                for(var j=0; j < props.applicationDetail.Events.length;j++){
+                    if(props.applicationDetail.Events[j].eventID === eventID){
+                        applications[i].Events[j].Contents = noteContent
+                    }
+                }
+            }
+        }
+        props.setApps(applications)
+    }
 
     const display = () =>{
         switch(radioValue){
@@ -64,7 +104,7 @@ function ApplicationDetailComponents(props){
                     <div>
                         {
                             props.applicationDetail.Events.map((event) =>(
-                                <ApplicationDetailEvents Event = {event}/>
+                                <ApplicationDetailEvents Event = {event} onSaveEventNote = {onSaveEventNote}/>
                             ))
                         }
                     </div>
@@ -73,39 +113,39 @@ function ApplicationDetailComponents(props){
                 return (
                     <div>
                         {
-                            props.applicationDetail.Notes.map((note) =>(
-                                <ApplicationDetailNotes Note = {note}/>
-                            ))
+                        props.applicationDetail.Notes.map((note) =>(
+                            <ApplicationDetailNotes Note = {note} onSaveNote = {onSaveNote}/>
+                        ))
                         }
                     </div>
                 )
             case '2':
                 return (
-                <div>
-                    {props.applicationDetail.Contacts.map((data) => (
-                        <ApplicationDetailContacts contact = {data}/>
-                    ))
-                    }
-                </div>                
+                    <div>
+                        {props.applicationDetail.Contacts.map((data) => (
+                            <ApplicationDetailContacts contact = {data} onSaveConvoNote = {onSaveConvoNote}/>
+                        ))
+                        }
+                    </div>                
                 )
             case '3':
                 return (
                     <div>
-                         {
-                            props.applicationDetail.FollowUps.map((FollowUp) =>(
-                                <ApplicationDetailFollowUp FollowUp = {FollowUp}/>
-                            ))
+                        {
+                        props.applicationDetail.FollowUps.map((FollowUp) =>(
+                            <ApplicationDetailFollowUp FollowUp = {FollowUp}/>
+                        ))
                         }
                     </div>
                 )
             case '4':
                 return (
                     <div>
-                    {
+                        {
                         props.applicationDetail.Checklists.map((checklist) =>(
                             <ApplicationDetailChecklists Checklist = {checklist}/>
                         ))
-                    }
+                        }
                     </div>
                 )
         }
@@ -137,7 +177,28 @@ function ApplicationDetailComponents(props){
           ))}
             </ButtonGroup>
             {display()}   
-            <button className = "sypp-detail-add-button">+</button>
+            <div>
+            <button data-for="addDetailButton"
+                    data-tip = '' 
+                    className = "sypp-detail-add-button">+</button>
+
+            <ReactTooltip
+            id= "addDetailButton"
+            className = "sypp-create-detail-tooltip"
+            effect='solid'
+            delayHide={250}
+            place={'right'}
+            disable	={false}
+            >
+                <div className = "sypp-tooltip-button-container">
+                <button>Events</button>
+                <button>Notes</button>
+                <button>Contacts</button>
+                <button>Conversation Histories</button>
+                <button>Checklists</button>
+                </div>
+            </ReactTooltip>
+            </div>
       </div>
     );  
 }

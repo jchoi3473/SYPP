@@ -2,12 +2,15 @@ import React, {Component, useState} from 'react';
 import {connect} from 'react-redux'
 import {requestProgress} from '../redux/progress-reducer/progressAction'
 import {setSelectedCategories} from '../redux/addApp-reducer/addAppAction'
+import {setCompany} from './../redux/company-reducer/companyAction'
 import {updateFilteredProgress} from '../redux/filteredProgress-reducer/filteredProgressAction'
 import './../components/radio/RadioButtons.css'
 
+import ApplicationDetailEvents from './../main_applications_components/ApplicationDetailEvents'
 import ApplicationDetailContacts from '../main_applications_components/ApplicationDetailContacts'
 import ApplicationDetailNotes from '../main_applications_components/ApplicationDetailNotes'
 import ApplicationDetailFollowUp from './../main_applications_components/ApplicationDetailFollowUp'
+import ApplicationDetailChecklists from './../main_applications_components/ApplicationDetailChecklists'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
@@ -19,6 +22,11 @@ const mapStatetoProps = state => {
     applicationDetail : state.applicationDetail.application
   }
 }
+const mapDispatchToProps= dispatch =>{
+    return {
+        setCompany : (companies) => dispatch(setCompany(companies))
+    }
+  } 
 
 
 function CompanyDetailComponents(props){
@@ -44,18 +52,64 @@ function CompanyDetailComponents(props){
         setTextValue(e.target.value)
     }
 
+    const onSaveNote  = (noteContent, noteID) => {
+        var companies = props.companies;
+        for(var i=0;i<companies.length;i++){
+            if(companies[i].companyID === props.companies.companyID){
+                for(var j=0; j < props.companyDetail.Notes.length;j++){
+                    if(props.companyDetail.Notes[j].noteID === noteID){
+                        companies[i].Notes[j].Contents = noteContent
+                    }
+                }
+            }
+        }
+        props.setCompany(companies)
+    }
+    const onSaveConvoNote = (noteContent, contactID) => {
+        var companies = props.companies;
+        for(var i=0;i<companies.length;i++){
+            if(companies[i].companyID === props.companies.companyID){
+                for(var j=0; j < props.companyDetail.Contacts.length;j++){
+                    if(props.companies.Contacts[j].contactID === contactID){
+                        companies[i].Contacts[j].Convo = noteContent
+                    }
+                }
+            }
+        }
+        props.setCompany(companies)
+    }
+    const onSaveEventNote  = (noteContent, eventID) => {
+        var companies = props.companies;
+        for(var i=0;i<companies.length;i++){
+            if(companies[i].companyID === props.companyDetail.companyID){
+                for(var j=0; j < props.companyDetail.Events.length;j++){
+                    if(props.companyDetail.Events[j].eventID === eventID){
+                        companies[i].Events[j].Contents = noteContent
+                    }
+                }
+            }
+        }
+        props.setCompany(companies)
+    }   
+
     const display = () =>{
         switch(radioValue){
             case '0':
                 return (
-                    <div>{radioName}</div>
+                    <div>
+                        {
+                            props.companyDetail.Events.map((event) =>(
+                                <ApplicationDetailEvents Event = {event} onSaveEventNote = {onSaveEventNote}/>
+                            ))
+                        }
+                    </div>
                 )
             case '1':
                 return (
                     <div>
                         {
                             props.companyDetail.Notes.map((note) =>(
-                                <ApplicationDetailNotes Note = {note}/>
+                                <ApplicationDetailNotes Note = {note} onSaveNote = {onSaveNote}/>
                             ))
                         }
                     </div>
@@ -64,7 +118,7 @@ function CompanyDetailComponents(props){
                 return (
                 <div>
                     {props.companyDetail.Contacts.map((data) => (
-                        <ApplicationDetailContacts contact = {data}/>
+                        <ApplicationDetailContacts contact = {data} onSaveConvoNote = {onSaveConvoNote}/>
                     ))
                     }
                 </div>                
@@ -79,7 +133,13 @@ function CompanyDetailComponents(props){
                 )
             case '4':
                 return (
-                    <div>{radioName}</div>
+                    <div>
+                    {
+                        props.companyDetail.Checklists.map((checklist) =>(
+                            <ApplicationDetailChecklists Checklist = {checklist}/>
+                        ))
+                    }
+                    </div>
                 )
         }
         
@@ -114,4 +174,4 @@ function CompanyDetailComponents(props){
     );  
 }
 
-export default connect(mapStatetoProps,null)(CompanyDetailComponents);
+export default connect(mapStatetoProps,mapDispatchToProps)(CompanyDetailComponents);

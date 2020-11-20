@@ -74,3 +74,34 @@
         background: rgba(255, 255, 255, 0.13);
     }
 }
+
+
+.sypp-create-detail-tooltip{
+    pointer-events: auto !important;
+    background: transparent!important;
+    // background-color: # !important;
+    &:hover {
+    visibility: visible !important;
+    background-color: transparent !important;
+    opacity: 1 !important;
+    }
+    &.place-right {
+        &:after {
+        background-color: transparent !important;
+        border-left-color: transparent !important;
+        color: transparent;
+        border-color: transparent !important;
+        border-bottom-color: transparent !important;
+        }
+        &::before {
+        background-color: transparent;
+        border-bottom-color: transparent !important;
+        }
+    }
+}
+.sypp-tooltip-button-container{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 80px;
+    margin-left: -10px;
+}
