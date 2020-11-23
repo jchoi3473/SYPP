@@ -15,7 +15,9 @@ import ApplicationDetailChecklists from './../main_applications_components/Appli
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import ReactTooltip from 'react-tooltip'
+import Modal from 'react-bootstrap/Modal';
 
+import CreateEvent from './../create_applications_components/create_event/CreateEvent'
 
 const mapStatetoProps = state => {
   return{
@@ -47,7 +49,11 @@ function ApplicationDetailComponents(props){
     { name: 'Checklists', value: '4' },
     ]
     const [textValue, setTextValue] = useState('');
-
+    //modal states
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const [selectedValue, setSelectedValue] = useState('')
 
     const radioChange = (e) => {
     setRadioValue(e.target.value)
@@ -95,6 +101,37 @@ function ApplicationDetailComponents(props){
             }
         }
         props.setApps(applications)
+    }
+    const onClick = (value) => {
+        if(value === '0'){
+            setShow(true)
+            setSelectedValue('0')
+            setRadioName('Events')
+            setRadioValue('0')
+        }
+        else if(value==='1'){
+            setShow(true)
+            setSelectedValue('1')
+            setRadioName('Notes')
+            setRadioValue('1')
+        }
+    }
+
+    const triggerComponents = () =>{
+        if(selectedValue === '0'){
+            return(
+                <CreateEvent />
+            // <div>Events</div>
+            );
+        }
+        else if(selectedValue === '1'){
+            return(
+                <div>Notes</div>
+            );
+        }
+        return(
+            <div></div>
+        )
     }
 
     const display = () =>{
@@ -191,14 +228,32 @@ function ApplicationDetailComponents(props){
             disable	={false}
             >
                 <div className = "sypp-tooltip-button-container">
-                <button>Events</button>
-                <button>Notes</button>
+                <button onClick = {() => onClick('0')}>Events</button>
+                <button onClick = {() => onClick('1')}>Notes</button>
                 <button>Contacts</button>
                 <button>Conversation Histories</button>
                 <button>Checklists</button>
                 </div>
             </ReactTooltip>
             </div>
+            <Modal 
+            show={show}
+            onHide={handleClose}
+            centered
+            dialogClassName = "sypp-create-detail-modal"
+            >
+                <div className = 'sypp-create-detail-modal-container'>
+                    <button className ="sypp-button-close" onClick={handleClose}>X</button>
+                    {triggerComponents()}
+                </div>
+            </Modal>
+
+
+
+
+
+
+
       </div>
     );  
 }

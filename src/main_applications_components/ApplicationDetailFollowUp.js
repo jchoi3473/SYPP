@@ -38,7 +38,7 @@ class ApplicationDetailFollowUp extends React.Component {
       }
       currentBlockKey = () => this.state.editorState.getSelection().getStartKey()
       currentBlockIndex = () => this.state.editorState.getCurrentContent().getBlockMap().keySeq().findIndex(k => k === this.currentBlockKey())
-      
+
       myKeyBindingFn = (e) => {
         switch (e.keyCode) {
           case 9: // TAB
@@ -77,8 +77,6 @@ class ApplicationDetailFollowUp extends React.Component {
       }
       onHandleBlurBody = (e) =>{
         console.log("blurred?")
-        console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array) 
-        console.log(this.props.Note.noteID)
         var newNoteContent = [{
           noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
           Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
@@ -100,7 +98,7 @@ class ApplicationDetailFollowUp extends React.Component {
             }
           }
           console.log(newNoteContent)
-          this.props.onSaveNote(newNoteContent, this.props.Note.noteID)
+          // this.props.onSaveNote(newNoteContent, this.props.Note.noteID)
       }
     
       render() {

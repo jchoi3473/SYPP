@@ -23,6 +23,7 @@ const mapStatetoProps = state => {
       applicationDetail : state.applicationDetail.application
   }
 }
+
 const mapDispatchToProps= dispatch =>{
   return {
       setApps: (applications) => dispatch(setApps(applications)),
