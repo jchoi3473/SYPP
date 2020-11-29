@@ -12,7 +12,7 @@
     /* background: tomato !important; */
 }
 .react-calendar__tile--active.sypp-background{
-    background: rgba(255, 255, 255, 0.4);
+    background: transparent;
     color: rgba(255, 255, 255, 0.1);
     border: transparent;
     outline: none;

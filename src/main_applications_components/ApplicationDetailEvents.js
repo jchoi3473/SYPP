@@ -9,7 +9,9 @@ import './ApplicationDetailEvents.scss'
 import { faListAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Moment from 'moment';
+import Modal from 'react-bootstrap/Modal';
 
+import CreateEditEvent from './../create_edit_applications_components/create_edit_event/CreateEditEvent'
 
 import {getDefaultKeyBinding, KeyBindingUtil, getSelection, getCurrentContent, editorState, changeDepth, keyBindingFn} from 'draft-js';
 import {connect} from 'react-redux'
@@ -22,7 +24,7 @@ const mapStatetoProps = state => {
         applicationDetail : state.applicationDetail.application
     }
   }
-  const {hasCommandModifier} = KeyBindingUtil;
+const {hasCommandModifier} = KeyBindingUtil;
   
 
 class ApplicationDetailEvents extends React.Component {
@@ -51,8 +53,9 @@ class ApplicationDetailEvents extends React.Component {
                 }
             }
         }
-          this.state = {
-          editorState: EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray))
+        this.state = {
+          editorState: EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray)),
+          show : false
         };
       }
       currentBlockKey = () => this.state.editorState.getSelection().getStartKey()
@@ -93,52 +96,90 @@ class ApplicationDetailEvents extends React.Component {
       }
     }
 
-    onHandleBlurBody = (e) =>{
-      var newNoteContent = [{
-        eventContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
-        Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
-        Contents_Text : []
-      }];
+    // onHandleBlurBody = (e) =>{
+    //   var newNoteContent = [{
+    //     eventContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
+    //     Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
+    //     Contents_Text : []
+    //   }];
 
-      var tracker = 0;
-        for(var i=1;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
-          if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth === 0){
-            tracker++;
-            newNoteContent.push({
-              eventContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
-              Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
-              Contents_Text : []
-            })
-          }
-          else{
-            newNoteContent[tracker].Contents_Text.push(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
-          }
-        }
-        console.log(newNoteContent)
+    //   var tracker = 0;
+    //     for(var i=1;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
+    //       if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth === 0){
+    //         tracker++;
+    //         newNoteContent.push({
+    //           eventContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
+    //           Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
+    //           Contents_Text : []
+    //         })
+    //       }
+    //       else{
+    //         newNoteContent[tracker].Contents_Text.push(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
+    //       }
+    //     }
+    //     console.log(newNoteContent)
 
-        this.props.onSaveEventNote(newNoteContent, this.props.Event.eventID)
+    //     this.props.onSaveEventNote(newNoteContent, this.props.Event.eventID)
+    // }
+ 
+
+    handleClose = () => {
+      this.setState({
+        show:false
+      })
     }
-
+    handleOpen = (e) =>{
+      e.preventDefault()
+      this.setState({
+        show:true
+      })
+    }
       render() {
         return (
-          <div className="sypp-ApplicationDetailNote-container sypp-EventContainer" onClick={console.log("triggered")} on>
+          <div className="sypp-ApplicationDetailNote-container sypp-EventContainer">
             <FontAwesomeIcon className = "sypp-notes" icon={faListAlt}/> 
-            <div className = "sypp-EventDetailContainer">
+            <div className = "sypp-EventDetailContainer"  onClick={e => this.handleOpen(e)}>
             {/* <div className="ApplicationDetailNote-title-container"> */}
               <div className = "sypp-applicationDetailTextTitle">{this.props.Event.Detail.Title}</div>
               <div className = "sypp-EventDateTime">{Moment(this.props.Event.Detail.Time).format('MMM DD, YYYY - h:mma')}</div>
               <div className = "sypp-EventDateTime">{this.props.Event.Detail.Location}</div>
             {/* </div> */}
-            <div onBlur = {this.onHandleBlurBody}>
-            <Editor 
+            {/* <Editor 
               toolbarHidden
               editorClassName="sypp-editor-class"
               editorState={this.state.editorState}
               onEditorStateChange={this._handleChange}
               keyBindingFn={this.myKeyBindingFn}
-            />
+            /> */}
+            {
+              this.props.Event.Contents.map((data) => (
+                <div>
+                <div className = "sypp-note-text-header">{' • ' +data.Header}</div>
+                {
+                  data.Contents_Text.length != 0 ?  
+                    data.Contents_Text.map((subText)=>(
+                      <div className = "sypp-note-text-subText">{' • ' +subText}</div>
+                    ))
+                  : undefined
+                }
+                </div>
+              ))
+
+            }
             </div>
-            </div>
+
+            <Modal 
+            show={this.state.show}
+            onHide={this.handleClose}
+            centered
+            dialogClassName = "sypp-create-detail-modal sypp-modal-content"
+            className = "sypp-modal-content"
+            >
+                <div className = 'sypp-create-detail-modal-container'>
+                    <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
+                    <CreateEditEvent onSaveEventNote = {this.props.onSaveEventNote} Event = {this.props.Event} handleClose = {this.handleClose} editorState = {this.state.editorState} applicationID = {this.props.applicationID} type ={this.props.type} companyID = {this.props.companyID}/>
+                </div>
+            </Modal>
           </div>
         );
       }

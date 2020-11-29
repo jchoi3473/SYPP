@@ -2,19 +2,21 @@
     padding: 0;
     font-size: 20px !important;
     pointer-events: auto !important;
-    background-color: #959595 !important;
+    background: #363C46 !important;
     &:hover {
    visibility: visible !important;
    opacity: 1 !important;
     }
     &.place-bottom {
         &:after {
-        border-bottom-color: #959595 !important;
+        border-bottom-color: #363C46 !important;
+        background: transparent;
         border-bottom-color: solid !important;
         border-bottom-color: 6px !important;
         }
         &::before {
-        border-bottom-color: #959595 !important;
+        border-bottom-color: #363C46 !important;
+        background: transparent;
         border-bottom-color: solid !important;
         border-bottom-color: 6px !important;
         }

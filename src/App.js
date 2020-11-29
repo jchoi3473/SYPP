@@ -52,7 +52,7 @@ class App extends Component {
       this.props.updateFilteredProgress(this.props.apps);
     return (
       <div className = "sypp-App">
-      <MainPage/>
+        <MainPage/>
       </div>
     );  
   }

@@ -3,7 +3,12 @@ import Calendar from 'react-calendar';
 import CalendarComponent from '../../components/calendar/CalendarComponent';
 import { Dropdown } from 'semantic-ui-react'
 
+import 'font-awesome/css/font-awesome.min.css';
+import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
 import './CreateEvent.scss'
+import { min } from 'moment';
 
 class EventSelectDate extends Component {
     constructor(props){
@@ -16,6 +21,19 @@ class EventSelectDate extends Component {
             minute : '',
         }
     }
+    componentDidMount(){
+        if(this.props.eventHour != 0){
+            this.setState({
+                hour : this.props.eventHour
+            })
+        }
+        if(this.props.eventMinute != 0){
+            this.setState({
+                minute : this.props.eventMinute
+            })
+        }
+    }
+
     expandCalendar = () =>{
         this.setState({
             visible : true,
@@ -65,37 +83,91 @@ class EventSelectDate extends Component {
             minute: e.target.getAttribute('value')
         })
     }
+    onChangeTime = (e) => {
+        this.setState({
+            hour : e.currentTarget.value
+        })
+    }
+    onChangeMinute = (e) => {
+        this.setState({
+            minute : e.currentTarget.value
+        })
+    }
+    onClickSelectDate = () => {
+        var hour = this.state.hour
+        var minute = this.state.minute
+        if(this.state.hour === ''){
+            hour = 0
+        }
+        if(this.state.minute === ''){
+            minute = 0
+        }
+        var date = this.props.eventDate;
+        if(this.props.eventDate === ''){
+            date = new Date()
+        }
+        date.setHours(hour);
+        date.setMinutes(minute)
+        const time = hour +":"+ minute
+        console.log(time)
+        this.props.onChangeHour(this.state.hour)
+        this.props.onChangeMinute(this.state.minute)
+        this.props.onChangeDate(date)
+        this.props.prevStep();
+    }
+    onClickRemoveSelection = () => {
+        this.setState({
+            hour:'',
+            minute: ''
+        })
+    }
 
     render(){
         return(
             <div>
-                {this.state.visible?<CalendarComponent calendarChange = {this.props.onChangeDate}/> : <div onClick = {this.expandCalendar}>...</div> }
-                <div>
-                <input placeholder = "HH" value = {this.state.hour}/> 
-                <button onClick = {this.onClickDropDownHour}>D</button>
-                {this.state.hourDropDown? 
-                    <div className = "sypp-dropdown-container" style={{overflowY: 'scroll', height: '200px'}}>
-                    {(hour.map((data) => (
-                    <button className = "sypp-timepicking-button" onClick = {e => this.onSelectHour(e)} value = {data.value}> {data.text} </button>
-                    )))}
-                    </div> :undefined
-                }
+                <div className = "sypp-event-date-title">Date</div>
+                <div className = "sypp-event-calendar">
+                {this.state.visible?<CalendarComponent calendarChange = {this.props.onChangeDate}/> : <div className = "sypp-event-calendar-collapsed" onClick = {this.expandCalendar}>...</div> }
                 </div>
-                <div>
-                <input placeholder = "MM" value = {this.state.hour}/> 
-                <button onClick = {this.onClickDropDownMin}>D</button>
-                {this.state.minuteDropDown? 
-                    <div className = "sypp-dropdown-container" style={{overflowY: 'scroll', height: '200px'}}>
-                    {(minute.map((data) => (
-                    <button className = "sypp-timepicking-button" onClick = {e => this.onSelectMin(e)} value = {data.value}> {data.text} </button>
-                    )))}
-                    </div> :undefined
-                }
-                </div>
-                <button onClick = {this.props.prevStep}>
-                    Select Date
-                </button>
+                <div className = "sypp-event-date-title2">Time</div>
+                <div  className = "sypp-time-container">
+                <div className = "sypp-time-hour-container">
+                    <input placeholder = "HH" value = {this.state.hour} className = "sypp-time-inputfield" onChange = {e => this.onChangeTime(e)}/> 
+                    {/* <button onClick = {this.onClickDropDownHour}>D</button> */}
+                    <FontAwesomeIcon className ="sypp-event-dropdown-button" icon={faCaretUp} onClick = {this.onClickDropDownHour}/>  
+                    {this.state.hourDropDown? 
+                        <div className = "sypp-dropdown-container" style={{overflowY: 'scroll', height: '200px'}}>
+                        {(hour.map((data) => (
+                        <button className = "sypp-timepicking-button" onClick = {e => this.onSelectHour(e)} value = {data.value}> {data.text} </button>
+                        )))}
+                        </div> :undefined
+                    }
+                    </div>
+                    <div>
+                    <input placeholder = "MM" value = {this.state.minute} className = "sypp-time-inputfield" onChange = {e => this.onChangeMinute(e)}/> 
+                    {/* <button onClick = {this.onClickDropDownMin}>D</button> */}
+                    <FontAwesomeIcon className ="sypp-event-dropdown-button" icon={faCaretUp} onClick = {this.onClickDropDownMin}/>  
 
+                    {this.state.minuteDropDown? 
+                        <div className = "sypp-dropdown-container" style={{overflowY: 'scroll', height: '200px'}}>
+                        {(minute.map((data) => (
+                        <button className = "sypp-timepicking-button" onClick = {e => this.onSelectMin(e)} value = {data.value}> {data.text} </button>
+                        )))}
+                        </div> :undefined
+                    }
+                    </div>
+                </div>
+                <div className = "sypp-event-bottom-options-container">
+                    <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page2" onClick = {this.onClickRemoveSelection}>
+                        Remove Selection
+                    </button>
+                    <button className = "sypp-event-bottom-option sypp-option2 sypp-option2-page2" onClick = {this.onClickSelectDate}>
+                        {"Select Date & Time"}
+                    </button>
+                    <button className = "sypp-event-bottom-option sypp-option3 sypp-option3-page2" onClick = {e => this.props.handleClose()}>
+                        Close
+                    </button>
+                </div>
             </div>
         );
     }
@@ -228,7 +300,7 @@ const hour = [
     text: '24',
     value: '24',
     },
-  ]
+]
 
 const minute = [
     {

@@ -1,3 +1,10 @@
+.sypp-application-detail-container{
+    margin-left: 20px;
+}
+.modal-content{
+    background: transparent !important;
+    border: none;
+}
 .sypp-button-container-applicationDetail{
     /* display: inline-block; */
     // margin-left: 5px;
@@ -14,15 +21,19 @@
 
 
 .btn-secondary.sypp-applicationDetialButtonGroups{
-    border-radius: 10px;
-    min-height: 24px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3px;
+    border-radius: 30px;
+    height: 26px ;
     padding-left: 10px;
     padding-right: 10px;
     // min-width: 10px;
-    background: rgba(255, 255, 255, 0.2);
+    background: #343B46; 
     border: none;
-    color: #ffffff;
-}
+    color: #C2DBFF;
+    }
 
 .sypp-textTitle{
     color: #ffffff;
@@ -56,7 +67,7 @@
 .sypp-applicationDetailTextTitle{
     font-size: 12px;
     font-weight: bold;
-    color: #ffffff;
+    color: #FFE9D6;
 }
 .sypp-applicationDetailTextSubTitle{
     font-size: 10px;
@@ -67,7 +78,7 @@
     color: #ffffff;
 }
 .sypp-applicationDetailContactsContainer{
-    background: rgba(255, 255, 255, 0.1);
+    background: #343B46;
     border-radius: 15px;
     max-width: 500px;
     &:hover{
@@ -117,4 +128,50 @@
     height: 446px !important;
     background: #343B46;
     border-radius: 15px;
+}
+
+.sypp-detail-add-button{
+    z-index: 99;
+    width: 44px;
+    height: 44px;
+    border-radius: 26px;
+    border: none;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    background: #C2DBFF;
+    &:hover {
+        background: #9ABAEA;
+    }
+    &:focus{
+        background: #7699CE;
+        border: none;
+        outline: none;
+    }
+}
+
+.sypp-create-detail-button{
+    height: 26px;
+    min-width: 25px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border: none;
+    text-align: left;
+    background: #363C46;
+    border-radius: 30px;
+    color: #C2DBFF;
+    &:hover {
+        background: #5E6A7E;
+        }
+    &:focus{
+        background: #C2DBFF;
+        border: none;
+        outline: none;
+        color: #242931;
+    }
 }

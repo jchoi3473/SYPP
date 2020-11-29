@@ -6,6 +6,8 @@
 .sypp-EventDetailContainer{
     display: flex;
     flex-direction: column;
+    min-width: 440px;
+    cursor: pointer;
 }
 .sypp-EventContainer{
     display: flex;

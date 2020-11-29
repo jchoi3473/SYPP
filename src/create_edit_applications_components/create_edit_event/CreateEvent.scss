@@ -1,0 +1,195 @@
+.sypp-event-detail-container{
+    display: flex;
+    flex-direction: column;
+    margin-left: 25px;
+}
+.sypp-event-name{
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    width: 250px;
+    height: 21px;
+    color: #FFE9D6;
+    background-color: transparent;
+    border: none;
+    margin-top: 25px;
+}
+.sypp-event-title{
+    color: rgba(194, 219, 255, 1);
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 15px;
+}
+.sypp-event-seperateLine{
+    border: 1px solid #5E6A7E;
+    width: 396px;
+    margin-top: 16px;
+}
+.sypp-event-datePick-button{
+    border: none;
+    width: 130px;
+    height: 26px;
+    background: #5E6A7E;
+    border-radius: 30px;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #C2DBFF;
+    margin-top: 5px;
+}
+.sypp-event-location{
+    width: 406px;
+    height: 18px;
+    font-weight: normal;
+    font-size: 14px;
+    color: #FFE9D6;
+    background-color: transparent;
+    border: none;
+}
+
+.sypp-dropdown-container{
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 55px;
+    background: #404956;
+    border-radius: 5px;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.sypp-timepicking-button{
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    font-size: 10px;
+}
+
+.sypp-time-inputfield{
+    height: 27px;
+    width: 55px;
+    background: #404956;
+    color: #FFE9D6;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    text-align: center;
+}
+.sypp-time-container{
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
+}
+.sypp-event-calendar{
+    margin: 0 auto;
+    width: 345px;
+}
+.sypp-event-date-title{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 35px;
+    margin-bottom: 12px;
+    width: 320px;
+    color: rgba(255, 233, 214, 1);
+    font-weight: bold;
+    font-size: 16px;
+
+}
+.sypp-event-calendar-collapsed{
+    text-align: center;
+    color: rgba(255, 233, 214, 1);
+    font-style: normal;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 38px;
+}
+.sypp-event-dropdown-button{
+    margin-left: 2px;
+    position: relative;
+    top: 0px;
+    font-size: 25px;
+    color: #93989F;
+    &:hover {
+        position: relative;
+        top: 7px;
+        font-size: 25px;
+        transform: rotate(-180deg);
+    }
+    cursor: pointer;
+}
+.sypp-time-hour-container{
+    margin-right: 20px;
+}
+
+
+.sypp-event-date-title2{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    margin-bottom: 8px;
+    width: 320px;
+    color: rgba(255, 233, 214, 1);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.sypp-event-bottom-options-container{
+    display: flex;
+    justify-content: center;
+    width: 446px;
+    position: absolute;
+    bottom: 16px;
+}
+
+.sypp-event-bottom-option{
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 0;
+}
+.sypp-option1{
+    color: rgba(222, 180, 180, 1);
+}
+.sypp-option2{
+    color:rgba(194, 219, 255, 1);
+}
+.sypp-option3{
+    color:rgba(172, 172, 172, 1);
+}
+
+.sypp-option2-page1{
+    margin-left: 95px;
+    margin-right: 95px;
+}
+
+.sypp-option1-page2{
+    margin-left: -40px;
+}
+
+.sypp-option2-page2{
+    margin-left: 40px;
+    margin-right: 58px;
+}
+.sypp-event-datepick-resultDate-container{
+    display: flex;
+    align-items: center;
+}
+.sypp-event-datepick-resultDate{
+    margin-top: 3px;
+    margin-right: 10px;
+    color: #FFE9D6;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+}

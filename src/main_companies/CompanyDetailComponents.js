@@ -14,6 +14,12 @@ import ApplicationDetailChecklists from './../main_applications_components/Appli
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
+import CreateEditEvent from './../create_edit_applications_components/create_edit_event/CreateEditEvent'
+import CreateEditNote from './../create_edit_applications_components/create_edit_note/CreateEditNote'
+import CreateEditContact from './../create_edit_applications_components/create_edit_contact/CreateEditContact'
+import CreateEditConversation from './../create_edit_applications_components/create_edit_conversation/CreateEditConversation'
+import Modal from 'react-bootstrap/Modal';
+import ReactTooltip from 'react-tooltip'
 
 
 const mapStatetoProps = state => {
@@ -28,79 +34,110 @@ const mapDispatchToProps= dispatch =>{
     }
   } 
 
+const radios =  
+[ 
+{ name: 'Events', value: '0' },
+{ name: 'Notes', value: '1' },
+{ name: 'Contacts', value: '2' },
+{ name: 'Conversation History', value: '3' },
+{ name: 'Checklists', value: '4' },
+]
 
-function CompanyDetailComponents(props){
-    const [radioValue, setRadioValue] = useState('0');
-    const [radioName, setRadioName] = useState('Events');
-    const radios =  
-    [ 
-    { name: 'Events', value: '0' },
-    { name: 'Notes', value: '1' },
-    { name: 'Contacts', value: '2' },
-    { name: 'Conversation History', value: '3' },
-    { name: 'Checklists', value: '4' },
-    ]
-    const [textValue, setTextValue] = useState('');
+class CompanyDetailComponents extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            radioValue : '0',
+            radioName : 'Events',
+            textValue : '',
+            selectedValue : '',
+            show: false
 
-
-    const radioChange = (e) => {
-    setRadioValue(e.target.value)
-    setRadioName(e.target.getAttribute('name'))
-    }
-
-    const onChangeTextArea = (e) =>{
-        setTextValue(e.target.value)
-    }
-
-    const onSaveNote  = (noteContent, noteID) => {
-        var companies = props.companies;
-        for(var i=0;i<companies.length;i++){
-            if(companies[i].companyID === props.companies.companyID){
-                for(var j=0; j < props.companyDetail.Notes.length;j++){
-                    if(props.companyDetail.Notes[j].noteID === noteID){
-                        companies[i].Notes[j].Contents = noteContent
-                    }
-                }
-            }
         }
-        props.setCompany(companies)
     }
-    const onSaveConvoNote = (noteContent, contactID) => {
-        var companies = props.companies;
-        for(var i=0;i<companies.length;i++){
-            if(companies[i].companyID === props.companies.companyID){
-                for(var j=0; j < props.companyDetail.Contacts.length;j++){
-                    if(props.companies.Contacts[j].contactID === contactID){
-                        companies[i].Contacts[j].Convo = noteContent
-                    }
-                }
-            }
-        }
-        props.setCompany(companies)
+    handleClose =() =>{
+        this.setState({
+            show: false
+        })
     }
-    const onSaveEventNote  = (noteContent, eventID) => {
-        var companies = props.companies;
-        for(var i=0;i<companies.length;i++){
-            if(companies[i].companyID === props.companyDetail.companyID){
-                for(var j=0; j < props.companyDetail.Events.length;j++){
-                    if(props.companyDetail.Events[j].eventID === eventID){
-                        companies[i].Events[j].Contents = noteContent
-                    }
-                }
-            }
-        }
-        props.setCompany(companies)
-    }   
+    handleShow = () =>{
+        this.setState({
+            show:true
+        })
+    }
+    radioChange = (e) => {
+        this.setState({
+            radioValue: e.target.value,
+            radioName: e.target.getAttribute('name')
+        })
+    }
 
-    const display = () =>{
-        switch(radioValue){
+    onChangeTextArea = (e) =>{
+        this.setState({
+            textValue: e.target.value
+        })
+    }
+    onSaveEventNote = () =>{
+        this.setState({
+            radioName : 'Events',
+            radioValue : '0',
+        })
+    }
+    onSaveNote = () =>{
+        this.setState({
+            radioName : 'Notes',
+            radioValue : '1',
+        })
+    }
+    onSaveContactNote = () =>{
+        this.setState({
+            radioName : 'Contacts',
+            radioValue : '3',
+        })
+    }
+    onSaveConversation  = () =>{
+        this.setState({
+            radioName : 'Conversation History',
+            radioValue : '4',
+        })
+    }
+
+    triggerComponents = () =>{
+        if(this.state.selectedValue === '0'){
+            return(
+                <CreateEditEvent Event = {''} onSaveEventNote = {this.onSaveEventNote} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
+            // <div>Events</div>
+            );
+        }
+        else if(this.state.selectedValue === '1'){
+            return(
+                <CreateEditNote Note = {''} onSaveNote = {this.onSaveNote} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
+            );
+        }
+        else if(this.state.selectedValue === '2'){
+            return(
+                <CreateEditContact Contact = {''} onSaveContactNote = {this.onSaveContactNote} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
+            );
+        }
+        else if(this.state.selectedValue === '3'){
+            return(
+                <CreateEditConversation FollowUp = {''} onSaveConversation = {this.onSaveConversation} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
+            );
+        }
+        return(
+            <div></div>
+        )
+    }
+
+    display = () =>{
+        switch(this.state.radioValue){
             case '0':
                 return (
                     <div>
                         {
-                            props.companyDetail.Events.map((event) =>(
-                                <ApplicationDetailEvents Event = {event} onSaveEventNote = {onSaveEventNote}/>
-                            ))
+                        this.props.companyDetail.Events.map((event) =>(
+                            <ApplicationDetailEvents Event = {event} onSaveEventNote = {this.onSaveEventNote} companyID = {this.props.companyDetail.companyID} type = {'company'}/>
+                        ))
                         }
                     </div>
                 )
@@ -108,17 +145,17 @@ function CompanyDetailComponents(props){
                 return (
                     <div>
                         {
-                            props.companyDetail.Notes.map((note) =>(
-                                <ApplicationDetailNotes Note = {note} onSaveNote = {onSaveNote}/>
-                            ))
+                        this.props.companyDetail.Notes.map((note) =>(
+                            <ApplicationDetailNotes Note = {note} onSaveNote = {this.onSaveNote} companyID = {this.props.companyDetail.companyID} type = {'company'}/>
+                        ))
                         }
                     </div>
                 )
             case '2':
                 return (
                 <div>
-                    {props.companyDetail.Contacts.map((data) => (
-                        <ApplicationDetailContacts contact = {data} onSaveConvoNote = {onSaveConvoNote}/>
+                    {this.props.companyDetail.Contacts.map((data) => (
+                        <ApplicationDetailContacts contact = {data} onSaveConvoNote = {this.onSaveContactNote} companyID = {this.props.companyDetail.companyID} type = {'company'}/>
                     ))
                     }
                 </div>                
@@ -126,8 +163,8 @@ function CompanyDetailComponents(props){
             case '3':
                 return (
                     <div>{
-                        props.companyDetail.FollowUps.map((FollowUp) =>(
-                            <ApplicationDetailFollowUp FollowUp = {FollowUp}/>
+                        this.props.companyDetail.FollowUps.map((FollowUp) =>(
+                            <ApplicationDetailFollowUp FollowUp = {FollowUp} companyID = {this.props.companyDetail.companyID} type = {'company'}/>
                         ))
                     }</div>
                 )
@@ -135,43 +172,110 @@ function CompanyDetailComponents(props){
                 return (
                     <div>
                     {
-                        props.companyDetail.Checklists.map((checklist) =>(
-                            <ApplicationDetailChecklists Checklist = {checklist}/>
+                        this.props.companyDetail.Checklists.map((checklist) =>(
+                            <ApplicationDetailChecklists Checklist = {checklist} companyID = {this.props.companyDetail.companyID} type = {'company'}/>
                         ))
                     }
                     </div>
                 )
         }
-        
-        
     }
+    onClick = (value) => {
+        if(value === '0'){
+            this.setState({
+                show:true,
+                selectedValue: '0',
+                radioName:'Events',
+                radioValue :'0'
+            })
 
-    return (
-      <div>
-          <ButtonGroup toggle className = {props.classContainerProps}>
-          {radios.map((radio, idx) => (
-            <div className="sypp-button-container-applicationDetail">
-                <ToggleButton
-                className={"sypp-applicationDetialButtonGroups sypp-activeChange sypp-hoverChange sypp-text"}
-                key={idx}
-                type="radio"
-                variant="secondary"
-                name={radio.name}
-                value={radio.value}
-                checked={radioValue === radio.value}
-                onChange={(e) => radioChange(e, radioValue)}
-                >
-                  <div className = "sypp-radio-button-container-applicationDetail" name = {radio.name} value = {radio.value}>
-                    {radio.name}
-                  </div>
-                </ToggleButton>
+        }
+        else if(value==='1'){
+            this.setState({
+                show:true,
+                selectedValue: '1',
+                radioName:'Notes',
+                radioValue :'1'
+            })
+        }
+        else if(value==='2'){
+            this.setState({
+                show:true,
+                selectedValue: '2',
+                radioName:'Contacts',
+                radioValue :'2'
+            })
+        }
+        else if(value==='3'){
+            this.setState({
+                show:true,
+                selectedValue: '3',
+                radioName:'Conversation History',
+                radioValue :'3'
+            })
+        }
+    }
+    render(){
+        return (
+        <div>
+            <ButtonGroup toggle className = {this.props.classContainerProps}>
+            {radios.map((radio, idx) => (
+                <div className="sypp-button-container-applicationDetail">
+                    <ToggleButton
+                    className={"sypp-applicationDetialButtonGroups sypp-activeChange sypp-hoverChange sypp-text"}
+                    key={idx}
+                    type="radio"
+                    variant="secondary"
+                    name={radio.name}
+                    value={radio.value}
+                    checked={this.state.radioValue === radio.value}
+                    onChange={(e) => this.radioChange(e, this.state.radioValue)}
+                    >
+                    <div className = "sypp-radio-button-container-applicationDetail" name = {radio.name} value = {radio.value}>
+                        {radio.name}
+                    </div>
+                    </ToggleButton>
+                    </div>
+            ))}
+                </ButtonGroup>
+                {this.display()}
+                <div>
+            <button data-for="addDetailButton"
+                    data-tip = '' 
+                    className = "sypp-detail-add-button">+</button>
+
+            <ReactTooltip
+            id= "addDetailButton"
+            className = "sypp-create-detail-tooltip"
+            effect='solid'
+            delayHide={250}
+            place={'right'}
+            disable	={false}
+            >
+                <div className = "sypp-tooltip-button-container">
+                <button className = "sypp-create-detail-button" onClick = {() => this.onClick('0')}>Events</button>
+                <button className = "sypp-create-detail-button" onClick = {() => this.onClick('1')}>Notes</button>
+                <button className = "sypp-create-detail-button" onClick = {() => this.onClick('2')}>Contacts</button>
+                <button className = "sypp-create-detail-button">Conversation Histories</button>
+                <button className = "sypp-create-detail-button">Checklists</button>
                 </div>
-          ))}
-            </ButtonGroup>
-
-            {display()}
-      </div>
-    );  
+            </ReactTooltip>
+            </div>
+            <Modal 
+            show={this.state.show}
+            onHide={this.handleClose}
+            centered
+            dialogClassName = "sypp-create-detail-modal sypp-modal-content"
+            className = "sypp-modal-content"
+            >
+                <div className = 'sypp-create-detail-modal-container'>
+                    <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
+                    {this.triggerComponents()}
+                </div>
+            </Modal>
+        </div>
+        );  
+    }
 }
 
 export default connect(mapStatetoProps,mapDispatchToProps)(CompanyDetailComponents);

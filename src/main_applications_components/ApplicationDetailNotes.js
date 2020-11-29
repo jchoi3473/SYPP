@@ -13,6 +13,8 @@ import {getDefaultKeyBinding, KeyBindingUtil, keyBindingFn} from 'draft-js';
 import {setApps} from './../redux/progress-reducer/progressAction'
 import {connect} from 'react-redux'
 import { setCompany } from '../redux/company-reducer/companyAction';
+import Modal from 'react-bootstrap/Modal';
+import CreateEditNote from './../create_edit_applications_components/create_edit_note/CreateEditNote'
 
 const {hasCommandModifier} = KeyBindingUtil;
 const mapStatetoProps = state => {
@@ -59,7 +61,9 @@ class ApplicationDetailNotes extends React.Component {
             }
         }
           this.state = {
-          editorState: EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray))
+          editorState: EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray)),
+          show : false
+
         };
       }
       currentBlockKey = () => this.state.editorState.getSelection().getStartKey()
@@ -125,37 +129,65 @@ class ApplicationDetailNotes extends React.Component {
             newNoteContent[tracker].Contents_Text.push(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
           }
         }
-        console.log(newNoteContent)
-        this.props.onSaveNote(newNoteContent, this.props.Note.noteID)
     }
 
-    // {
-    //   "noteContentsID": "14023531-8c8c-42e3-bc14-f3724aff0872",
-    //   "Header": "Header 0",
-    //   "Contents_Text": [
-    //     "Header 0 - Contentx_Text0",
-    //     "Header 0 - Contentx_Text1",
-    //     "Header 0 - Contentx_Text2"
-    //   ]
-    // },
+    handleClose = () => {
+      this.setState({
+        show:false
+      })
+    }
+    handleOpen = (e) =>{
+      e.preventDefault()
+      this.setState({
+        show:true
+      })
+    }
      
     
       render() {
         return (
-          <div className="sypp-ApplicationDetailNote-container">
-            <div className="sypp-ApplicationDetailNote-title-container">
+          <div className= "sypp-ApplicationDetailNote-container">
+            <div className="sypp-ApplicationDetailNote-title-container" onClick = {this.handleOpen}>
+            <div className = "sypp-ApplicationDetailNote-title">
             <FontAwesomeIcon className = "sypp-notes" icon={faListAlt}/>  
             <div className = "sypp-applicationDetailTextTitle">{this.props.Note.Detail.Title}</div>
             </div>
-            <div onBlur = {this.onHandleBlurBody}>
-            <Editor 
+            <div>
+            {
+              this.props.Note.Contents.map((data) => (
+                <div>
+                <div className = "sypp-note-text-header">{' • ' +data.Header}</div>
+                {
+                  data.Contents_Text.length != 0 ?  
+                    data.Contents_Text.map((subText)=>(
+                      <div className = "sypp-note-text-subText">{' • ' +subText}</div>
+                    ))
+                  : undefined
+                }
+                </div>
+              ))
+            }
+            {/* <Editor 
               toolbarHidden
               editorClassName="sypp-editor-class"
               editorState={this.state.editorState}
               onEditorStateChange={this._handleChange}
               keyBindingFn={this.myKeyBindingFn}
-            />
+            /> */}
             </div>
+            </div>
+            <Modal 
+            show={this.state.show}
+            onHide={this.handleClose}
+            centered
+            dialogClassName = "sypp-create-detail-modal sypp-modal-content"
+            className = "sypp-modal-content"
+            >
+                <div className = 'sypp-create-detail-modal-container'>
+                    <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
+                    <CreateEditNote  onSaveNote = {this.props.onSaveNote} Note = {this.props.Note} handleClose = {this.handleClose} editorState = {this.state.editorState} applicationID = {this.props.applicationID} type ={this.props.type} companyID = {this.props.companyID}/>
+                </div>
+            </Modal>
           </div>
         );
       }

@@ -45,11 +45,16 @@ export class ApplicationDetail extends Component{
         console.log(application)
         // this.props.updateApplicationDetail(application)
     }
-    
+    reRender = () =>{
+        console.log("please babe")
+        this.setState({
+            application: this.props.applicationDetail
+        })
+    }
     render()
     {
         return(
-            <div>
+            <div className = "sypp-application-detail-container">
                 {this.state.application != ''?
                 <div>
                     <div className = 'sypp-titleContainer'>
@@ -59,7 +64,7 @@ export class ApplicationDetail extends Component{
                     <div className = "sypp-textTitle sypp-companyName">{this.state.application.Detail.CompanyName}</div>
                     <div className = "sypp-textTitle sypp-positionName">{this.state.application.Detail.PositionName}</div>
                     </div>
-                <ApplicationDetailComponents applicationDetail = {this.state.application}/>
+                <ApplicationDetailComponents  applicationDetail = {this.state.application}/>
                 </div>          
                 :undefined
                 }
