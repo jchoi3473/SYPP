@@ -39,19 +39,21 @@ export class ProgressBar extends Component{
     }
 
     handleTitleCompleted = (title) =>{
+        console.log("Completeed triggered")
         this.setState({
             completed: true,
             Title : title
         })
     }
     handleTitleNotCompleted = (title) =>{
+        console.log("not Completeed triggered")
         this.setState({
             completed: false,
             Title : title
         })
     }
 
-    handleCompleted = (date) => {
+    handleCompleted = (date, title) => {
         const apps = this.props.filteredProgress
         for(var i=0;i<apps.length;i++){
             if(apps[i].applicationID === this.props.applicationID){
@@ -66,7 +68,9 @@ export class ProgressBar extends Component{
             }
         }
         this.props.setApps(apps)
-        this.setState({})
+        this.setState({
+            completed: !this.state.completed,
+        })
     }
 
     handleCompletedApplied = () => {
@@ -110,6 +114,7 @@ export class ProgressBar extends Component{
 
         this.props.onClickAdd(this.props.applicationID, title, date, dateShow)
         this.handleClose()
+
     }
     //use if clause to determine what color to use.
     render(){
@@ -138,15 +143,15 @@ export class ProgressBar extends Component{
                             <div className ="sypp-progress-inner-container">
                             {
                             sortedDates.map((date) => (
-                                (date.Title!=="Applied")?
+                                <div>
+                                {(date.Title!=="Applied")?
                                     ((date.showDate)?
                                         ((date.Status)?
                                             <div className = "sypp-application-status-container">
-                        
                                                 <div className="sypp-applicationFirst sypp-completed"  
                                                 data-for="progressTip"
                                                 data-tip = ''
-                                                onClick = {()=>this.handleCompleted(date)}
+                                                onClick = {()=>this.handleCompleted(date, date.Title)}
                                                 onMouseEnter = {() => this.handleTitleCompleted(date.Title)}></div>
                                                 <div className="sypp-date-font">{Moment(date.Time).format('MMM DD')}</div>
                                             </div>: 
@@ -154,12 +159,22 @@ export class ProgressBar extends Component{
                                                 <div className="sypp-applicationFirst sypp-notCompleted" 
                                                 data-for="progressTip"
                                                 data-tip = ''
-                                                onClick = {()=>this.handleCompleted(date)}
+                                                onClick = {()=>this.handleCompleted(date, date.Title)}
                                                 onMouseEnter = {() => this.handleTitleNotCompleted(date.Title)}></div>
                                                 <div className="sypp-date-font">{Moment(date.Time).format('MMM DD')}</div>
                                             </div>)
-                                    : undefined):undefined
-                            ))
+                                    : undefined):undefined}
+                                    <ReactTooltip
+                                    id= "progressTip"
+                                    className = {"sypp-extraClass"}
+                                    effect='solid'
+                                    delayHide={250}
+                                    place={'bottom'}
+                                    disable	={false}
+                                    >
+                                        <div className = {this.state.completed? "sypp-Completed":"sypp-NotCompleted"}>{this.state.Title}</div>
+                                    </ReactTooltip>
+                            </div>))
                             }
                             <div className = "sypp-application-status-container">
                                 <Fab variant="round" className = "sypp-addTask" onClick={this.handleShow}>
@@ -184,16 +199,7 @@ export class ProgressBar extends Component{
                             <NewTask onClickSave = {this.onClickSave} applicationID = {this.props.applicationID}/>
                         </div>
                     </Modal>
-                    <ReactTooltip
-                    id= "progressTip"
-                    className = { this.state.completed? "sypp-Completed sypp-extraClass ":"sypp-NotCompleted sypp-extraClass"}
-                    effect='solid'
-                    delayHide={250}
-                    place={'bottom'}
-                    disable	={false}
-                    >
-                        <div>{this.state.Title}</div>
-                    </ReactTooltip>
+
                 </div>
         )
     }
