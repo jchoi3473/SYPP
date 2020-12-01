@@ -40,7 +40,7 @@ export class CreateEditEvent extends Component {
         eventName : '',
         eventLocation :'',
         eventNote : '',
-        eventDate : new Date(),
+        eventDate : '',
         eventHour : 0,
         eventMinute : 0,
         eventTimeConvert : '',

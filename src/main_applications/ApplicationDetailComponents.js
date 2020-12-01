@@ -20,7 +20,7 @@ import Modal from 'react-bootstrap/Modal';
 import CreateEditEvent from '../create_edit_applications_components/create_edit_event/CreateEditEvent'
 import CreateEditNote from './../create_edit_applications_components/create_edit_note/CreateEditNote'
 import CreateEditContact from '../create_edit_applications_components/create_edit_contact/CreateEditContact';
-import CreateEditConversation from '../create_edit_applications_components/create_edit_conversation/CreateEditConversation';
+import CreateEditConversation from './../create_edit_applications_components/create_edit_conversation/CreateEditConversation'
 
 const mapStatetoProps = state => {
   return{
@@ -100,13 +100,13 @@ class ApplicationDetailComponents extends Component {
     onSaveContactNote = () =>{
         this.setState({
             radioName : 'Contacts',
-            radioValue : '3',
+            radioValue : '2',
         })
     }
-    onSaveConversatio  = () =>{
+    onSaveConversation  = () =>{
         this.setState({
             radioName : 'Conversation History',
-            radioValue : '4',
+            radioValue : '3',
         })
     }
 
@@ -211,7 +211,7 @@ class ApplicationDetailComponents extends Component {
                     <div>
                         {
                         this.props.applicationDetail.FollowUps.map((FollowUp) =>(
-                            <ApplicationDetailFollowUp FollowUp = {FollowUp} type ={'application'}/>
+                            <ApplicationDetailFollowUp onSaveConversation = {this.onSaveConversation} FollowUp = {FollowUp} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
                         ))
                         }
                     </div>
@@ -272,7 +272,7 @@ class ApplicationDetailComponents extends Component {
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('0')}>Events</button>
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('1')}>Notes</button>
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('2')}>Contacts</button>
-                <button className = "sypp-create-detail-button">Conversation Histories</button>
+                <button className = "sypp-create-detail-button" onClick = {() => this.onClick('3')}>Conversation Histories</button>
                 <button className = "sypp-create-detail-button">Checklists</button>
                 </div>
             </ReactTooltip>

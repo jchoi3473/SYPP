@@ -95,32 +95,6 @@ class ApplicationDetailEvents extends React.Component {
         this.setState({ editorState});
       }
     }
-
-    // onHandleBlurBody = (e) =>{
-    //   var newNoteContent = [{
-    //     eventContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
-    //     Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
-    //     Contents_Text : []
-    //   }];
-
-    //   var tracker = 0;
-    //     for(var i=1;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
-    //       if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth === 0){
-    //         tracker++;
-    //         newNoteContent.push({
-    //           eventContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
-    //           Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
-    //           Contents_Text : []
-    //         })
-    //       }
-    //       else{
-    //         newNoteContent[tracker].Contents_Text.push(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
-    //       }
-    //     }
-    //     console.log(newNoteContent)
-
-    //     this.props.onSaveEventNote(newNoteContent, this.props.Event.eventID)
-    // }
  
 
     handleClose = () => {

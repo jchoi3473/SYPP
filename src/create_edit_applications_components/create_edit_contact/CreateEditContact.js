@@ -43,7 +43,7 @@ export class CreateEditContact extends Component {
         phoneID: '',
         editorState : '',
     }
-    
+
     //componentDidMount will determine if this is a new Event
     //if this is not a new event, will call exisitng features and save them to the state
     componentDidMount(){
@@ -298,14 +298,14 @@ export class CreateEditContact extends Component {
             <input
                 className = "sypp-event-name"
                 placeholder="Contact Name Here"
-                onChange={e => this.onChangePosition(e)}
+                onChange={e => this.onChangeEmail(e)}
                 value={this.state.Email}
             />
             <div className = "sypp-event-title">PhoneNumber</div>
             <input
                 className = "sypp-event-name"
                 placeholder="Contact Name Here"
-                onChange={e => this.onChangePosition(e)}
+                onChange={e => this.onChangePhoneNumber(e)}
                 value={this.state.PhoneNumber}
             />
             <div className = "sypp-event-title">Notes</div>
