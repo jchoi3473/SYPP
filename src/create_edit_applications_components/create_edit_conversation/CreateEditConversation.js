@@ -51,38 +51,14 @@ export class CreateEditConversation extends Component {
             type : this.props.type
         })
         if(this.props.FollowUp !== ''){
-            const contentBlocksArray = []
-              for (var i=0;i<this.props.FollowUp.Description.length;i++){
-              if(this.props.FollowUp.Description.length !== 0){
-                console.log("Was it ever triggerd?")
-                  contentBlocksArray.push(
-                      new ContentBlock({
-                          key: this.props.FollowUp.Description[i].noteContentsID,
-                          type: 'unordered-list-item',
-                          depth: 0,
-                          text: this.props.FollowUp.Description[i].Header
-                        })
-                  )
-                  for(var j=0;j<this.props.FollowUp.Description[i].Contents_Text.length;j++){
-                      contentBlocksArray.push(
-                          new ContentBlock({
-                              key: genKey(),
-                              type: 'unordered-list-item',
-                              depth: 1,
-                              text: this.props.FollowUp.Description[i].Contents_Text[j]
-                            })
-                      )
-                  }
-              }
-            }
             this.setState({
                 followUpID : this.props.FollowUp.followUpID,
-                name : this.props.FollowUp.Personnel.Firstname,
+                name : this.props.FollowUp.Personnel.Name,
                 time : this.props.FollowUp.Time,
-                position : this.props.FollowUp.Personnel.Title,
-                editorState : EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray))
+                position : this.props.FollowUp.Personnel.Position,
+                editorState : this.props.editorState
             })
-    }
+        }
 }
 
 //API CALL HERE
@@ -132,7 +108,6 @@ export class CreateEditConversation extends Component {
                     )
                 }
             }
-            this.props.onSaveConversation()
             this.props.setApps(apps)
         }
         //editing an existing event, app
@@ -180,7 +155,6 @@ export class CreateEditConversation extends Component {
                     )
                 }
             }
-            this.props.onSaveConversation()
             this.props.setCompany(companies)
             this.setState({})
         }
@@ -228,9 +202,7 @@ export class CreateEditConversation extends Component {
         this.setState({
             time : date
         })
-        console.log(date)
     }
-
     nextStep = () =>{
         const {step}  = this.state;
         this.setState({
@@ -249,8 +221,6 @@ export class CreateEditConversation extends Component {
             editorState: editorState
         })
     }
-
-
     
     render(){
         const{step} = this.state;
@@ -266,7 +236,7 @@ export class CreateEditConversation extends Component {
                             onChangePosition = {this.onChangePosition}
                             handleClose = {this.props.handleClose}
                             time = {this.state.time}
-                            editorState = {this.state.editorState}
+                            editorState = {this.props.editorState}
                             handleEditorState = {this.handleEditorState}
                             onSaveButton = {this.onSaveButton}
                         />

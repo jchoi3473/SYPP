@@ -8,14 +8,14 @@ import './ApplicationDetailNotes.scss'
 import './../main_applications/ApplicationDetail.scss'
 import './ApplicationDetailChecklists.scss'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 
 import { faListAlt} from "@fortawesome/free-solid-svg-icons";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
+import Modal from 'react-bootstrap/Modal';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // import { Checkbox } from 'semantic-ui-react'
-
+import CreateEditChecklist from './../create_edit_applications_components/create_edit_checklist/CreateEditChecklist'
 
 import {getDefaultKeyBinding, KeyBindingUtil, getSelection, getCurrentContent, editorState, changeDepth, keyBindingFn} from 'draft-js';
 import {connect} from 'react-redux'
@@ -47,67 +47,12 @@ class ApplicationDetailChecklists extends React.Component {
         }
           this.state = {
           editorState: EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray)),
-          checkboxState : checkboxArray
+          checkboxState : checkboxArray,
+          show : false
         };
       }
-
-      currentBlockKey = () => this.state.editorState.getSelection().getStartKey()
-      
-      currentBlockIndex = () => this.state.editorState.getCurrentContent().getBlockMap().keySeq().findIndex(k => k === this.currentBlockKey())
-      myKeyBindingFn = (e) => {
-        if (e.keyCode === 13) {
-          console.log(this.currentBlockIndex())
-            if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].depth == 0 && this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].text === ""){
-              console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].text)
-              console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].depth)
-            return console.log(this.currentBlockKey());
-          }
-            else{
-              return getDefaultKeyBinding(e);
-            }
-        }
-      }
-    //   myKeyBindingFn = (e) => {
-    //     if (e.keyCode === 13) {
-    //       console.log(this.currentBlockIndex())
-    //         var tempCheckbox = 
-    //         [
-    //             ...this.state.checkboxState.slice(0, this.currentBlockIndex()),
-    //             {
-    //                 checklistID: this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][0],
-    //                 checkboxBoolean: false
-    //             },
-    //             ...this.state.checkboxState.slice(this.currentBlockIndex())
-    //         ]
-    //         this.setState({
-    //         checkboxState : tempCheckbox
-    //         })
-    //         return getDefaultKeyBinding(e);
-    //     }
-    //     else if (e.keyCode === 8) {
-    //         if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length < this.state.checkboxState.length){
-    //             console.log("triggered")
-    //             var tempCheckbox = []
-    //             for(var i = 0; i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
-    //                 for(var j=0;j< this.state.checkboxState.length;j++){
-    //                     if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0]===this.state.checkboxState[j].checklistID){
-    //                         tempCheckbox.push(this.state.checkboxState[j])
-    //                     }
-    //                 }
-    //             }
-    //            this.setState({
-    //             checkboxState : tempCheckbox
-    //            })
-    //         }
-    //         return getDefaultKeyBinding(e);
-
-    //       }
-    //       else{
-    //           return getDefaultKeyBinding(e);
-    //       }
-    // }
     
-
+    //API calls here, need to save the checkbox status to the application
     onCheckBoxClick = (checkboxID) => {
         var tempCheckbox = this.state.checkboxState
         for(var i=0;i<this.state.checkboxState.length;i++){
@@ -118,54 +63,25 @@ class ApplicationDetailChecklists extends React.Component {
                 checkboxState : tempCheckbox 
             })
         }
+      }
+
+    handleClose = () => {
+      this.setState({
+        show:false
+      })
+    }
+    handleOpen = (e) =>{
+      e.preventDefault()
+      this.setState({
+          show:true
+      })
     }
 
-    _handleChange = (editorState) => {      
-        this.setState({editorState});
-        console.log("editor state = ")
-        console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array)
-
-    //   if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length !== this.state.checkboxState.length){
-        //   var tempCheckbox = this.state.checkboxState;
-
-        //   for(var i=0;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
-        //     if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0] !== tempCheckbox[i].checklistID){
-        //         console.log("triggered")
-        //     }
-        //   }
-        
-        if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length > this.state.checkboxState.length){
-            var tempCheckbox = 
-            [
-                ...this.state.checkboxState.slice(0, this.currentBlockIndex()),
-                {
-                    checklistID: this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][0],
-                    checkboxBoolean: false
-                },
-                ...this.state.checkboxState.slice(this.currentBlockIndex())
-            ]
-           this.setState({
-            checkboxState : tempCheckbox
-           })
-           console.log(this.state.checkboxState)
-        }
-        else if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length < this.state.checkboxState.length){
-            var tempCheckbox = []
-            for(var i = 0; i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
-                for(var j=0;j< this.state.checkboxState.length;j++){
-                    if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0]===this.state.checkboxState[j].checklistID){
-                        tempCheckbox.push(this.state.checkboxState[j])
-                    }
-                }
-            }
-           this.setState({
-            checkboxState : tempCheckbox
-           })
-        }
-        this.setState({})
-        console.log("checkbox" + this.state.checkboxState)        
+    handleCheckbox = (checkboxState) =>{
+      this.setState({
+        checkboxState : checkboxState
+      })
     }
-
      
     
       render() {
@@ -195,16 +111,27 @@ class ApplicationDetailChecklists extends React.Component {
                 ))
             }
             </div>
-            <div className = "sypp-Editor-Container">
-            <Editor 
-              toolbarHidden
-              editorClassName="sypp-editor-class"
-              editorState={this.state.editorState}
-              onEditorStateChange={this._handleChange}
-            //   keyBindingFn={this.myKeyBindingFn}
-            />
+            <div className = "sypp-Editor-Container" onClick = {this.handleOpen}>
+            {
+              this.props.Checklist.Contents.map((data) => (
+                <div className = "sypp-checklist-body">{data.Type}</div>
+              ))
+            }
             </div>
             </div>
+            <Modal 
+            show={this.state.show}
+            onHide={this.handleClose}
+            centered
+            dialogClassName = "sypp-create-detail-modal sypp-modal-content"
+            className = "sypp-modal-content"
+            >
+                <div className = 'sypp-create-detail-modal-container'>
+                    <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
+                    <CreateEditChecklist onSaveChecklist = {this.props.onSaveChecklist} handleCheckbox = {this.handleCheckbox} Checklist = {this.props.Checklist} handleClose = {this.handleClose} type ={this.props.type} companyID = {this.props.companyID} applicationID = {this.props.applicationID}
+                    checkboxState = {this.state.checkboxState} editorState = {this.state.editorState}/>
+                </div>
+            </Modal>
           </div>
         );
       }

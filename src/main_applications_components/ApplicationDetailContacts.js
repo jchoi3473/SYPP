@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import './../main_applications/ApplicationDetail.scss'
-import ApplicationDetailContactsNotes from './ApplicationDetailContactsNotes'
 import Modal from 'react-bootstrap/Modal';
 import CreateEditContact from '../create_edit_applications_components/create_edit_contact/CreateEditContact';
 
@@ -22,9 +21,7 @@ class ApplicationDetailContacts extends Component{
             radioValue : e.target.value
         })
     }
-    onSaveNote = (noteContent) =>{
-        this.props.onSaveConvoNote(noteContent, this.props.contact.contactID)
-    }
+
     display = () =>{
         switch(this.state.radioValue) {
             case '0' :
@@ -65,12 +62,12 @@ class ApplicationDetailContacts extends Component{
           show:false
         })
       }
-      handleOpen = (e) =>{
-        e.preventDefault()
-        this.setState({
-          show:true
-        })
-      }
+    handleOpen = (e) =>{
+    e.preventDefault()
+    this.setState({
+        show:true
+    })
+    }
 
     render(){
         return(

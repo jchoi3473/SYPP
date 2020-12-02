@@ -193,3 +193,48 @@
     font-weight: 600;
     font-size: 14px;
 }
+
+
+
+.MuiCheckbox-root.sypp-Checkbox-padding{
+    padding: 0 !important;
+}
+.sypp-CheckBox-root{
+    // background-color: rgb(42,42,42);
+}
+
+.sypp-CheckList-Container{
+    display: flex;
+    // justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 20px;
+    // margin-top: -1px;
+}
+.sypp-Editor-Container{
+    display: inline block;
+    width: 470px;
+}
+.sypp-ApplicationDetailChecklists-container{
+    display: flex
+}
+
+.sypp-CheckBox-icon{
+    color: white;;
+    font-size: 12px;
+    padding: 0 !important;
+}
+
+.MuiFormControlLabel-root.sypp-FormRoot{
+    margin: 0;
+    padding: 0 !important;
+}
+
+.sypp-emptybody-checkbox{
+    color: #AEB1B5 !important;
+    font-size: 12px;
+    padding: 0 !important;
+}
+.sypp-emptybody-checkbox-container{
+    margin-top: 17px;
+}

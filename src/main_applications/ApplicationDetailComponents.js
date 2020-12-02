@@ -21,6 +21,7 @@ import CreateEditEvent from '../create_edit_applications_components/create_edit_
 import CreateEditNote from './../create_edit_applications_components/create_edit_note/CreateEditNote'
 import CreateEditContact from '../create_edit_applications_components/create_edit_contact/CreateEditContact';
 import CreateEditConversation from './../create_edit_applications_components/create_edit_conversation/CreateEditConversation'
+import CreateEditChecklist from '../create_edit_applications_components/create_edit_checklist/CreateEditChecklist';
 
 const mapStatetoProps = state => {
   return{
@@ -109,6 +110,12 @@ class ApplicationDetailComponents extends Component {
             radioValue : '3',
         })
     }
+    onSaveChecklist  = () =>{
+        this.setState({
+            radioName : 'Checklists',
+            radioValue : '4',
+        })
+    }
 
 
     onClick = (value) => {
@@ -145,6 +152,14 @@ class ApplicationDetailComponents extends Component {
                 radioValue :'3'
             })
         }
+        else if(value==='4'){
+            this.setState({
+                show:true,
+                selectedValue: '4',
+                radioName:'Checklists',
+                radioValue :'4'
+            })
+        }
     }
 
     triggerComponents = () =>{
@@ -166,7 +181,12 @@ class ApplicationDetailComponents extends Component {
         }
         else if(this.state.selectedValue === '3'){
             return(
-                <CreateEditConversation FollowUp = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
+                <CreateEditConversation FollowUp = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'} editorState = {''}/>
+            );
+        }
+        else if(this.state.selectedValue === '4'){
+            return(
+                <CreateEditChecklist Checklist = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'} editorState = {''}/>
             );
         }
         return(
@@ -221,7 +241,7 @@ class ApplicationDetailComponents extends Component {
                     <div>
                         {
                         this.props.applicationDetail.Checklists.map((checklist) =>(
-                            <ApplicationDetailChecklists Checklist = {checklist} type ={'application'}/>
+                            <ApplicationDetailChecklists onSaveChecklist = {this.onSaveChecklist} Checklist = {checklist} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
                         ))
                         }
                     </div>
@@ -273,7 +293,7 @@ class ApplicationDetailComponents extends Component {
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('1')}>Notes</button>
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('2')}>Contacts</button>
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('3')}>Conversation Histories</button>
-                <button className = "sypp-create-detail-button">Checklists</button>
+                <button className = "sypp-create-detail-button" onClick = {() => this.onClick('4')}>Checklists</button>
                 </div>
             </ReactTooltip>
             </div>

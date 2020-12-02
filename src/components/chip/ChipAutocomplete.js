@@ -160,7 +160,7 @@ export class ChipAutocomplete extends Component {
     });
   };
 
-  handleDeleteTags = tag => {
+  handleDeleteTags = (tag) => {
     const delectedCategory = this.props.selectedCategories[this.props.index].SuggestionsOrSeleceted.filter(state => state !== tag)
     const newSelectedCategory = this.props.selectedCategories
     for (var i =0;i<newSelectedCategory.length;i++){
@@ -249,7 +249,7 @@ export class ChipAutocomplete extends Component {
                         return e.Type
                     }).indexOf(this.props.name)].SuggestionsOrSeleceted}
                     placeholder="Assign Tag"
-                    onDelete={(tag, index) => this.handleDeleteTags(tag, index)}
+                    onDelete={(tag) => this.handleDeleteTags(tag)}
                     onUpdateInput={this.onChange}
                     disableUnderline = {true}
                     fullWidthInput = {false}

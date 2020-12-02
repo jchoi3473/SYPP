@@ -12,7 +12,7 @@ const INITIAL_STATE = {
         SuggestionsOrSeleceted : [],
         },
         {
-            Type: 'Location',
+        Type: 'Location',
         SuggestionsOrSeleceted : [],
         }
     ],

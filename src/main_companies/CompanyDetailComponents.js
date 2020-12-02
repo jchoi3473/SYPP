@@ -18,6 +18,7 @@ import CreateEditEvent from './../create_edit_applications_components/create_edi
 import CreateEditNote from './../create_edit_applications_components/create_edit_note/CreateEditNote'
 import CreateEditContact from './../create_edit_applications_components/create_edit_contact/CreateEditContact'
 import CreateEditConversation from '../create_edit_applications_components/create_edit_conversation/CreateEditConversation'
+import CreateEditChecklist from './../create_edit_applications_components/create_edit_checklist/CreateEditChecklist'
 import Modal from 'react-bootstrap/Modal';
 import ReactTooltip from 'react-tooltip'
 
@@ -101,6 +102,12 @@ class CompanyDetailComponents extends Component{
             radioValue : '3',
         })
     }
+    onSaveChecklist  = () =>{
+        this.setState({
+            radioName : 'Checklists',
+            radioValue : '4',
+        })
+    }
 
     triggerComponents = () =>{
         if(this.state.selectedValue === '0'){
@@ -122,6 +129,11 @@ class CompanyDetailComponents extends Component{
         else if(this.state.selectedValue === '3'){
             return(
                 <CreateEditConversation FollowUp = {''} onSaveConversation = {this.onSaveConversation} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
+            );
+        }
+         else if(this.state.selectedValue === '4'){
+            return(
+                <CreateEditChecklist onSaveChecklist = {this.onSaveChecklist} Checklist = {''} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'} editorState = {''}/>
             );
         }
         return(
@@ -164,7 +176,7 @@ class CompanyDetailComponents extends Component{
                 return (
                     <div>{
                         this.props.companyDetail.FollowUps.map((FollowUp) =>(
-                            <ApplicationDetailFollowUp FollowUp = {FollowUp} companyID = {this.props.companyDetail.companyID} type = {'company'}/>
+                            <ApplicationDetailFollowUp onSaveConversation = {this.onSaveConversation} FollowUp = {FollowUp} companyID = {this.props.companyDetail.companyID} type = {'company'}/>
                         ))
                     }</div>
                 )
@@ -173,7 +185,7 @@ class CompanyDetailComponents extends Component{
                     <div>
                     {
                         this.props.companyDetail.Checklists.map((checklist) =>(
-                            <ApplicationDetailChecklists Checklist = {checklist} companyID = {this.props.companyDetail.companyID} type = {'company'}/>
+                            <ApplicationDetailChecklists onSaveChecklist = {this.onSaveChecklist} Checklist = {checklist} companyID = {this.props.companyDetail.companyID} type = {'company'}/>
                         ))
                     }
                     </div>
@@ -212,6 +224,14 @@ class CompanyDetailComponents extends Component{
                 selectedValue: '3',
                 radioName:'Conversation History',
                 radioValue :'3'
+            })
+        }
+        else if(value==='4'){
+            this.setState({
+                show:true,
+                selectedValue: '4',
+                radioName:'Checklists',
+                radioValue :'4'
             })
         }
     }
@@ -257,7 +277,7 @@ class CompanyDetailComponents extends Component{
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('1')}>Notes</button>
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('2')}>Contacts</button>
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('3')}>Conversation Histories</button>
-                <button className = "sypp-create-detail-button">Checklists</button>
+                <button className = "sypp-create-detail-button" onClick = {() => this.onClick('4')}>Checklists</button>
                 </div>
             </ReactTooltip>
             </div>

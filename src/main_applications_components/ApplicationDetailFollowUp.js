@@ -20,8 +20,40 @@ class ApplicationDetailFollowUp extends React.Component {
         super(props);
           this.state = {
             show: false,
+            editorState : ''
         };
-      }
+    }
+    componentDidMount(){
+        const contentBlocksArray = []
+        for (var i=0;i<this.props.FollowUp.Description.length;i++){
+            if(this.props.FollowUp.Description.length !== 0){
+                console.log("Was it ever triggerd?")
+                contentBlocksArray.push(
+                    new ContentBlock({
+                        key: this.props.FollowUp.Description[i].noteContentsID,
+                        type: 'unordered-list-item',
+                        depth: 0,
+                        text: this.props.FollowUp.Description[i].Header
+                    })
+                )
+                for(var j=0;j<this.props.FollowUp.Description[i].Contents_Text.length;j++){
+                    contentBlocksArray.push(
+                        new ContentBlock({
+                            key: genKey(),
+                            type: 'unordered-list-item',
+                            depth: 1,
+                            text: this.props.FollowUp.Description[i].Contents_Text[j]
+                        })
+                    )
+                }
+            }
+        }
+        this.setState({
+            editorState : EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray))
+        })
+    }
+
+
     handleClose = () => {
     this.setState({
         show:false
@@ -41,8 +73,8 @@ class ApplicationDetailFollowUp extends React.Component {
             <div onClick = {this.handleOpen}>
                 <div className="sypp-ApplicationDetailFollowup-title-container">
                 {/* <FontAwesomeIcon className = "notes" icon={faListAlt}/>   */}
-                    <div className = "sypp-applicationDetailTextTitle">{this.props.FollowUp.Personnel.Firstname +" "+this.props.FollowUp.Personnel.Lastname}</div>
-                    <div className = "sypp-applicationDetailTextSubTitle">{this.props.FollowUp.Personnel.Title}</div>
+                    <div className = "sypp-applicationDetailTextTitle">{this.props.FollowUp.Personnel.Name}</div>
+                    <div className = "sypp-applicationDetailTextSubTitle">{this.props.FollowUp.Personnel.Position}</div>
                     <div className = "sypp-EventDateTime">{Moment(this.props.FollowUp.Time).format('MMM DD, YYYY') + Moment(this.props.FollowUp.Time).fromNow()}</div>
                 </div>
                     {
@@ -69,7 +101,7 @@ class ApplicationDetailFollowUp extends React.Component {
             >
                 <div className = 'sypp-create-detail-modal-container'>
                     <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
-                    <CreateEditConversation onSaveConversation = {this.props.onSaveConversation} FollowUp = {this.props.FollowUp} handleClose = {this.handleClose} type ={this.props.type} applicationID = {this.props.applicationID} companyID = {this.props.companyID}/>
+                    <CreateEditConversation editorState = {this.state.editorState} onSaveConversation = {this.props.onSaveConversation} FollowUp = {this.props.FollowUp} handleClose = {this.handleClose} type ={this.props.type} applicationID = {this.props.applicationID} companyID = {this.props.companyID}/>
                 </div>
             </Modal>
         </div>

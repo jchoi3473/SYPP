@@ -92,40 +92,7 @@ export class CreateEditContact extends Component {
 //API CALL HERE
 // //Send Post request, close modal(save button)
 
- // "Contacts": [
-    //     {
-    //       "contactID": "a5de0306-1877-4d6e-9853-b8ce3cec718b",
-    //       "PersonalDetail": {
-    //         "contactID": "a5de0306-1877-4d6e-9853-b8ce3cec718b",
-    //         "Firstname": "Firstname 0",
-    //         "Lastname": "Lastname 0",
-    //         "Title": "Title 0",
-    //         "Company": "Company 0",
-    //         "IsReadOnly": "True",
-    //         "Width_Per_Cell": 86
-    //       },
-    //       "Email": {
-    //         "emailID": "e7055cab-b8b2-4a1d-ba90-478b0e33bc39",
-    //         "Email": "Email00@gmail.com"
-    //       },
-    //       "Phone": {
-    //         "phoneID": "2c7bd395-48f5-4c9a-ac1b-dd48af5ce8fc",
-    //         "PhoneNumber": "0"
-    //       },
-    //       "Convo": [
-    //         {
-    //           "noteContentsID": "a0ad0d90-2dd5-4b77-bb74-6df9d0382f01",
-    //           "Header": "Header 0",
-    //           "Contents_Text": [
-    //             "Header 0 - Contentx_Text0",
-    //             "Header 0 - Contentx_Text1",
-    //             "Header 0 - Contentx_Text2",
-    //             "Header 0 - Contentx_Text3",
-    //             "Header 0 - Contentx_Text4"
-    //           ]
-    //         }
-    //       ]
-    //     },
+
     onSaveButton = () => {
         // this.props.postNewApp(this.props.addApp)
         console.log(this.state.editorState)

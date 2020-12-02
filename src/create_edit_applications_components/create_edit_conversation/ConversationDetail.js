@@ -22,12 +22,12 @@ class ConversationDetail extends Component {
             })
         }
     }
+
     onSave = () =>{
-      this.props.handleEditorState(this.state.editorState);
       this.props.onSaveButton(this.state.editorState);
     }
+
     currentBlockKey = () => this.state.editorState.getSelection().getStartKey()
-      
     currentBlockIndex = () => this.state.editorState.getCurrentContent().getBlockMap().keySeq().findIndex(k => k === this.currentBlockKey())
       
     myKeyBindingFn = (e) => {
@@ -54,6 +54,7 @@ class ConversationDetail extends Component {
       }
     }
         //       console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].depth)
+    
     _handleChange = (editorState) => {
       console.log(this.state.editorState)
       if(RichUtils.getCurrentBlockType(editorState) !== 'unordered-list-item'){
@@ -63,7 +64,9 @@ class ConversationDetail extends Component {
       else{
         this.setState({editorState});
       }
+      this.props.handleEditorState(this.state.editorState);
     }
+
     render(){
         return(
             <div >

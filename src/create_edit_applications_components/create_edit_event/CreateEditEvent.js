@@ -116,7 +116,6 @@ export class CreateEditEvent extends Component {
                     )
                 }
             }
-            this.props.onSaveEventNote()
             this.props.setApps(apps)
         }
         //editing an existing event, app
