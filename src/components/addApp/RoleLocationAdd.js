@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ChipAutocomplete from '../chip/ChipAutocomplete'
 import './Modalbox.css';
+import './Modalbox.scss';
 import Modal from 'react-bootstrap/Modal';
 import Scroll from '../scroll/Scroll'
 

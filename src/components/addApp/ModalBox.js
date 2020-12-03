@@ -28,11 +28,10 @@ const ModalBox = (props) => {
 
     return (
         <div>
-                <div onClick = {handleShow} className = {classes.extendedIcon + " sypp-newapp-button"}>
-                    <div className = "sypp-newapp-button-plus">+</div>
-                    <div  className = "sypp-newapp-button-body">New App</div>
-                </div>
-          
+            <div onClick = {handleShow} className = {classes.extendedIcon + " sypp-newapp-button"}>
+                <div className = "sypp-newapp-button-plus">+</div>
+                <div  className = "sypp-newapp-button-body">New App</div>
+            </div>
             <Modal 
             show={show}
             onHide={handleClose}
