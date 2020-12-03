@@ -81,7 +81,7 @@ export class Progress extends Component{
             <div>
             <div className ="sypp-searchBox-container">
             <input 
-            className ="sypp-searchBox"
+            className ="sypp-applicationlist-searchBox"
             type='search' 
             placeholder = '  Search application'
             onChange = {e => this.onSearchChange(e)}

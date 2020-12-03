@@ -2,6 +2,8 @@ import React,{useState, Component} from 'react';
 import CalendarComponent from './../calendar/CalendarComponent';
 import RadioButtons from '../radio/RadioButtons'
 import './Modalbox.css';
+import './Modalbox.scss';
+
 import './Calendar.css';
 import 'react-calendar/dist/Calendar.css';
 

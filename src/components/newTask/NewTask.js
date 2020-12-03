@@ -3,12 +3,14 @@ import NextStep from './NextStep';
 import NewDate from './NewDate';
 import Page from '../page/Page'
 import './NewTask.css'
+import './NewTask.scss'
+
 
 
 export class NewTask extends Component {
     state = {
         step: 1,
-        title: "",
+        title: "Interview",
         date: new Date(),
         showDate: true
     }
@@ -99,6 +101,7 @@ export class NewTask extends Component {
                         calendarChange = {this.calendarChange}
                         date = {this.state.date}
                         onInterviewOptionChange = {this.onInterviewOptionChange}
+                        title = {this.state.title}
                         />
                         <div className="sypp-next-button-container">
                             <button className = "sypp-button-next" 

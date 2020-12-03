@@ -108,3 +108,13 @@
     border: none;
     background: rgba(255, 255, 255, 0.1);
 }
+
+.sypp-applicationFirst:hover + .sypp-task-hide-completed{
+    display: block;
+    background-color:#94CE4B;
+}
+.sypp-applicationFirst:hover + .sypp-task-hide-notcompleted{
+    display: block;
+    background-color:#FFD600;
+}
+

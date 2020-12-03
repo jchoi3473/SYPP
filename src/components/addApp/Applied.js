@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Modalbox.css';
+import './Modalbox.scss';
 import MuiButton from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 import RadioButtons from '../radio/RadioButtons'
@@ -63,7 +64,7 @@ export class Applied extends Component{
         return(
             <div>
                 <div className ="sypp-applied-container">
-                    <div className="sypp-modal-text">Have you applied yet?</div>
+                    <div className="sypp-modal-text sypp-modal-newapp-applied">Have you applied yet?</div>
                     <div className = "sypp-radio-container">
                     <RadioButtons options = {radioValue} onChange = {this.onChange} isDisabled = {false}/>
                     </div>

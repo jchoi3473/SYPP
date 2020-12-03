@@ -1,0 +1,52 @@
+.sypp-border{
+    display: block;
+    padding-right: 5px;
+    padding-left: 20px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin: 0 auto;
+    width: 186px;
+    min-height: 32px;
+    background: #474F5C;    
+    border-radius: 26px;
+    &:hover{
+        border: solid 1px #918D8D;
+    }
+    &:active{
+        border: solid  1px #DACABD
+    }
+    &:focus{
+        border: solid  1px #DACABD
+    }
+    &:focus-within{
+        border: solid  1px #DACABD
+    } 
+}
+
+.sypp-suggestion{
+    outline: none;
+    outline-style: none;
+    &:disabled{
+        color: #C2DBFF;
+        background: #5E6A7E;
+        opacity: 0.5;
+    }
+    &:hover{
+        background: #7D8CA8;
+    }
+    &:active{
+        background: #94A5C5;
+    }
+    background-color: transparent;
+    display: inline-block;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    margin-top: 0px;
+    background: #5E6A7E;
+    color: #C2DBFF;
+    border-radius: 26px;
+    font-size: 10px;
+    text-align: center;
+    border-color: transparent;
+}

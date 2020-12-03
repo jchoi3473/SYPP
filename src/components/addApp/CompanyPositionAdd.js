@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { setCompanyName, setPositionName } from '../../redux/addApp-reducer/addAppAction';
 import {connect} from 'react-redux'
 import './Modalbox.css';
+import './Modalbox.scss';
 
 
 export class CompanyPositionAdd extends Component{
@@ -33,7 +34,7 @@ export class CompanyPositionAdd extends Component{
                     <br/>
 
                     <div className="sypp-next-button-container">
-                     <button className ="button-next" onClick = {this.continue} disabled ={this.props.positionName === "" && this.props.companyName === ""?true:false}>
+                     <button className ="sypp-button-next" onClick = {this.continue} disabled ={this.props.positionName === "" || this.props.companyName === ""?true:false}>
                          Next
                     </button>
                     </div>

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import RadioButtons from './../radio/RadioButtons'
 import './NewTask.css'
+import './NewTask.scss'
+
 
 
 export class NextStep extends Component{
@@ -44,14 +46,16 @@ export class NextStep extends Component{
         ]
         return(
             <div>
+                <div className = "sypp-modal-text-newTask">
                 <div className="sypp-modal-text">What is the next step?</div>
+                </div>
                 <div  className = "sypp-radio">
                     <RadioButtons options = {radioValue} onChange = {this.onChange} classContainerProps = "sypp-button-group-container" buttonContainerProps = "sypp-button-props" 
                     isDisabled = {this.state.disabled}/>
                 </div>
                 <input
                         className ="sypp-customizeInputField"
-                        placeholder="sypp-Customize sypp-Step sypp-Name"
+                        placeholder="Customize Step Name"
                         onChange = {e => this.onUserInput(e)}
                         value={this.state.userInput}
                     />

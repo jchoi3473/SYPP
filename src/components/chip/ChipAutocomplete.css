@@ -7,7 +7,7 @@
     margin: 0 auto;
     width: 186px;
     min-height: 32px;
-    background: rgba(255, 255, 255, 0.15);    
+    background: #474F5C;    
     border-radius: 26px;
 }
 
@@ -19,8 +19,9 @@
     color: #ffffff;
 }
 .sypp-label-container{
-    display: inline-block;
-    /* display: flex; */
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
     width: 80px;
 }
 

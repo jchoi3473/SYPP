@@ -1,0 +1,51 @@
+.sypp-modal-text-newTask{
+margin-top: 60px;
+margin-bottom: -10px;
+}
+
+.sypp-customizeInputField{
+    display: flex;
+    text-align: center;
+    margin: 0 auto;
+    background: #474F5C;    font-size: 12px;
+    border: none;
+    width: 165px;
+    height: 32px;
+    border-radius: 26px;
+    outline: none;
+    color: #FFE9D6;
+    &:disabled{
+        color: rgba(255, 233, 214, 0.5);
+    }
+    &:hover{
+        border: solid 1px #918D8D;
+    }
+    &:active{
+        border: solid  1px #DACABD
+    }
+    &:focus{
+        border: solid  1px #DACABD
+    }
+}
+.sypp-modal-newApp-duedate-title{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.9);
+}
+.sypp-modal-newApp-duedate-body{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: -10px;
+    color: rgba(255, 255, 255, 0.9);
+}

@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 import Chip from '@material-ui/core/Chip';
 import './ChipAutocomplete.css';
+import './ChipAutocomplete.scss';
 import { withStyles } from '@material-ui/core/styles';
 import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
@@ -25,7 +26,7 @@ const ChipInput = withStyles({
   inputRoot: {
     flexWrap: 'wrap',
     fontSize :'5',
-    minWidth: 50,
+    maxWidth: 50,
     color: "white",
     '&$outlined,&$filled': {
       boxSizing: 'border-box'
@@ -43,10 +44,12 @@ const ChipInput = withStyles({
     }
   },
   chip:{
+    background : "#5E6A7E",
     marginTop: '5px',
     marginBottom:'3px',
     fontSize : '10px',
-    height : '20px'
+    height : '20px',
+    color :"#C2DBFF",
   },
 })(MuiChipInput);
 
@@ -161,14 +164,18 @@ export class ChipAutocomplete extends Component {
   };
 
   handleDeleteTags = (tag) => {
+   
     const delectedCategory = this.props.selectedCategories[this.props.index].SuggestionsOrSeleceted.filter(state => state !== tag)
     const newSelectedCategory = this.props.selectedCategories
-    for (var i =0;i<newSelectedCategory.length;i++){
-      if(newSelectedCategory[i].name === this.props.name){
-        newSelectedCategory[i].SuggestionsOrSeleceted = delectedCategory
-      }
-    }
+    // console.log(this.props.name)
+    // for (var i =0;i<newSelectedCategory.length;i++){
+    //   if(newSelectedCategory[i].Type === this.props.name){
+    //     newSelectedCategory[i].SuggestionsOrSeleceted = delectedCategory
+    //   }
+    // }
+    newSelectedCategory[this.props.index].SuggestionsOrSeleceted = this.props.selectedCategories[this.props.index].SuggestionsOrSeleceted.filter(state => state !== tag)
     this.props.setSelectedCategories(newSelectedCategory)
+    console.log(newSelectedCategory)
     this.setState({})
   };
 

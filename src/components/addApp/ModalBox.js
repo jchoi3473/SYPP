@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import UserForm from './UserForm.js';
 import './Modalbox.css';
+import './Modalbox.scss';
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -26,10 +28,11 @@ const ModalBox = (props) => {
 
     return (
         <div>
-            <Fab variant="extended" onClick = {handleShow} size = "small">
-                <AddIcon className={classes.extendedIcon}/>
-                    New App
-            </Fab>            
+                <div onClick = {handleShow} className = {classes.extendedIcon + " sypp-newapp-button"}>
+                    <div className = "sypp-newapp-button-plus">+</div>
+                    <div  className = "sypp-newapp-button-body">New App</div>
+                </div>
+          
             <Modal 
             show={show}
             onHide={handleClose}

@@ -12,6 +12,8 @@ import ReactTooltip from "react-tooltip";
 
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {connect} from 'react-redux'
+import Progress from './Progress'
+
 
 const mapStatetoProps = state => {
     return{
@@ -147,33 +149,16 @@ export class ProgressBar extends Component{
                                 {(date.Title!=="Applied")?
                                     ((date.showDate)?
                                         ((date.Status)?
+
                                             <div className = "sypp-application-status-container">
-                                                <div className="sypp-applicationFirst sypp-completed"  
-                                                data-for="progressTip"
-                                                data-tip = ''
-                                                onClick = {()=>this.handleCompleted(date, date.Title)}
-                                                onMouseEnter = {() => this.handleTitleCompleted(date.Title)}></div>
-                                                <div className="sypp-date-font">{Moment(date.Time).format('MMM DD')}</div>
+                                                <Progress completed = {true} handleCompleted = {this.handleCompleted} date = {date}/>
                                             </div>: 
+
                                             <div className = "sypp-application-status-container">
-                                                <div className="sypp-applicationFirst sypp-notCompleted" 
-                                                data-for="progressTip"
-                                                data-tip = ''
-                                                onClick = {()=>this.handleCompleted(date, date.Title)}
-                                                onMouseEnter = {() => this.handleTitleNotCompleted(date.Title)}></div>
-                                                <div className="sypp-date-font">{Moment(date.Time).format('MMM DD')}</div>
-                                            </div>)
+                                                <Progress completed = {false} handleCompleted = {this.handleCompleted} date = {date}/>
+                                            </div>            )
                                     : undefined):undefined}
-                                    <ReactTooltip
-                                    id= "progressTip"
-                                    className = {"sypp-extraClass"}
-                                    effect='solid'
-                                    delayHide={250}
-                                    place={'bottom'}
-                                    disable	={false}
-                                    >
-                                        <div className = {this.state.completed? "sypp-Completed":"sypp-NotCompleted"}>{this.state.Title}</div>
-                                    </ReactTooltip>
+                                   
                             </div>))
                             }
                             <div className = "sypp-application-status-container">

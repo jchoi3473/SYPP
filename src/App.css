@@ -1,7 +1,7 @@
 .sypp-App {
   width: 540px;
   height: 600px;
-  background: rgb(37,41,48);
+  background: #1A1C20;
   position: relative;
   z-index: 1;
   -webkit-app-region: drag;

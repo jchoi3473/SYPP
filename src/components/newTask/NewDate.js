@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import CalendarComponent from './../calendar/CalendarComponent'
 import RadioButtons from './../radio/RadioButtons'
-
+import './NewTask.scss'
+import './NewTask.css'
 
 export class NewDate extends Component{
 
@@ -18,10 +19,11 @@ export class NewDate extends Component{
         ]
         return(
             <div>
+                <div className = "sypp-modal-newApp-duedate-title">{"When is the "+this.props.title+" due?"}</div>
                 <CalendarComponent
                   calendarChange={this.props.calendarChange}
                 />
-                <div className="sypp-modal-text">Display this date on timeline?</div>
+                <div className="sypp-modal-newApp-duedate-body">Display this date on timeline?</div>
                 <div className = "sypp-button-choice-container">
                     <div className = "sypp-radio-container">
                     <RadioButtons options = {radioValue} onChange = {this.onChange}/>
