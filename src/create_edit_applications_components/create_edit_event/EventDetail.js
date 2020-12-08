@@ -94,15 +94,17 @@ class EventDetail extends Component {
                 />  
                 <div className ="sypp-event-seperateLine"></div>
 
-                <div className = "sypp-event-title">Note</div>                
+                <div className = "sypp-event-title">Note</div>    
+                <div style={{overflowY: 'scroll', height: '165px'}}>            
                 <Editor 
-                placeholder = "      Text Here"
-                toolbarHidden
-                editorClassName="sypp-editor-class"
-                editorState={this.state.editorState}
-                onEditorStateChange={this._handleChange}
-                keyBindingFn={this.myKeyBindingFn}
+                  placeholder = "      Text Here"
+                  toolbarHidden
+                  editorClassName="sypp-editor-class"
+                  editorState={this.state.editorState}
+                  onEditorStateChange={this._handleChange}
+                  keyBindingFn={this.myKeyBindingFn}
                 />
+                </div>
                 </div>
                 <div className = "sypp-event-bottom-options-container">
                     <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1">Delete</button>

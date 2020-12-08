@@ -128,6 +128,7 @@ export class CreateEditNote extends Component {
                 }
             }
             this.props.setApps(apps)
+            this.props._handleChange(this.state.editorState)
             this.props.onSaveNote()
         }
         //company detail fixing part, when it doesnt exist 
@@ -172,6 +173,7 @@ export class CreateEditNote extends Component {
                     }
                 }
             }
+            this.props._handleChange(this.state.editorState)
             this.props.setCompany(companies)
             this.props.onSaveNote()
         }

@@ -134,6 +134,7 @@ export class CreateEditConversation extends Component {
             }
             this.props.setApps(apps)
             this.props.onSaveConversation()
+            this.props._handleChange(this.state.editorState)
             this.setState({})
         }
         else if(this.state.followUpID === '' && this.state.type ==='company'){
@@ -182,6 +183,7 @@ export class CreateEditConversation extends Component {
             }
             this.props.setCompany(companies)
             this.props.onSaveConversation()
+            this.props._handleChange(this.state.editorState)
             this.setState({})
         }
         this.props.handleClose()

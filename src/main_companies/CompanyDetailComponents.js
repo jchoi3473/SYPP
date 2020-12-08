@@ -258,7 +258,9 @@ class CompanyDetailComponents extends Component{
                     </div>
             ))}
                 </ButtonGroup>
+                <div style={{overflowY: 'scroll', height: '475px'}}>
                 {this.display()}
+                </div>
                 <div>
             <button data-for="addDetailButton"
                     data-tip = '' 

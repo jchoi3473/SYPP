@@ -78,7 +78,7 @@ class ConversationDetail extends Component {
                 value={this.props.name}
                 />
                 <input
-                className = "sypp-event-name"
+                className = "sypp-contact-name-subTitle"
                 placeholder="Contact Position Here"
                 onChange={e => this.props.onChangePosition(e)}
                 value={this.props.position}
@@ -98,15 +98,17 @@ class ConversationDetail extends Component {
                 }
                 <div className ="sypp-event-seperateLine"></div>
 
-                <div className = "sypp-event-title">Note</div>                
-                <Editor 
-                placeholder = "      Text Here"
-                toolbarHidden
-                editorClassName="sypp-editor-class"
-                editorState={this.state.editorState}
-                onEditorStateChange={this._handleChange}
-                keyBindingFn={this.myKeyBindingFn}
-                />
+                <div className = "sypp-event-title">Note</div>  
+                <div style={{overflowY: 'scroll', height: '200px'}}>
+                  <Editor 
+                  placeholder = "      Text Here"
+                  toolbarHidden
+                  editorClassName="sypp-editor-class"
+                  editorState={this.state.editorState}
+                  onEditorStateChange={this._handleChange}
+                  keyBindingFn={this.myKeyBindingFn}
+                  />
+                </div>
                 </div>
                 <div className = "sypp-event-bottom-options-container">
                     <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1">Delete</button>

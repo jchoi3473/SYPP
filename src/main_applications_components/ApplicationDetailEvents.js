@@ -151,7 +151,7 @@ class ApplicationDetailEvents extends React.Component {
             >
                 <div className = 'sypp-create-detail-modal-container'>
                     <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
-                    <CreateEditEvent onSaveEventNote = {this.props.onSaveEventNote} Event = {this.props.Event} handleClose = {this.handleClose} editorState = {this.state.editorState} applicationID = {this.props.applicationID} type ={this.props.type} companyID = {this.props.companyID}/>
+                    <CreateEditEvent _handleChange = {this._handleChange} onSaveEventNote = {this.props.onSaveEventNote} Event = {this.props.Event} handleClose = {this.handleClose} editorState = {this.state.editorState} applicationID = {this.props.applicationID} type ={this.props.type} companyID = {this.props.companyID}/>
                 </div>
             </Modal>
           </div>

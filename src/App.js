@@ -13,7 +13,6 @@ import './App.css';
 import ModalProvider from './ModalProvider'
 import Modal from './Modal'
 
-
 const mapStatetoProps = state => {
   return{
       apps: state.progress.applications,
@@ -30,8 +29,6 @@ const mapDispatchToProps= dispatch =>{
       onRequestCompany: () => dispatch(requestCompany())
   }
 }
-
-
 
 class App extends Component {
   
@@ -59,6 +56,3 @@ class App extends Component {
 }
 
 export default connect(mapStatetoProps,mapDispatchToProps)(App);
-       {/* <ModalProvider>
-        <Modal />
-      </ModalProvider> */}

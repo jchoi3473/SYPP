@@ -126,6 +126,7 @@ export class CreateEditChecklist extends Component {
                 }
             }
             this.props.setApps(apps)
+            this.props._handleChange(this.state.editorState)
             this.props.onSaveChecklist()
         }
         //company detail fixing part, when it doesnt exist 
@@ -171,6 +172,7 @@ export class CreateEditChecklist extends Component {
                 }
             }
             this.props.setCompany(companies)
+            this.props._handleChange(this.state.editorState)
             this.props.onSaveChecklist()
         }
         this.props.handleClose()
@@ -251,7 +253,7 @@ export class CreateEditChecklist extends Component {
                 value={this.state.Title}
                 />
              <div className ="sypp-event-seperateLine"></div>
-            <div className = "sypp-ApplicationDetailChecklists-container">
+            <div className = "sypp-ApplicationDetailChecklists-container" style={{overflowY: 'scroll', height: '340px'}}>
             <div className = "sypp-CheckList-Container" style = {{"height":""+this.state.checkboxState.length*16.35}}>
             {
                 this.state.checkboxState.length === 0 ? 

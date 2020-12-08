@@ -4,7 +4,7 @@ import CompanyDetail from './CompanyDetail';
 
 import {connect} from 'react-redux'
 import {updateFilteredProgress} from '../redux/filteredProgress-reducer/filteredProgressAction'
-
+import './Companies.scss'
 const mapStatetoProps = state => {
     return{
         companies: state.companies.companies,
@@ -47,7 +47,7 @@ export class Companies extends Component {
         switch(step){
             case 1:
                 return(
-                    <div>
+                    <div className = "sypp-company-general-container">
                         <CompanyList 
                             toCompanyDetail = {this.toCompanyDetail}
                         />
@@ -55,7 +55,7 @@ export class Companies extends Component {
                 );
             case 2:
                 return (
-                    <div>
+                    <div className = "sypp-company-general-container">
                         <CompanyDetail
                         toCompanyList = {this.toCompanyList}
                         companyID = {this.state.companyID}

@@ -13,8 +13,33 @@
     color: #FFE9D6;
     background-color: transparent;
     border: none;
-    margin-top: 25px;
+    margin-top: 10px;
+    outline: none;
 }
+
+.sypp-contact-name-subTitle{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: -6.5px;
+}
+.sypp-contact-name-body{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: #FFE9D6;
+    margin-left: -2px;
+}
+
 .sypp-event-title{
     color: rgba(194, 219, 255, 1);
     font-family: Assistant;

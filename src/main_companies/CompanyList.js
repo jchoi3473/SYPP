@@ -76,6 +76,7 @@ export class CompanyList extends Component{
                 </div>
               )):undefined
             }
+            
           </div>
         )
     }

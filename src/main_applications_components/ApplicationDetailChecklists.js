@@ -64,7 +64,11 @@ class ApplicationDetailChecklists extends React.Component {
             })
         }
       }
-
+    _handleChange = (editorState) =>{
+      this.setState({
+        editorState: editorState
+      })
+    }
     handleClose = () => {
       this.setState({
         show:false
@@ -128,7 +132,7 @@ class ApplicationDetailChecklists extends React.Component {
             >
                 <div className = 'sypp-create-detail-modal-container'>
                     <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
-                    <CreateEditChecklist onSaveChecklist = {this.props.onSaveChecklist} handleCheckbox = {this.handleCheckbox} Checklist = {this.props.Checklist} handleClose = {this.handleClose} type ={this.props.type} companyID = {this.props.companyID} applicationID = {this.props.applicationID}
+                    <CreateEditChecklist _handleChange = {this._handleChange} onSaveChecklist = {this.props.onSaveChecklist} handleCheckbox = {this.handleCheckbox} Checklist = {this.props.Checklist} handleClose = {this.handleClose} type ={this.props.type} companyID = {this.props.companyID} applicationID = {this.props.applicationID}
                     checkboxState = {this.state.checkboxState} editorState = {this.state.editorState}/>
                 </div>
             </Modal>

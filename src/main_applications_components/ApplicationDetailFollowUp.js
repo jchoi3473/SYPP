@@ -52,6 +52,11 @@ class ApplicationDetailFollowUp extends React.Component {
             editorState : EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray))
         })
     }
+    _handleChange = (editorState) =>{
+        this.setState({
+            editorState: editorState
+        })
+    }
 
 
     handleClose = () => {
@@ -101,7 +106,7 @@ class ApplicationDetailFollowUp extends React.Component {
             >
                 <div className = 'sypp-create-detail-modal-container'>
                     <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
-                    <CreateEditConversation editorState = {this.state.editorState} onSaveConversation = {this.props.onSaveConversation} FollowUp = {this.props.FollowUp} handleClose = {this.handleClose} type ={this.props.type} applicationID = {this.props.applicationID} companyID = {this.props.companyID}/>
+                    <CreateEditConversation _handleChange = {this._handleChange} editorState = {this.state.editorState} onSaveConversation = {this.props.onSaveConversation} FollowUp = {this.props.FollowUp} handleClose = {this.handleClose} type ={this.props.type} applicationID = {this.props.applicationID} companyID = {this.props.companyID}/>
                 </div>
             </Modal>
         </div>

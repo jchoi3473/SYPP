@@ -103,33 +103,6 @@ class ApplicationDetailNotes extends React.Component {
         this.setState({ editorState});
       }
     }
-    //Make a server call here, use currentstate and convert back to the original note property
-    //after editting the note, will need to save this to the server. 
-    onHandleBlurBody = (e) =>{
-      console.log("blurred?")
-      console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array) 
-      console.log(this.props.Note.noteID)
-      var newNoteContent = [{
-        noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
-        Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
-        Contents_Text : []
-      }];
-
-      var tracker = 0;
-        for(var i=1;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
-          if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth === 0){
-            tracker++;
-            newNoteContent.push({
-              noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
-              Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
-              Contents_Text : []
-            })
-          }
-          else{
-            newNoteContent[tracker].Contents_Text.push(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
-          }
-        }
-    }
 
     handleClose = () => {
       this.setState({
@@ -149,7 +122,6 @@ class ApplicationDetailNotes extends React.Component {
           <div className= "sypp-ApplicationDetailNote-container">
             <div className="sypp-ApplicationDetailNote-title-container" onClick = {this.handleOpen}>
             <div className = "sypp-ApplicationDetailNote-title">
-            <FontAwesomeIcon className = "sypp-notes" icon={faListAlt}/>  
             <div className = "sypp-applicationDetailTextTitle">{this.props.Note.Detail.Title}</div>
             </div>
             <div>
@@ -185,7 +157,7 @@ class ApplicationDetailNotes extends React.Component {
             >
                 <div className = 'sypp-create-detail-modal-container'>
                     <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
-                    <CreateEditNote  onSaveNote = {this.props.onSaveNote} Note = {this.props.Note} handleClose = {this.handleClose} editorState = {this.state.editorState} applicationID = {this.props.applicationID} type ={this.props.type} companyID = {this.props.companyID}/>
+                    <CreateEditNote  _handleChange = {this._handleChange} onSaveNote = {this.props.onSaveNote} Note = {this.props.Note} handleClose = {this.handleClose} editorState = {this.state.editorState} applicationID = {this.props.applicationID} type ={this.props.type} companyID = {this.props.companyID}/>
                 </div>
             </Modal>
           </div>

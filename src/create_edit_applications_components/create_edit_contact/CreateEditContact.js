@@ -255,7 +255,7 @@ export class CreateEditContact extends Component {
                 value={this.state.Firstname}
                 />
                 <input
-                className = "sypp-event-name"
+                className = "sypp-contact-name-subTitle"
                 placeholder="Contact Name Here"
                 onChange={e => this.onChangePosition(e)}
                 value={this.state.Title}
@@ -263,27 +263,30 @@ export class CreateEditContact extends Component {
              <div className ="sypp-event-seperateLine"></div>
             <div className = "sypp-event-title">Email</div>
             <input
-                className = "sypp-event-name"
+                className = "sypp-contact-name-body"
                 placeholder="Contact Name Here"
                 onChange={e => this.onChangeEmail(e)}
                 value={this.state.Email}
             />
             <div className = "sypp-event-title">PhoneNumber</div>
             <input
-                className = "sypp-event-name"
+                className = "sypp-contact-name-body"
                 placeholder="Contact Name Here"
                 onChange={e => this.onChangePhoneNumber(e)}
                 value={this.state.PhoneNumber}
             />
             <div className = "sypp-event-title">Notes</div>
-            <Editor 
-                placeholder = "      Text Here"
-                toolbarHidden
-                editorClassName="sypp-editor-class"
-                editorState={this.state.editorState}
-                onEditorStateChange={this._handleChange}
-                keyBindingFn={this.myKeyBindingFn}
-            />
+
+            <div style={{overflowY: 'scroll', height: '170px'}}>
+                <Editor 
+                    placeholder = "      Text Here"
+                    toolbarHidden
+                    editorClassName="sypp-editor-class"
+                    editorState={this.state.editorState}
+                    onEditorStateChange={this._handleChange}
+                    keyBindingFn={this.myKeyBindingFn}
+                />
+            </div>
             </div>
             <div className = "sypp-event-bottom-options-container">
                 <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1">Delete</button>

@@ -67,6 +67,7 @@ function MainPage(props){
 
     return (
       <div>
+        <div className = "sypp-main-button-container">
           <ButtonGroup toggle className = {props.classContainerProps}>
           {radios.map((radio, idx) => (
             <div className="sypp-button-container">
@@ -87,7 +88,7 @@ function MainPage(props){
                 </div>
           ))}
             </ButtonGroup>
-
+            </div>
             {display()}
 
       </div>

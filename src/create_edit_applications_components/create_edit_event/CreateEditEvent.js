@@ -144,7 +144,8 @@ export class CreateEditEvent extends Component {
             }
             this.props.setApps(apps)
             this.props.onSaveEventNote()
-            this.setState({})
+            this.props._handleChange(editorState)
+
         }
         else if(this.state.eventID === '' && this.state.type ==='company'){
             var companies = this.props.companies
@@ -195,6 +196,7 @@ export class CreateEditEvent extends Component {
             }
             this.props.setCompany(companies)
             this.props.onSaveEventNote()
+            this.props._handleChange(editorState)
             this.setState({})
         }
         this.props.handleClose()
