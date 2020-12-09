@@ -88,6 +88,7 @@
 .sypp-NotCompleted{
     background-color: #FFD600 !important;
 }
+
 .sypp-task-tooltip-completed{
     display: flex;
     align-items: center;
@@ -103,7 +104,7 @@
     border-radius: 27px;
     margin-top: 2px;
     margin-left: -10px;
-    width: 59px;
+    min-width: 59px;
     height: 17px;
     z-index: 2;
 }
@@ -112,7 +113,7 @@
     align-items: center;
     justify-content: center;
     background: #FFD600;
-    width: 59px;
+    min-width: 59px;
     height: 17px;
     color: #1A1C20;
     font-family: Assistant;
@@ -126,3 +127,10 @@
     z-index: 2;
     margin-left: -10px;
 }
+.sypp-task-tooltip-more{
+    cursor: pointer;
+    margin-left: 3.5px;
+    margin-right: -3.5px;
+transform: rotate(90deg);
+}
+

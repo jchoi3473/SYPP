@@ -92,7 +92,6 @@ class ApplicationDetailChecklists extends React.Component {
         return (
           <div className="sypp-ApplicationDetailNote-container ">
             <div className="sypp-ApplicationDetailNote-title-container">
-            <FontAwesomeIcon className = "sypp-notes" icon={faListAlt}/>  
             <div className = "sypp-applicationDetailTextTitle">{this.props.Checklist.Detail.Title}</div>
             </div>
             <div className = "sypp-ApplicationDetailChecklists-container">

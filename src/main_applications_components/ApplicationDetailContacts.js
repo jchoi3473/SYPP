@@ -76,8 +76,7 @@ class ApplicationDetailContacts extends Component{
                     <div>
                         <div className = "sypp-applicationDetailContactsTitle">
                             <div className = "sypp-applicationDetailTextTitle">{this.props.contact.PersonalDetail.Firstname}</div>
-                            <div className = "sypp-applicationDetailTextTitle">{this.props.contact.PersonalDetail.Lastname}</div>
-                            <div className = "sypp-applicationDetailTextTitle">{this.props.contact.PersonalDetail.Title}</div>
+                            <div className = "sypp-applicationDetailTextTitle-body">{this.props.contact.PersonalDetail.Title}</div>
                         </div>
                         <ButtonGroup toggle className = {this.props.classContainerProps}>
                         {radios.map((radio, idx) => (

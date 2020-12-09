@@ -106,7 +106,10 @@ export class Progress extends Component{
                                 </div>
                                     <div>{console.log(data)}</div>
                                     <div className = "sypp-application-name" onClick = {e => this.props.toApplicationDetail(data.Detail.applicationID)}>
-                                    <div className = "sypp-progress-company">{data.Detail.CompanyName}</div>
+                                    <div className = "sypp-appilication-name-container">
+                                        <div className = "sypp-progress-company">{data.Detail.CompanyName}</div>
+                                        <div> Trash</div>
+                                    </div>
                                     <div className = "sypp-progress-position">{data.Detail.PositionName}</div>
                                     </div>
                                 <ProgressBar applicationID = {data.Detail.applicationID} applied = {data.applied} dates = {data.Tasks} details = {data.Detail.Status[0]} onClickAdd = {this.onClickAdd}/>

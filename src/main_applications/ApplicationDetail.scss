@@ -63,27 +63,44 @@
 }
 .sypp-applicationDetailContactsTitle{
     display: flex;
+    flex-flow: column;
 }
 .sypp-applicationDetailTextTitle{
     font-size: 12px;
     font-weight: bold;
     color: #FFE9D6;
 }
-.sypp-applicationDetailTextSubTitle{
+.sypp-applicationDetailTextTitle-body{
+    margin-top: 1px;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
     font-size: 10px;
-    color: #ffffff;
+    color: #F5F5F5;
+    margin-bottom: 3px;
+}
+.sypp-applicationDetailTextSubTitle{
+    margin-top: 1px;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    color: #F5F5F5;
 }
 .sypp-applicationDetailTextBody{
     font-size: 11px;
-    color: #ffffff;
+    color: #F5F5F5;
+    ;
 }
 .sypp-applicationDetailContactsContainer{
     background: #343B46;
-    border-radius: 15px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
     max-width: 500px;
-    &:hover{
-        background: rgba(255, 255, 255, 0.13);
-    }
+    margin-bottom: 10px;
 }
 
 

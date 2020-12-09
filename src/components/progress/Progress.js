@@ -47,7 +47,8 @@ export class Progress extends Component{
                 {
                 this.state.isHovering &&this.props.completed?
                     <div className = "sypp-task-tooltip-completed">
-                        <div>{this.props.date.Title}</div></div>:
+                        <div>{this.props.date.Title}</div>
+                        <div className ="sypp-task-tooltip-more">...</div> </div>:
                     undefined                
                 }
 
@@ -55,6 +56,7 @@ export class Progress extends Component{
                 this.state.isHovering &&!this.props.completed?
                     <div className = "sypp-task-tooltip-notcompleted">
                         <div>{this.props.date.Title}</div>
+                        <div className ="sypp-task-tooltip-more">...</div>
                     </div>:
                     undefined
                 }

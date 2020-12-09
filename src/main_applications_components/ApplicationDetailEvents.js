@@ -111,7 +111,6 @@ class ApplicationDetailEvents extends React.Component {
       render() {
         return (
           <div className="sypp-ApplicationDetailNote-container sypp-EventContainer">
-            <FontAwesomeIcon className = "sypp-notes" icon={faListAlt}/> 
             <div className = "sypp-EventDetailContainer"  onClick={e => this.handleOpen(e)}>
             {/* <div className="ApplicationDetailNote-title-container"> */}
               <div className = "sypp-applicationDetailTextTitle">{this.props.Event.Detail.Title}</div>
