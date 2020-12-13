@@ -15,6 +15,8 @@ import ApplicationDetailChecklists from './../main_applications_components/Appli
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import ReactTooltip from 'react-tooltip'
+import Popup from 'reactjs-popup';
+
 import Modal from 'react-bootstrap/Modal';
 
 import CreateEditEvent from '../create_edit_applications_components/create_edit_event/CreateEditEvent'
@@ -58,7 +60,8 @@ class ApplicationDetailComponents extends Component {
             addDetailName : '',
             textValue : '',
             selectedValue : '',
-            show: false
+            show: false,
+            toolTip : true, 
         }
     }
     //modal states
@@ -247,8 +250,11 @@ class ApplicationDetailComponents extends Component {
                     </div>
                 )
         }
-        
-        
+    }
+    toolTipEnable = () =>{
+        this.setState({
+            toolTip : false
+        })
     }
 
     render(){
@@ -278,17 +284,36 @@ class ApplicationDetailComponents extends Component {
             {this.display()}   
             </div>
             <div>
-            <button data-for="addDetailButton"
+            {/* <button 
+                    onClick = {this.toolTipEnable}
+                    data-for="addDetailButton"
                     data-tip = '' 
-                    className = "sypp-detail-add-button">+</button>
+                    className = "sypp-detail-add-button">+</button> */}
+             <Popup
+            trigger={
+                <button 
+                className = "sypp-detail-add-button">+</button>
+            }
+            position={'right'}
+            closeOnEscape
+            closeOnDocumentClick
+            >
+               <div className = "sypp-tooltip-button-container">
+                <button className = "sypp-create-detail-button sypp-create-detail-button1" onClick = {() => this.onClick('0')}>Events</button>
+                <button className = "sypp-create-detail-button sypp-create-detail-button2" onClick = {() => this.onClick('1')}>Notes</button>
+                <button className = "sypp-create-detail-button sypp-create-detail-button3" onClick = {() => this.onClick('2')}>Contacts</button>
+                <button className = "sypp-create-detail-button sypp-create-detail-button4" onClick = {() => this.onClick('3')}>Conversation Histories</button>
+                <button className = "sypp-create-detail-button sypp-create-detail-button5" onClick = {() => this.onClick('4')}>Checklists</button>
+                </div>
+            </Popup>
 
-            <ReactTooltip
+            {/* <ReactTooltip
             id= "addDetailButton"
             className = "sypp-create-detail-tooltip"
             effect='solid'
             delayHide={250}
             place={'right'}
-            disable	={false}
+            disable	={this.state.toolTip}
             >
                 <div className = "sypp-tooltip-button-container">
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('0')}>Events</button>
@@ -297,7 +322,7 @@ class ApplicationDetailComponents extends Component {
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('3')}>Conversation Histories</button>
                 <button className = "sypp-create-detail-button" onClick = {() => this.onClick('4')}>Checklists</button>
                 </div>
-            </ReactTooltip>
+            </ReactTooltip> */}
             </div>
             <Modal 
             show={this.state.show}

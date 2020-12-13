@@ -77,7 +77,6 @@ class ApplicationDetailFollowUp extends React.Component {
             <div className="sypp-ApplicationDetailNote-container">
             <div onClick = {this.handleOpen}>
                 <div className="sypp-ApplicationDetailFollowup-title-container">
-                {/* <FontAwesomeIcon className = "notes" icon={faListAlt}/>   */}
                     <div className = "sypp-applicationDetailTextTitle">{this.props.FollowUp.Personnel.Name}</div>
                     <div className = "sypp-applicationDetailTextSubTitle">{this.props.FollowUp.Personnel.Position}</div>
                     <div className = "sypp-EventDateTime">{Moment(this.props.FollowUp.Time).format('MMM DD, YYYY') + Moment(this.props.FollowUp.Time).fromNow()}</div>

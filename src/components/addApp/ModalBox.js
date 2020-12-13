@@ -10,25 +10,17 @@ import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 
 
-const useStyles = makeStyles((theme) => ({
-    margin: {
-      margin: theme.spacing(1),
-    },
-    extendedIcon: {
-      marginRight: theme.spacing(1),
-    },
-}));
+
 
 
 const ModalBox = (props) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const classes = useStyles();
 
     return (
         <div>
-            <div onClick = {handleShow} className = {classes.extendedIcon + " sypp-newapp-button"}>
+            <div onClick = {handleShow} className = {"sypp-newapp-button"}>
                 <div className = "sypp-newapp-button-plus">+</div>
                 <div  className = "sypp-newapp-button-body">New App</div>
             </div>

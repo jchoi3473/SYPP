@@ -5,6 +5,8 @@ import Rating from 'react-rating';
 import './CompanyList.scss'
 import {setCompany} from './../redux/company-reducer/companyAction'
 import {connect} from 'react-redux'
+import Modal from 'react-bootstrap/Modal';
+
 
 
 
@@ -24,8 +26,15 @@ export class CompanyList extends Component{
     constructor(){
         super();
         this.state =  {
-            searchField:''
+            searchField:'',
+            show: false,
+            companyName : ''
         }
+      }
+      onChangeCompanyName = (e) =>{
+        this.setState({
+          companyName : e.target.value
+        })
       }
       onSearchChange = (e) =>{
         this.setState({
@@ -46,7 +55,17 @@ export class CompanyList extends Component{
         this.props.setCompany(companies)
         this.setState({})
     }
-
+    handleClose = () =>{
+      this.setState({
+        show: false
+      })
+    }
+    handleShow = () =>{
+      this.setState({
+        show:true
+      })
+    }
+  
    
 
     render(){
@@ -76,7 +95,32 @@ export class CompanyList extends Component{
                 </div>
               )):undefined
             }
-            
+            <div onClick = {this.handleShow} className = {"sypp-newcompany-button"}>
+                <div className = "sypp-newapp-button-plus">+</div>
+                <div className = "sypp-newapp-button-body">New Company</div>
+            </div>
+            <Modal
+            show = {this.state.show}
+            onHide={this.handleClose} 
+            centered
+            dialogClassName = "sypp-ModalMain"
+            >
+              <div className = "sypp-Modal-container">
+              <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
+              <div className = "sypp-addcompany-container">
+                <div className = "sypp-addcompany-title">Which company would you like to add?</div>
+                <input
+                        className ="sypp-modal-input"
+                        placeholder="Company Name"
+                        onChange={e => this.onChangeCompanyName(e)}
+                        value={this.state.companyName}
+                />
+                </div>
+                  <button className ="sypp-button-next">
+                         Save
+                  </button>
+              </div>
+            </Modal>
           </div>
         )
     }

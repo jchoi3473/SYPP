@@ -3,6 +3,9 @@ import './../addApp/Modalbox.css'
 import './Progress.css'
 import './ProgressBar.scss'
 import Moment from 'moment';
+import ReactTooltip from 'react-tooltip'
+import Popup from 'reactjs-popup';
+
 
 
 export class Progress extends Component{
@@ -11,6 +14,7 @@ export class Progress extends Component{
         this.handleMouseHover = this.handleMouseHover.bind(this);
         this.state = {
             isHovering : false, 
+            isHoveringMore: false, 
         }
     }
 
@@ -23,12 +27,30 @@ export class Progress extends Component{
             isHovering: !state.isHovering,
         };
     }
+    handleClick = () =>{
+        this.setState({
+            isHoveringMore: !this.state.isHoveringMore
+        })
+    }
+    handleUnClick = () =>{
+        this.setState({
+            isHoveringMore: false
+        })
+    }
+    onClickMark = () =>{
+        this.setState({
+            isHovering: false
+        })
+        this.props.handleCompleted(this.props.date, this.props.date.Title)
+    }
+
     render(){
         return(
             <div
-            onMouseEnter = {this.handleMouseHover}
-            onMouseLeave = {this.handleMouseHover}
+            // onBlur = {() => {ReactTooltip.hide(this.fooRef)}}
+            // onMouseLeave = {this.handleMouseHover}
             >
+            <div className = "sypp-progress-general-container" onMouseEnter = {this.handleMouseHover} onMouseLeave = {this.handleMouseHover}>
                 {this.props.completed?
                 <div>
                 <div className="sypp-applicationFirst sypp-completed"  
@@ -48,7 +70,22 @@ export class Progress extends Component{
                 this.state.isHovering &&this.props.completed?
                     <div className = "sypp-task-tooltip-completed">
                         <div>{this.props.date.Title}</div>
-                        <div className ="sypp-task-tooltip-more">...</div> </div>:
+                        <Popup
+                        trigger={
+                            <div className ="sypp-task-tooltip-more">
+                            ...
+                            </div>
+                        }
+                        position={'bottom right'}
+                        closeOnDocumentClick
+                        >
+                            <div className = "sypp-progress-tooltip-options-container">
+                            <button className = "sypp-progress-tooltip-option" onClick = {this.onClickMark}>Mark Incomplete</button>
+                            <button className = "sypp-progress-tooltip-option" onClick = {() => {this.onClick()}}>Edit</button>
+                            <button className = "sypp-progress-tooltip-option" onClick = {() => {this.onClick()}}>Add Note</button>
+                            </div>
+                        </Popup>
+                        </div>:
                     undefined                
                 }
 
@@ -56,10 +93,27 @@ export class Progress extends Component{
                 this.state.isHovering &&!this.props.completed?
                     <div className = "sypp-task-tooltip-notcompleted">
                         <div>{this.props.date.Title}</div>
-                        <div className ="sypp-task-tooltip-more">...</div>
+                        <Popup
+                        trigger={
+                            <div className ="sypp-task-tooltip-more">
+                            ...
+                            </div>
+                        }
+                        position={'bottom right'}
+                        closeOnDocumentClick
+                        >
+                            <div className = "sypp-progress-tooltip-options-container">
+                            <button className = "sypp-progress-tooltip-option"  onClick = {this.onClickMark}>Mark Complete</button>
+                            <button className = "sypp-progress-tooltip-option"  onClick = {() => {this.onClick()}}>Edit</button>
+                            <button className = "sypp-progress-tooltip-option"  onClick = {() => {this.onClick()}}>Add Note</button>
+                            </div>
+                        </Popup>
                     </div>:
                     undefined
                 }
+               
+                </div>
+                
             </div>
         )
     }

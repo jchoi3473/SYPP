@@ -20,11 +20,12 @@
     &:hover {
         border: 2px solid rgba(194, 219, 255, 1);
         background: rgba(156, 193, 249, 0.2);
+        z-index: -1;
     }
     width: 510px;
     height: 44px;
-    margin-top: 2.5px;
-    margin-bottom: 2.5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .sypp-application-name{
   min-width: 160px;
@@ -106,7 +107,7 @@
     margin-left: -10px;
     min-width: 59px;
     height: 17px;
-    z-index: 2;
+    z-index: 10;
 }
 .sypp-task-tooltip-notcompleted{
     display: flex;
@@ -124,13 +125,51 @@
     padding-right: 5px;
     border-radius: 27px;
     margin-top: 2px;
-    z-index: 2;
+    z-index: 10;
     margin-left: -10px;
 }
 .sypp-task-tooltip-more{
     cursor: pointer;
     margin-left: 3.5px;
     margin-right: -3.5px;
-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
+.popup-arrow {
+    background: transparent;
+    color: transparent;
+    width: 40px;
+    left: -70px;
+    top: -10px;
+}
+.popup-content {
+    margin-left: 70px;
+    margin-top: -5px;
+  }
+
+.sypp-progress-tooltip-options-container{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background: #363C46;
+    border-radius: 5px;
+}
+.sypp-progress-tooltip-option{
+    padding: 0;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.9);
+    &:focus{
+        border: none;
+        outline: none;
+    }
+}

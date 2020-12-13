@@ -43,15 +43,7 @@ export const postNewApp = (app) => (dispatch) =>{
         applicationID: null,
         uID: null,
         authID: null,
-        Tasks:[
-        {
-            midTaskID: null,
-            Time: app.dates[0].date,
-            Title: "Applied",
-            Status: app.dates[0].completed,
-            showDate: app.dates[0].showDate
-        }
-        ],
+        Tasks:[],
         Detail:{
             applicationID: null,
             uID: null,
@@ -60,7 +52,16 @@ export const postNewApp = (app) => (dispatch) =>{
             IsFavorite: app.applicationDetail.pinned,
             companyID: null,
             positionID: null,
-            Status: null,
+            Status: [
+                {
+                    midTaskID: null,
+                    Time: app.dates[0].date,
+                    Title: "Applied",
+                    Status: app.dates[0].completed,
+                    IsFavorite : false,
+                    showDate: app.dates[0].showDate
+                }
+            ],
             Categories: app.Categories
         },       
       })

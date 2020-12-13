@@ -4,6 +4,7 @@ import './../main_applications/CategoryButtons.scss';
 
 import {connect} from 'react-redux'
 import {updateFilteredProgress, updateFilteredProgressTitle, updateFilteredProgressButtonValue} from '../redux/filteredProgress-reducer/filteredProgressAction'
+import Modal from 'react-bootstrap/Modal';
 
 
 
@@ -20,7 +21,8 @@ class CompanyListComponents extends Component {
   constructor(){
     super();
     this.state =  {
-        searchField:''
+        searchField:'',
+        show : true
     }
   }
   
@@ -30,7 +32,6 @@ class CompanyListComponents extends Component {
     })
     console.log(this.state.searchField)
   }
-
 
   render(){
     const searchFilteredProgress = this.props.companies.filter(company => {
@@ -54,6 +55,8 @@ class CompanyListComponents extends Component {
                <div onClick = {this.props.toCompanyDetail(data.companyID)}>{data.Detail.CompanyName}</div>
                )):undefined
             }
+            
+
           </div>
       );
   }

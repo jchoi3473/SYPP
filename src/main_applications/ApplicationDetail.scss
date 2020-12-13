@@ -128,10 +128,11 @@
     }
 }
 .sypp-tooltip-button-container{
+    position: relative;
     display: flex;
     flex-direction: column;
-    margin-bottom: 80px;
-    margin-left: -10px;
+    bottom: 45px;
+    margin-left: -70px;
 }
 
 .sypp-create-detail-modal{
@@ -174,13 +175,17 @@
 
 .sypp-create-detail-button{
     height: 26px;
-    min-width: 25px;
     padding-left: 4px;
     padding-right: 4px;
     border: none;
-    text-align: left;
+    text-align: center;
     background: #363C46;
     border-radius: 30px;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 5px;
     color: #C2DBFF;
     &:hover {
         background: #5E6A7E;
@@ -191,4 +196,19 @@
         outline: none;
         color: #242931;
     }
+}
+.sypp-create-detail-button1{
+    width: 72px;
+}
+.sypp-create-detail-button2{
+    width: 66px;
+}
+.sypp-create-detail-button3{
+    width: 83px;
+}
+.sypp-create-detail-button4{
+    width: 155px;
+}
+.sypp-create-detail-button5{
+    width: 90px;
 }

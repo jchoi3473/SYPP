@@ -34,7 +34,7 @@
     background: #94CE4B;
 }
 .MuiFab-root.sypp-addTask{
-    display: inline-flex;
+    /* display: inline-flex; */
     font-size: 5px;
     height: 15px !important;
     width: 15px;
