@@ -71,7 +71,6 @@ export class CreateEditChecklist extends Component {
 
     onSaveButton = () => {
         // this.props.postNewApp(this.props.addApp)
-        this.props.handleCheckbox(this.state.checkboxState)
         var newNoteContent = []
         if(this.state.editorState !== ''){
             for(var i=0;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
@@ -106,6 +105,7 @@ export class CreateEditChecklist extends Component {
         }
         //editing an existing event, app
         else if(this.state.checkListsID !== '' && this.state.type ==='application'){
+            this.props.handleCheckbox(this.state.checkboxState)
             var apps = this.props.apps 
             for(var i=0;i<this.props.apps.length;i++){
                 console.log("this one is triggeredd?")
@@ -152,6 +152,7 @@ export class CreateEditChecklist extends Component {
             this.props.setCompany(companies)
         }
         else if(this.state.checkListsID !== '' && this.state.type ==='company'){
+            this.props.handleCheckbox(this.state.checkboxState)
             var companies = this.props.companies 
             for(var i=0;i<this.props.companies.length;i++){
                 console.log("this one is triggeredd?")

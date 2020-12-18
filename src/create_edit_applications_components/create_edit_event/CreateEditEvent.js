@@ -74,7 +74,7 @@ export class CreateEditEvent extends Component {
     onSaveButton = (editorState) => {
         // this.props.postNewApp(this.props.addApp)
     var newNoteContent = []
-    if(this.state.editorState !== ''){
+    if(editorState !== ''){
         newNoteContent = [{
         eventContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
         Header : editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,

@@ -8,18 +8,28 @@
    opacity: 1 !important;
     }
     &.place-bottom {
-        &:after {
+        &::after {
         border-bottom-color: #363C46 !important;
-        background: transparent;
-        border-bottom-color: solid !important;
-        border-bottom-color: 6px !important;
+        background: transparent !important;
         }
         &::before {
         border-bottom-color: #363C46 !important;
-        background: transparent;
-        border-bottom-color: solid !important;
-        border-bottom-color: 6px !important;
+        background: transparent !important;
         }
+    }
+}
+.place-bottom {
+    &::after {
+    border-bottom-color: #363C46 !important;
+    background: transparent !important;
+    border-bottom-color: solid !important;
+    border-bottom-color: 6px !important;
+    }
+    &::before {
+    border-bottom-color: #363C46 !important;
+    background: transparent !important;
+    border-bottom-color: solid !important;
+    border-bottom-color: 6px !important;
     }
 }
 

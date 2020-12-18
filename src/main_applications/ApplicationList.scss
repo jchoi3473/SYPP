@@ -69,3 +69,14 @@
 .sypp-appilication-name-container{
     display: flex;
 }
+.sypp-trashIcon{
+    color: transparent;
+    font-size: 12px;
+    margin-top: 1px;
+    margin-left: 5px;
+}
+.sypp-trashIcon-Hover{
+    &:hover{
+        color: rgb(163, 164, 166);
+    }
+}

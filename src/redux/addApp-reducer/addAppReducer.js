@@ -5,24 +5,24 @@ const INITIAL_STATE = {
         companyName: '',
         positionName: '',
         pinned: false,
-    },
-    Categories : [
-        {
-        Type: 'Role',
-        SuggestionsOrSeleceted : [],
         },
-        {
-        Type: 'Location',
-        SuggestionsOrSeleceted : [],
-        }
-    ],
-    archived: false, 
-    dates :[
-        {key : 0, 
-        date: new Date(), 
-        showDate: true, 
-        completed: true}
-    ],
+        Categories : [
+            {
+            Type: 'Role',
+            SuggestionsOrSeleceted : [],
+            },
+            {
+            Type: 'Location',
+            SuggestionsOrSeleceted : [],
+            }
+        ],
+        archived: false, 
+        dates :[
+            {key : 0, 
+            date: new Date(), 
+            showDate: true, 
+            completed: true}
+        ],
 }
 
 const addAppReducer  = (state = INITIAL_STATE, action) =>{

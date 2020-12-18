@@ -15,23 +15,24 @@ export class CompanyPositionAdd extends Component{
     render(){
         return(
             <div>
-                    <div className="sypp-modal-text">What company are you applying for?</div>
+                <div className = "sypp-company-position-container">
+                    <div className="sypp-modal-text sypp-modal-text-company-margin">What company are you applying for?</div>
                     <input
                         className ="sypp-modal-input company"
                         placeholder="Company Name"
                         onChange={this.props.onCompanyChange}
                         value={this.props.companyName}
                     />
-
                     <br/>
-                    <div className="sypp-modal-text">What position are you applying for?</div>
+                    <div className="sypp-modal-text sypp-modal-text-company-margin">What position are you applying for?</div>
                     <input
-                        className ="sypp-modal-input sypp-position"
+                        className ="sypp-modal-input company"
                         placeholder="Position Name"
                         onChange={this.props.onPositionChange}
                         value={this.props.positionName}
                     />
                     <br/>
+                </div>
 
                     <div className="sypp-next-button-container">
                      <button className ="sypp-button-next" onClick = {this.continue} disabled ={this.props.positionName === "" || this.props.companyName === ""?true:false}>

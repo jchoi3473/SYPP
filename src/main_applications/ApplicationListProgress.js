@@ -10,6 +10,10 @@ import {setApps, requestProgress, postProgress} from '../redux/progress-reducer/
 import {connect} from 'react-redux'
 import 'font-awesome/css/font-awesome.min.css';
 
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+
 
 const mapStatetoProps = state => {
     return{
@@ -30,9 +34,20 @@ const mapDispatchToProps= dispatch =>{
 export class Progress extends Component{
     constructor(){
         super();
+        this.handleMouseHover = this.handleMouseHover.bind(this);
+
         this.state =  {
-            searchField:''
+            searchField:'',
+            isHovering : false,
         }
+    }
+    handleMouseHover(){
+        this.setState(this.toggleHoverState);
+    }
+    toggleHoverState(state) {
+        return{
+            isHovering: !state.isHovering,
+        };
     }
     //UID, APP ID, TASK use post call
     //return task with id
@@ -71,6 +86,9 @@ export class Progress extends Component{
         })
         console.log(this.state.searchField)
     }
+    onClickDelete = () =>{
+        console.log("trigger Trash Can")
+    }
 
     render(){
         const searchFilteredProgress = this.props.filteredProgress.filter(application => {
@@ -97,7 +115,7 @@ export class Progress extends Component{
                 {
                     (searchFilteredProgress.length > 0)?
                     searchFilteredProgress.map((data) => (
-                            <div className = "sypp-progress-all">
+                            <div className = "sypp-progress-all sypp-trashIcon-Hover">
                                 <div className = "sypp-starContainer">
                                 <Rating className ="sypp-starIcon" applicationName = {data.applicationID} stop={1} initialRating = {data.Detail.IsFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.applicationID)}
                                 emptySymbol="fa fa-star-o starSize starIcon"
@@ -105,12 +123,12 @@ export class Progress extends Component{
                                  />
                                 </div>
                                     <div>{console.log(data)}</div>
-                                    <div className = "sypp-application-name" onClick = {e => this.props.toApplicationDetail(data.Detail.applicationID)}>
+                                    <div className = "sypp-application-name">
                                     <div className = "sypp-appilication-name-container">
-                                        <div className = "sypp-progress-company">{data.Detail.CompanyName}</div>
-                                        <div> Trash</div>
+                                        <div className = "sypp-progress-company" onClick = {e => this.props.toApplicationDetail(data.Detail.applicationID)} >{data.Detail.CompanyName}</div>
+                                        <FontAwesomeIcon className = "sypp-trashIcon sypp-trashIcon-Hover" icon={faTrashAlt} onClick = {this.onClickDelete}/>
                                     </div>
-                                    <div className = "sypp-progress-position">{data.Detail.PositionName}</div>
+                                    <div className = "sypp-progress-position" onClick = {e => this.props.toApplicationDetail(data.Detail.applicationID)}>{data.Detail.PositionName}</div>
                                     </div>
                                 <ProgressBar applicationID = {data.Detail.applicationID} applied = {data.applied} dates = {data.Tasks} details = {data.Detail.Status[0]} onClickAdd = {this.onClickAdd}/>
                             </div>

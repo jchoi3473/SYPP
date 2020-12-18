@@ -20,7 +20,6 @@ export class Progress extends Component{
 
     handleMouseHover(){
         this.setState(this.toggleHoverState);
-        console.log(this.state.isHovering)
     }
     toggleHoverState(state) {
         return{

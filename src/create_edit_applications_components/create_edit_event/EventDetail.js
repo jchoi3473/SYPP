@@ -23,6 +23,7 @@ class EventDetail extends Component {
     onSave = () =>{
       this.props.handleEditorState(this.state.editorState);
       this.props.onSaveButton(this.state.editorState);
+      console.log(this.state.editorState)
     }
     currentBlockKey = () => this.state.editorState.getSelection().getStartKey()
       

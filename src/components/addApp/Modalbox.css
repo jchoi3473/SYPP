@@ -48,6 +48,9 @@
     font-size: 12px;
     color: #ffffff;
 }
+.sypp-modal-text-company-margin{
+    margin-bottom: 9px;
+}
 
 .sypp-button-close{
     position: absolute;

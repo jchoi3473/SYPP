@@ -3,7 +3,6 @@ import ChipAutocomplete from '../chip/ChipAutocomplete'
 import './Modalbox.css';
 import './Modalbox.scss';
 import Modal from 'react-bootstrap/Modal';
-import Scroll from '../scroll/Scroll'
 
 import {connect} from 'react-redux'
 import { setSelectedCategories } from '../../redux/addApp-reducer/addAppAction';
@@ -98,7 +97,7 @@ export class RoleLocationAdd extends Component{
                 <div className ="sypp-category-container">
                     <div className="sypp-modal-text">Let's categorize this applicaiton!</div>
                     <div className="sypp-modal-text">Feel free to leave categories empty if desired!</div>
-                    <Scroll className = "sypp-scroll">
+                    <div className = "sypp-scroll">
                     {   
                         this.props.categories.map((data) => (
                         <div>
@@ -116,7 +115,7 @@ export class RoleLocationAdd extends Component{
                     <button className ="sypp-create-category" onClick = {this.handleShow}>
                         + New Category
                     </button>
-                    </Scroll>
+                    </div>
                 </div>
                 <Modal 
                     show={this.state.show}
