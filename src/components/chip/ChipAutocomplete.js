@@ -26,7 +26,7 @@ const ChipInput = withStyles({
   inputRoot: {
     flexWrap: 'wrap',
     fontSize :'5',
-    maxWidth: 50,
+    maxWidth: 150,
     color: "white",
     '&$outlined,&$filled': {
       boxSizing: 'border-box'
@@ -107,6 +107,7 @@ export class ChipAutocomplete extends Component {
       filteredSuggestions: [],
       showSuggestions: false,
       userInput: '',
+      disabled: false
     };
   }
   
@@ -124,7 +125,9 @@ export class ChipAutocomplete extends Component {
       filteredSuggestions: [],
       showSuggestions: false,
       userInput: '',
+      disabled: true
     });
+    console.log(this.state.disabled)
   };
 
   newSuggestion = e => {
@@ -143,6 +146,7 @@ export class ChipAutocomplete extends Component {
       filteredSuggestions: [],
       showSuggestions: false,
       userInput: '',
+      disabled: true
     });  }
 
 
@@ -154,29 +158,34 @@ export class ChipAutocomplete extends Component {
       (suggestion) =>
         suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
-
-    this.setState({
-      activeSuggestion: 0,
-      filteredSuggestions,
-      showSuggestions: true,
-      userInput: e.currentTarget.value,
-    });
+      if(this.state.disabled){
+        this.setState({
+          activeSuggestion: 0,
+          filteredSuggestions,
+          showSuggestions: false,
+          userInput: '',
+        });
+      }
+      else{
+        this.setState({
+          activeSuggestion: 0,
+          filteredSuggestions,
+          showSuggestions: true,
+          userInput: e.currentTarget.value,
+        });
+    }
   };
 
   handleDeleteTags = (tag) => {
    
     const delectedCategory = this.props.selectedCategories[this.props.index].SuggestionsOrSeleceted.filter(state => state !== tag)
     const newSelectedCategory = this.props.selectedCategories
-    // console.log(this.props.name)
-    // for (var i =0;i<newSelectedCategory.length;i++){
-    //   if(newSelectedCategory[i].Type === this.props.name){
-    //     newSelectedCategory[i].SuggestionsOrSeleceted = delectedCategory
-    //   }
-    // }
     newSelectedCategory[this.props.index].SuggestionsOrSeleceted = this.props.selectedCategories[this.props.index].SuggestionsOrSeleceted.filter(state => state !== tag)
     this.props.setSelectedCategories(newSelectedCategory)
     console.log(newSelectedCategory)
-    this.setState({})
+    this.setState({
+      disabled: false
+    })
   };
 
   handleSuggestion = (index, newSuggestion) => {
@@ -228,9 +237,12 @@ export class ChipAutocomplete extends Component {
             <ul className = "sypp-ul">
               {filteredSuggestions.map((suggestion, index) => {
                 return (
-                  <button class ="sypp-suggestion sypp-chipbutton" key={suggestion} onClick={onClick}>
+                  <div class ="sypp-suggestion sypp-chipbutton">
+                  <button  key={suggestion} onClick={onClick}>
                     {suggestion}
                   </button>
+                  <div>X</div>
+                  </div>
                 );
               })}
             </ul>
@@ -261,17 +273,18 @@ export class ChipAutocomplete extends Component {
                     disableUnderline = {true}
                     fullWidthInput = {false}
                     fullWidth = {false}
+                    inputValue = {this.state.disabled?'':this.state.userInput}
                     />
                 </div>
             </div>
             </AccordionSummary>
             <AccordionDetails>
                 <div className = "sypp-container-suggestion">
-                {suggestionsListComponent}
                 <button className = "sypp-suggestion" 
                   onClick={this.newSuggestion}
                   disabled = {this.state.userInput.length<1}
                 >Create</button>
+                {suggestionsListComponent}
                 </div>
             </AccordionDetails>
         </Accordion>

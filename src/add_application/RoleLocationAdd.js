@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import ChipAutocomplete from '../chip/ChipAutocomplete'
+import ChipAutocomplete from '../components/chip/ChipAutocomplete'
 import './Modalbox.css';
 import './Modalbox.scss';
 import Modal from 'react-bootstrap/Modal';
 
 import {connect} from 'react-redux'
-import { setSelectedCategories } from '../../redux/addApp-reducer/addAppAction';
-import { setCategories } from '../../redux/categories-reducer/categoriesAction';
+import { setSelectedCategories } from '../redux/addApp-reducer/addAppAction';
+import { setCategories } from '../redux/categories-reducer/categoriesAction';
 
 
 //Make independent server call here. Need to save these properties globally
@@ -97,7 +97,7 @@ export class RoleLocationAdd extends Component{
                 <div className ="sypp-category-container">
                     <div className="sypp-modal-text">Let's categorize this applicaiton!</div>
                     <div className="sypp-modal-text">Feel free to leave categories empty if desired!</div>
-                    <div className = "sypp-scroll">
+                    <div className = "sypp-scroll" style={{overflowY: 'scroll', height: '160px'}}>
                     {   
                         this.props.categories.map((data) => (
                         <div>

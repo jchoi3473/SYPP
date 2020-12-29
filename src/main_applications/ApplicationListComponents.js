@@ -1,6 +1,5 @@
 import React, { Component, useState } from 'react';
-import Button from 'react-bootstrap/Button'
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 

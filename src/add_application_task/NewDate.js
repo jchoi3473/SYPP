@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import CalendarComponent from './../calendar/CalendarComponent'
-import RadioButtons from './../radio/RadioButtons'
+import CalendarComponent from '../components/calendar/CalendarComponent'
+import RadioButtons from '../components/radio/RadioButtons'
 import './NewTask.scss'
 import './NewTask.css'
 

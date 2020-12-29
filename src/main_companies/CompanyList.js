@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import CompanyListComponents from './CompanyListComponents'
 import Rating from 'react-rating';
 
+import './../add_application/Modalbox.css'
 import './CompanyList.scss'
 import {setCompany} from './../redux/company-reducer/companyAction'
 import {connect} from 'react-redux'
@@ -83,6 +83,9 @@ export class CompanyList extends Component{
             value = {this.state.searchField}
             />
             </div>
+            <div className = "sypp-company-sortby">
+              Testing
+            </div>
             {
               (searchFilteredProgress.length > 0)?
               searchFilteredProgress.map((data) => (
@@ -116,7 +119,7 @@ export class CompanyList extends Component{
                         value={this.state.companyName}
                 />
                 </div>
-                  <button className ="sypp-button-next">
+                  <button className ="sypp-company-button-next">
                          Save
                   </button>
               </div>

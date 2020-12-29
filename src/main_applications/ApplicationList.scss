@@ -42,7 +42,7 @@
     color: rgba(255, 255, 255, 0.87);
     font-weight: bold;
     font-size: 14px;
-    margin-left: 15px;
+    // margin-left: 15px;
 }
 
 .sypp-modalButton{
@@ -79,4 +79,13 @@
     &:hover{
         color: rgb(163, 164, 166);
     }
+}
+.sypp-task-sortby{
+    margin-top: 3px;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 11px;
+    color: rgba(221, 221, 221, 0.6);
+
 }

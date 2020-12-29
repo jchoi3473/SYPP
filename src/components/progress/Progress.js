@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
-import './../addApp/Modalbox.css'
+import '../../add_application/Modalbox.css'
 import './Progress.css'
 import './ProgressBar.scss'
 import Moment from 'moment';
-import ReactTooltip from 'react-tooltip'
 import Popup from 'reactjs-popup';
+import Modal from 'react-bootstrap/Modal';
+import NewTask from '../../add_application_task/NewTask.js'
+import {setApps} from './../../redux/progress-reducer/progressAction'
+import {connect} from 'react-redux'
 
 
+
+const mapStatetoProps = state => {
+    return{
+        apps: state.progress.applications,
+        filteredProgress: state.filteredProgress.applications
+    }
+}
+
+const mapDispatchToProps= dispatch =>{
+    return {
+        setApps: (applications) => dispatch(setApps(applications)),
+    }
+}
 
 export class Progress extends Component{
     constructor(props){
@@ -15,7 +31,14 @@ export class Progress extends Component{
         this.state = {
             isHovering : false, 
             isHoveringMore: false, 
+            show : false,
         }
+    }
+    handleClose = () => {
+        this.setState({show: false});
+    }
+    handleShow = () => {
+        this.setState({show: true});
     }
 
     handleMouseHover(){
@@ -26,6 +49,11 @@ export class Progress extends Component{
             isHovering: !state.isHovering,
         };
     }
+
+    onClickEdit = () =>{
+        this.handleShow()
+    }
+
     handleClick = () =>{
         this.setState({
             isHoveringMore: !this.state.isHoveringMore
@@ -37,10 +65,31 @@ export class Progress extends Component{
         })
     }
     onClickMark = () =>{
+        console.log(this.props.date)
         this.setState({
             isHovering: false
         })
         this.props.handleCompleted(this.props.date, this.props.date.Title)
+    }
+
+    onClickSave = (title, date, dateShow) =>{
+        var applications = this.props.apps
+        for(var i=0 ; i<applications.length;i++){
+            if(this.props.applicationID === applications[i].applicationID){
+                console.log(applications[i].Tasks.length)
+                for(var j=0; j<applications[i].Tasks.length;j++){
+                    console.log(applications[i].Tasks[j])
+                    if(applications[i].Tasks[j].midTaskID === this.props.date.midTaskID){
+                        applications[i].Tasks[j].Title = title
+                        applications[i].Tasks[j].Time = date
+                        applications[i].Tasks[j].showDate = dateShow
+                    }
+                }
+            }
+        }
+        // this.props.setApps(applications)
+        this.setState({})
+        this.handleClose()
     }
 
     render(){
@@ -80,7 +129,7 @@ export class Progress extends Component{
                         >
                             <div className = "sypp-progress-tooltip-options-container">
                             <button className = "sypp-progress-tooltip-option" onClick = {this.onClickMark}>Mark Incomplete</button>
-                            <button className = "sypp-progress-tooltip-option" onClick = {() => {this.onClick()}}>Edit</button>
+                            <button className = "sypp-progress-tooltip-option" onClick = {() => {this.onClickEdit()}}>Edit</button>
                             <button className = "sypp-progress-tooltip-option" onClick = {() => {this.onClick()}}>Add Note</button>
                             </div>
                         </Popup>
@@ -103,19 +152,30 @@ export class Progress extends Component{
                         >
                             <div className = "sypp-progress-tooltip-options-container">
                             <button className = "sypp-progress-tooltip-option"  onClick = {this.onClickMark}>Mark Complete</button>
-                            <button className = "sypp-progress-tooltip-option"  onClick = {() => {this.onClick()}}>Edit</button>
+                            <button className = "sypp-progress-tooltip-option"  onClick = {() => {this.onClickEdit()}}>Edit</button>
                             <button className = "sypp-progress-tooltip-option"  onClick = {() => {this.onClick()}}>Add Note</button>
                             </div>
                         </Popup>
                     </div>:
                     undefined
                 }
-               
                 </div>
+
+                <Modal 
+                    show={this.state.show}
+                    onHide={this.handleClose}
+                    centered
+                    dialogClassName = "sypp-ModalMain"
+                    >    
+                    <div className = 'sypp-Modal-container'>
+                        <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
+                        <NewTask onClickSave = {this.onClickSave} applicationID = {this.props.applicationID}/>
+                    </div>
+                </Modal>
                 
             </div>
         )
     }
 }
 
-export default Progress
+export default connect(mapStatetoProps,mapDispatchToProps)(Progress)

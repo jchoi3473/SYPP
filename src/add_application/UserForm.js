@@ -3,11 +3,11 @@ import RoleLocationAdd from './RoleLocationAdd';
 import Applied from './Applied';
 import CompanyPositionAdd from './CompanyPositionAdd';
 import InterviewDate from './InterviewDate';
-import Page from '../page/Page'
+import Page from '../components/page/Page'
 
 import {connect} from 'react-redux'
-import {postNewApp, setSelectedCategories} from './../../redux/addApp-reducer/addAppAction'
-import {requestProgress} from './../../redux/progress-reducer/progressAction'
+import {postNewApp, setSelectedCategories} from './../redux/addApp-reducer/addAppAction'
+import {requestProgress} from './../redux/progress-reducer/progressAction'
 
 
 const mapStatetoProps = state => {

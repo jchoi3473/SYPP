@@ -1,41 +1,21 @@
 import React, {Component} from 'react';
-import './Modalbox.css';
-import './Modalbox.scss';
-import MuiButton from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core';
-import RadioButtons from '../radio/RadioButtons'
+import RadioButtons from '../components/radio/RadioButtons'
 
 import {connect} from 'react-redux'
-import {setDates} from './../../redux/addApp-reducer/addAppAction'
+import {setDates} from './../redux/addApp-reducer/addAppAction'
 
 
 //{key : 1, date: new Date('2020-01-16'), showDate: true, completed: true},
 
-const Button = withStyles({
-    contained: {
-        '&$focusVisible': {
-        //   boxShadow: theme.shadows[6],
-          backgroundColor: 'rgba(0, 0, 0, 0)'
-        },
-        '&:active': {
-            backgroundColor: 'rgba(0, 0, 0, 0)'
-        },
-        '&$focus': {
-            //   boxShadow: theme.shadows[6],
-              backgroundColor: 'rgba(0, 0, 0, 0)'
-        },
-      },
-})(MuiButton);
 
-
-export class Applied extends Component{
+export class ArchiveTask extends Component{
     state = {
         option: '1'
         }
 
     onChange = (value) => {
         var boolean = true;
-        if (value == 1) {
+        if (value === 1) {
             boolean = true;
         }
         else{
@@ -58,26 +38,19 @@ export class Applied extends Component{
     render(){
         const radioValue =    
             [ 
-            { name: 'Yes', value: '1' },
-            { name: 'No', value: '2' },
+            { name: 'Offer', value: '1' },
+            { name: 'Rejection', value: '2' },
             ]
         return(
             <div>
                 <div className ="sypp-applied-container">
-                    <div className="sypp-modal-text sypp-modal-newapp-applied">Have you applied yet?</div>
+                    <div className="sypp-modal-text sypp-modal-newapp-applied">What is the result?</div>
                     <div className = "sypp-radio-container">
                     <RadioButtons options = {radioValue} onChange = {this.onChange} isDisabled = {false}/>
                     </div>
                 </div>
             <br/>
-            <div className ="sypp-next-button-container">
-                <button className = "sypp-button-prev" onClick = {this.back}>
-                    Prev
-                </button>
-                <button className ="sypp-button-next" onClick = {this.continue}>
-                    Next
-                </button>
-            </div>
+
         </div>
         );
     }
@@ -94,5 +67,5 @@ const mapStatetoProps = state => {
     }
   }
 
-export default connect(mapStatetoProps,mapDispatchToProps)(Applied)
+export default connect(mapStatetoProps,mapDispatchToProps)(ArchiveTask)
 //Add x button bootstrap or material-ui x 

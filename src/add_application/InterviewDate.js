@@ -1,14 +1,14 @@
-import React,{useState, Component} from 'react';
-import CalendarComponent from './../calendar/CalendarComponent';
-import RadioButtons from '../radio/RadioButtons'
+import React,{Component} from 'react';
+import CalendarComponent from './../components/calendar/CalendarComponent';
+import RadioButtons from './../components/radio/RadioButtons'
 import './Modalbox.css';
 import './Modalbox.scss';
 
-import './Calendar.css';
+import './../components/calendar/Calendar.css';
 import 'react-calendar/dist/Calendar.css';
 
 import {connect} from 'react-redux'
-import {setDates} from './../../redux/addApp-reducer/addAppAction'
+import {setDates} from './../redux/addApp-reducer/addAppAction'
 
 
 // Calandar 컴포넌트는 reusable 해서 다른곳에 적용 가능, 
@@ -24,7 +24,7 @@ export class InterviewDate extends Component{
 
   onChange = (value) => {
     var boolean = true;
-    if (value == 1) {
+    if (value === 1) {
         boolean = true;
     }
     else{

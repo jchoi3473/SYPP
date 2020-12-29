@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import './../addApp/Modalbox.css'
+import '../../add_application/Modalbox.css'
 import './Progress.css'
 import './ProgressBar.scss'
 
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Moment from 'moment';
-import NewTask from '../newTask/NewTask.js'
-import ReactTooltip from "react-tooltip";
+import NewTask from '../../add_application_task/NewTask.js'
 
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {connect} from 'react-redux'
@@ -37,31 +36,29 @@ export class ProgressBar extends Component{
             toolTip: false,
             Title : "",
             completed : false,
+            archiveShow: false, 
         }
     }
 
     handleTitleCompleted = (title) =>{
-        console.log("Completeed triggered")
         this.setState({
             completed: true,
             Title : title
         })
     }
     handleTitleNotCompleted = (title) =>{
-        console.log("not Completeed triggered")
         this.setState({
             completed: false,
             Title : title
         })
     }
 
+    //Task click function to handle completed
     handleCompleted = (date, title) => {
-        const apps = this.props.filteredProgress
+        const apps = this.props.apps
         for(var i=0;i<apps.length;i++){
             if(apps[i].applicationID === this.props.applicationID){
-
                 for(var j=0;j<apps[i].Tasks.length;j++){
-                    
                     if(apps[i].Tasks[j].midTaskID === date.midTaskID){
                         apps[i].Tasks[j].Status = !apps[i].Tasks[j].Status
                         break;
@@ -75,31 +72,36 @@ export class ProgressBar extends Component{
         })
     }
 
+    //Task click function for applied task
     handleCompletedApplied = () => {
         console.log("Clicked")
         const apps = this.props.filteredProgress
         for(var i=0;i<apps.length;i++){
             if(apps[i].applicationID === this.props.applicationID){
-                // for(var j=0;j<apps[i].Tasks.length;j++){
-                    
-                //     if(apps[i].Tasks[j].midTaskID === date.midTaskID){
-                        apps[i].Detail.Status[0].Status = !apps[i].Detail.Status[0].Status
-                        // break;
-                //     }
-                // }
+                apps[i].Detail.Status[0].Status = !apps[i].Detail.Status[0].Status
             }
         }
         this.props.setApps(apps)
         this.setState({})
     }
 
-
+    //Tasks Modal Show/Close
     handleClose = () => {
         this.setState({show: false});
     }
     handleShow = () => {
         this.setState({show: true});
     }
+
+    //Archive Modal Show/Close
+    handleArchiveShow = () =>{
+        this.setState({archiveShow : true})
+    }
+    handleArchiveClose = () =>{
+        this.setState({archiveShow : false})
+    }
+
+    //Tasks Modal Stepper
     nextStep = () =>{
         const {step}  = this.state;
         this.setState({
@@ -112,11 +114,11 @@ export class ProgressBar extends Component{
             step: step - 1
         });
     }
-    onClickSave = (title, date, dateShow) =>{
 
+    //Save function for task
+    onClickSave = (title, date, dateShow) =>{
         this.props.onClickAdd(this.props.applicationID, title, date, dateShow)
         this.handleClose()
-
     }
     //use if clause to determine what color to use.
     render(){
@@ -149,14 +151,13 @@ export class ProgressBar extends Component{
                                 {(date.Title!=="Applied")?
                                     ((date.showDate)?
                                         ((date.Status)?
-
                                             <div className = "sypp-application-status-container">
-                                                <Progress completed = {true} handleCompleted = {this.handleCompleted} date = {date}/>
+                                                <Progress applicationID = {this.props.applicationID} completed = {true} handleCompleted = {this.handleCompleted} date = {date}/>
                                             </div>: 
 
                                             <div className = "sypp-application-status-container">
-                                                <Progress completed = {false} handleCompleted = {this.handleCompleted} date = {date}/>
-                                            </div>            )
+                                                <Progress applicationID = {this.props.applicationID} completed = {false} handleCompleted = {this.handleCompleted} date = {date}/>
+                                            </div>)
                                     : undefined):undefined}
                                    
                             </div>))
@@ -168,7 +169,7 @@ export class ProgressBar extends Component{
                             </div>
                             </div>
                             <div className = "sypp-application-result-container">
-                            <Fab variant="round" className = "sypp-addTask" onClick={this.props.onClickAdd}>
+                            <Fab variant="round" className = "sypp-addTask" onClick={this.handleArchiveShow}>
                                     <AddIcon className = "sypp-sizeChange"/>
                             </Fab>
                             </div>
@@ -181,6 +182,18 @@ export class ProgressBar extends Component{
                     >    
                         <div className = 'sypp-Modal-container'>
                             <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
+                            <NewTask onClickSave = {this.onClickSave} applicationID = {this.props.applicationID}/>
+                        </div>
+                    </Modal>
+                    <Modal 
+                    show={this.state.archiveShow}
+                    onHide={this.handleArchiveClose}
+                    centered
+                    dialogClassName = "sypp-ModalMain"
+                    >    
+                        <div className = 'sypp-Modal-container'>
+                            <button className ="sypp-button-close" onClick={this.handleArchiveClose}>X</button>
+
                             <NewTask onClickSave = {this.onClickSave} applicationID = {this.props.applicationID}/>
                         </div>
                     </Modal>

@@ -66,7 +66,7 @@ export class Progress extends Component{
 
     onClickAdd = (applicationID, title, date, showDate) => {
         const apps = this.props.apps
-        apps.map((data) =>{
+        apps.map((data) => {
             if(data.applicationID === applicationID){
                 data.Tasks = data.Tasks.concat({
                     Time: date,
@@ -107,6 +107,7 @@ export class Progress extends Component{
             />
             </div>
             {this.props.selectedTitle !== ""? <div className ="sypp-selectedTitle">{this.props.selectedTitle}</div>:undefined}
+            <div className = "sypp-task-sortby">Testing</div>
             <div className = "sypp-taskTitles">
                 <div className="sypp-taskEntity">Apply</div>
                 <div className="sypp-taskEntity">Task</div>

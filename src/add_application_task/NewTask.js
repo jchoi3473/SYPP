@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import NextStep from './NextStep';
 import NewDate from './NewDate';
-import Page from '../page/Page'
+import Page from '../components/page/Page'
 import './NewTask.css'
 import './NewTask.scss'
 

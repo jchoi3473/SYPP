@@ -1,7 +1,4 @@
 import React, {Component, useState} from 'react';
-import ModalBox from './components/addApp/ModalBox.js';
-import ApplicationList from './main_applications/ApplicationList'
-import Applications from './main_applications/Applications'
 import MainPage from './main/MainPage'
 import {connect} from 'react-redux'
 import {requestProgress} from './redux/progress-reducer/progressAction'
@@ -10,8 +7,7 @@ import {updateFilteredProgress} from './redux/filteredProgress-reducer/filteredP
 import {requestCompany} from './redux/company-reducer/companyAction'
 import './App.css';
 
-import ModalProvider from './ModalProvider'
-import Modal from './Modal'
+
 
 const mapStatetoProps = state => {
   return{

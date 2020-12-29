@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import Calendar from 'react-calendar';
 import './Calendar.css';
+import './Calendar.scss'
 import 'react-calendar/dist/Calendar.css';
 
 export class CalendarComponent extends Component{

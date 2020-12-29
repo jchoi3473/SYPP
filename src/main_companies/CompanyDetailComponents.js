@@ -1,9 +1,6 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {requestProgress} from '../redux/progress-reducer/progressAction'
-import {setSelectedCategories} from '../redux/addApp-reducer/addAppAction'
 import {setCompany} from './../redux/company-reducer/companyAction'
-import {updateFilteredProgress} from '../redux/filteredProgress-reducer/filteredProgressAction'
 import './../components/radio/RadioButtons.css'
 
 import ApplicationDetailEvents from './../main_applications_components/ApplicationDetailEvents'
@@ -20,7 +17,8 @@ import CreateEditContact from './../create_edit_applications_components/create_e
 import CreateEditConversation from '../create_edit_applications_components/create_edit_conversation/CreateEditConversation'
 import CreateEditChecklist from './../create_edit_applications_components/create_edit_checklist/CreateEditChecklist'
 import Modal from 'react-bootstrap/Modal';
-import ReactTooltip from 'react-tooltip'
+import Popup from 'reactjs-popup';
+
 
 
 const mapStatetoProps = state => {
@@ -262,26 +260,23 @@ class CompanyDetailComponents extends Component{
                 {this.display()}
                 </div>
                 <div>
-            <button data-for="addDetailButton"
-                    data-tip = '' 
-                    className = "sypp-detail-add-button">+</button>
-
-            <ReactTooltip
-            id= "addDetailButton"
-            className = "sypp-create-detail-tooltip"
-            effect='solid'
-            delayHide={250}
-            place={'right'}
-            disable	={false}
+            <Popup
+            trigger={
+                <button 
+                className = "sypp-detail-add-button">+</button>
+            }
+            position={'right'}
+            closeOnEscape
+            closeOnDocumentClick
             >
                 <div className = "sypp-tooltip-button-container">
-                <button className = "sypp-create-detail-button" onClick = {() => this.onClick('0')}>Events</button>
-                <button className = "sypp-create-detail-button" onClick = {() => this.onClick('1')}>Notes</button>
-                <button className = "sypp-create-detail-button" onClick = {() => this.onClick('2')}>Contacts</button>
-                <button className = "sypp-create-detail-button" onClick = {() => this.onClick('3')}>Conversation Histories</button>
-                <button className = "sypp-create-detail-button" onClick = {() => this.onClick('4')}>Checklists</button>
+                <button className = "sypp-create-detail-button sypp-create-detail-button1" onClick = {() => this.onClick('0')}>Events</button>
+                <button className = "sypp-create-detail-button sypp-create-detail-button2" onClick = {() => this.onClick('1')}>Notes</button>
+                <button className = "sypp-create-detail-button sypp-create-detail-button3" onClick = {() => this.onClick('2')}>Contacts</button>
+                <button className = "sypp-create-detail-button sypp-create-detail-button4" onClick = {() => this.onClick('3')}>Conversation Histories</button>
+                <button className = "sypp-create-detail-button sypp-create-detail-button5" onClick = {() => this.onClick('4')}>Checklists</button>
                 </div>
-            </ReactTooltip>
+            </Popup>
             </div>
             <Modal 
             show={this.state.show}

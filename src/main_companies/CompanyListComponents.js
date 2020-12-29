@@ -55,8 +55,6 @@ class CompanyListComponents extends Component {
                <div onClick = {this.props.toCompanyDetail(data.companyID)}>{data.Detail.CompanyName}</div>
                )):undefined
             }
-            
-
           </div>
       );
   }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import RadioButtons from './../radio/RadioButtons'
+import RadioButtons from '../components/radio/RadioButtons'
 import './NewTask.css'
 import './NewTask.scss'
 

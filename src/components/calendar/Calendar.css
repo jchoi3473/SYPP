@@ -1,9 +1,4 @@
-.sypp-main{
-    border:transparent !important ;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.4);
-    background: transparent;
-}
+
 .react-calendar__navigation button{
     color: #ffffff;
 }

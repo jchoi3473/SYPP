@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { setCompanyName, setPositionName } from '../../redux/addApp-reducer/addAppAction';
+import { setCompanyName, setPositionName } from '../redux/addApp-reducer/addAppAction';
 import {connect} from 'react-redux'
 import './Modalbox.css';
 import './Modalbox.scss';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ModalBox from './../components/addApp/ModalBox'
-import './../components/addApp/Modalbox.css'
+import ModalBox from './../add_application/ModalBox'
+import './../add_application/Modalbox.css'
 import './../components/progress/Progress.css'
 import ApplicationListComponents from './ApplicationListComponents'
 import ApplicationListProgress from './ApplicationListProgress'

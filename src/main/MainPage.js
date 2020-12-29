@@ -1,5 +1,4 @@
-import React, {Component, useState} from 'react';
-import ModalBox from './../components/addApp/ModalBox.js';
+import React, {useState} from 'react';
 import Applications from './../main_applications/Applications'
 import Companies from './../main_companies/Companies'
 import {connect} from 'react-redux'
@@ -8,12 +7,9 @@ import {setSelectedCategories} from './../redux/addApp-reducer/addAppAction'
 import {updateFilteredProgress} from './../redux/filteredProgress-reducer/filteredProgressAction'
 import './MainPage.scss';
 import './../components/radio/RadioButtons.css'
-import Button from 'react-bootstrap/Button'
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
-
-
 
 const mapStatetoProps = state => {
   return{
@@ -62,7 +58,6 @@ function MainPage(props){
                 <div>more to go</div>
             )
         }
-        
     }
 
     return (
