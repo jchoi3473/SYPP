@@ -8,7 +8,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Moment from 'moment';
 import NewTask from '../../add_application_task/NewTask.js'
-
+import ArchiveTask from './../../archive_application_task/ArchiveTask'
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {connect} from 'react-redux'
 import Progress from './Progress'
@@ -193,8 +193,7 @@ export class ProgressBar extends Component{
                     >    
                         <div className = 'sypp-Modal-container'>
                             <button className ="sypp-button-close" onClick={this.handleArchiveClose}>X</button>
-
-                            <NewTask onClickSave = {this.onClickSave} applicationID = {this.props.applicationID}/>
+                            <ArchiveTask applicationID = {this.props.applicationID}/>
                         </div>
                     </Modal>
 

@@ -1,0 +1,38 @@
+.sypp-archive-text-container{
+    display: flex;  
+    justify-content: center;
+    &:hover{
+        color: #E3EFFF !important;
+    }
+}
+
+.sypp-archive-text{
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    /* identical to box height */
+    color:rgb(129,139,161);
+    &:hover{
+        color: #E3EFFF !important;
+    }
+
+}
+.sypp-archive-text-save{
+    margin-left: 3px;
+    font-weight: bold;
+}
+.sypp-archive-subtext{
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    opacity: 0.5;
+
+    &:hover{
+        opacity: 1;
+    }
+}
+    

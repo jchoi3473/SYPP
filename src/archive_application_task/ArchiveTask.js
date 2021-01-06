@@ -3,14 +3,15 @@ import RadioButtons from '../components/radio/RadioButtons'
 
 import {connect} from 'react-redux'
 import {setDates} from './../redux/addApp-reducer/addAppAction'
-
+import './ArchiveTask.scss'
 
 //{key : 1, date: new Date('2020-01-16'), showDate: true, completed: true},
 
 
 export class ArchiveTask extends Component{
     state = {
-        option: '1'
+        option: '1',
+        result : true, 
         }
 
     onChange = (value) => {
@@ -21,9 +22,7 @@ export class ArchiveTask extends Component{
         else{
             boolean = false;
         }
-        const newDates = this.props.dates
-        newDates[0].completed = boolean
-        this.props.setDates(newDates)
+        this.setState({result: boolean})
     }
     
     continue = e => {
@@ -49,8 +48,13 @@ export class ArchiveTask extends Component{
                     <RadioButtons options = {radioValue} onChange = {this.onChange} isDisabled = {false}/>
                     </div>
                 </div>
-            <br/>
-
+                <div className = "sypp-archive-text-container">
+                    <div className = "sypp-archive-text">Save and </div>
+                    <div className ="sypp-archive-text sypp-archive-text-save">
+                        move to archive
+                    </div>
+                </div>
+                <div className = "sypp-archive-subtext">(Archived apps are accessible via desktop app)</div>
         </div>
         );
     }
