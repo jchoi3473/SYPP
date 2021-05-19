@@ -6,12 +6,14 @@ import progressReducer from './progress-reducer/progressReducer'
 import filteredProgressReducer from './filteredProgress-reducer/filteredProgressReducer'
 import applicationDetailReducer from './applicationDetail-reducer/ApplicationDetailReducer'
 import companyReducer from './company-reducer/companyReducer'
+import userReducer from './user-reducer/userReducer'
 export default combineReducers({
     addApp : addAppReducer,
     categories: categoriesReducer,
     progress : progressReducer,
     filteredProgress: filteredProgressReducer,
     applicationDetail: applicationDetailReducer,
-    companies: companyReducer
+    companies: companyReducer,
+    user : userReducer
     // requestProgress : requestProgressReducer
 })

@@ -38,7 +38,7 @@ export class ApplicationList extends Component{
         }
         else{
             boolean = false;
-        }   // this.props.setDates(newDates)
+        }   
     }
 
 render(){
@@ -81,18 +81,3 @@ render(){
 }
 export default connect(mapStatetoProps, mapDispatchToProps)(ApplicationList)
 
-
-//will use this at later production. Function that will help crawl data by highlighting
-{/* <input onBlur = {this.handleMouseUp} value = {this.state.value}/>  */}
-
-// handleMouseUp = (e) => {
-//     setTimeout( function() {
-//         this.setState({
-//             value : window.getSelection().toString()
-//         })
-//     }.bind(this)
-//     ,300)
-//     console.log("triggered")
-//     console.log(e.target.value)
-//     // e.preventDefault()
-// }

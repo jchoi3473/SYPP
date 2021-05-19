@@ -1,10 +1,11 @@
-import React, {Component, useState} from 'react';
-import MainPage from './main/MainPage'
-import {connect} from 'react-redux'
-import {requestProgress} from './redux/progress-reducer/progressAction'
-import {setSelectedCategories} from './redux/addApp-reducer/addAppAction'
-import {updateFilteredProgress} from './redux/filteredProgress-reducer/filteredProgressAction'
-import {requestCompany} from './redux/company-reducer/companyAction'
+import React, {Component} from 'react';
+import MainPage from './main/MainPage';
+import Login from './login/Login';
+import {connect} from 'react-redux';
+import {requestProgress} from './redux/progress-reducer/progressAction';
+import {setSelectedCategories} from './redux/addApp-reducer/addAppAction';
+import {updateFilteredProgress} from './redux/filteredProgress-reducer/filteredProgressAction';
+import {requestCompany} from './redux/company-reducer/companyAction';
 import './App.css';
 
 
@@ -45,7 +46,8 @@ class App extends Component {
       this.props.updateFilteredProgress(this.props.apps);
     return (
       <div className = "sypp-App">
-        <MainPage/>
+        {/* <MainPage/> */}
+        <Login/>
       </div>
     );  
   }

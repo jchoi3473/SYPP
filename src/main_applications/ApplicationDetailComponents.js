@@ -128,7 +128,6 @@ class ApplicationDetailComponents extends Component {
                 radioName:'Events',
                 radioValue :'0'
             })
-
         }
         else if(value==='1'){
             this.setState({
