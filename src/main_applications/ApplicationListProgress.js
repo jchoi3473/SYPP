@@ -92,7 +92,7 @@ export class Progress extends Component{
 
     render(){
         const searchFilteredProgress = this.props.filteredProgress.filter(application => {
-            return (application.Detail.CompanyName.toLowerCase().includes(this.state.searchField.toLowerCase())||application.Detail.PositionName.toLowerCase().includes(this.state.searchField.toLowerCase()) )
+            return (application.detail.companyName.toLowerCase().includes(this.state.searchField.toLowerCase())||application.detail.positionName.toLowerCase().includes(this.state.searchField.toLowerCase()) )
         })
 
         return(
@@ -118,7 +118,7 @@ export class Progress extends Component{
                     searchFilteredProgress.map((data) => (
                             <div className = "sypp-progress-all sypp-trashIcon-Hover">
                                 <div className = "sypp-starContainer">
-                                <Rating className ="sypp-starIcon" applicationName = {data.applicationID} stop={1} initialRating = {data.Detail.IsFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.applicationID)}
+                                <Rating className ="sypp-starIcon" applicationName = {data.applicationID} stop={1} initialRating = {data.detail.isFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.applicationID)}
                                 emptySymbol="fa fa-star-o starSize starIcon"
                                 fullSymbol = "fa fa-star starSize starIcon"
                                  />
@@ -126,12 +126,12 @@ export class Progress extends Component{
                                     <div>{console.log(data)}</div>
                                     <div className = "sypp-application-name">
                                     <div className = "sypp-appilication-name-container">
-                                        <div className = "sypp-progress-company" onClick = {e => this.props.toApplicationDetail(data.Detail.applicationID)} >{data.Detail.CompanyName}</div>
+                                        <div className = "sypp-progress-company" onClick = {e => this.props.toApplicationDetail(data.detail.applicationID)} >{data.detail.companyName}</div>
                                         <FontAwesomeIcon className = "sypp-trashIcon sypp-trashIcon-Hover" icon={faTrashAlt} onClick = {this.onClickDelete}/>
                                     </div>
-                                    <div className = "sypp-progress-position" onClick = {e => this.props.toApplicationDetail(data.Detail.applicationID)}>{data.Detail.PositionName}</div>
+                                    <div className = "sypp-progress-position" onClick = {e => this.props.toApplicationDetail(data.detail.applicationID)}>{data.detail.PositionName}</div>
                                     </div>
-                                <ProgressBar applicationID = {data.Detail.applicationID} applied = {data.applied} dates = {data.Tasks} details = {data.Detail.Status[0]} onClickAdd = {this.onClickAdd}/>
+                                <ProgressBar applicationID = {data.detail.applicationID} applied = {data.applied} dates = {data.tasks} details = {data.detail.status[0]} onClickAdd = {this.onClickAdd}/>
                             </div>
                             )):undefined
                 }

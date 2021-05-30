@@ -1,4 +1,3 @@
-
 const INITIAL_STATE = {
     application:{}
 }

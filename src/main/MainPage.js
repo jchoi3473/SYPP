@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Applications from './../main_applications/Applications'
 import Companies from './../main_companies/Companies'
 import {connect} from 'react-redux'
-import {requestProgress} from './../redux/progress-reducer/progressAction'
+import {setApps} from './../redux/progress-reducer/progressAction'
 import {setSelectedCategories} from './../redux/addApp-reducer/addAppAction'
 import {updateFilteredProgress} from './../redux/filteredProgress-reducer/filteredProgressAction'
 import './MainPage.scss';
 import './../components/radio/RadioButtons.css'
+import {getApplication} from './../lib/api'
 
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
@@ -21,7 +22,7 @@ const mapStatetoProps = state => {
 
 const mapDispatchToProps= dispatch =>{
   return {
-      onRequestProgress: () => dispatch(requestProgress()),
+      setApps: (applications) => dispatch(setApps(applications)),
       setSelectedCategories: (categories) => dispatch(setSelectedCategories(categories)),
       updateFilteredProgress: (applications) => dispatch(updateFilteredProgress(applications)),
   }
@@ -35,6 +36,15 @@ function MainPage(props){
     { name: 'Companies', value: '1' },
     { name: 'Templates', value: '2' },
     ]
+
+    useEffect(() => {
+      if(localStorage.getItem('jwt-token')){
+        getApplication(JSON.parse(localStorage.getItem('user')).uID).then(applications => props.setApps(applications))
+        // console.log(applications)
+      }
+    },[])
+
+
     const radioChange = (e) => {
     setRadioValue(e.target.value)
     }
