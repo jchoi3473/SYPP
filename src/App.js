@@ -28,19 +28,36 @@ const mapDispatchToProps= dispatch =>{
 }
 
 class App extends Component {
-  
-  async componentDidMount() {
-    const apps = await this.props.onRequestProgress();
-    const companies = await this.props.onRequestCompany();
-    var newCategory = [];
-    for (var i=0;i<this.props.categories.length;i++){
-      newCategory = newCategory.concat({
-        Type : this.props.categories[i].name,
-        SuggestionsOrSeleceted : []
-      })
+
+  initializeUserInfo = async () => {
+    const loggedInfo = storage.get('loggedInfo'); // 로그인 정보를 로컬스토리지에서 가져옵니다.
+    if(!loggedInfo) return; // 로그인 정보가 없다면 여기서 멈춥니다.
+
+    const { UserActions } = this.props;
+    UserActions.setLoggedInfo(loggedInfo);
+    try {
+        await UserActions.checkStatus();
+    } catch (e) {
+        storage.remove('loggedInfo');
+        window.location.href = '/auth/login?expired';
     }
-    this.props.setSelectedCategories(newCategory)
+}
+  componentDidMount() {
+    this.initializeUserInfo();
   }
+
+  // async componentDidMount() {
+  //   const apps = await this.props.onRequestProgress();
+  //   const companies = await this.props.onRequestCompany();
+  //   var newCategory = [];
+  //   for (var i=0;i<this.props.categories.length;i++){
+  //     newCategory = newCategory.concat({
+  //       Type : this.props.categories[i].name,
+  //       SuggestionsOrSeleceted : []
+  //     })
+  //   }
+  //   this.props.setSelectedCategories(newCategory)
+  // }
 
   render(){
       this.props.updateFilteredProgress(this.props.apps);
