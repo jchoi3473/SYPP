@@ -48,7 +48,7 @@ export class CompanyList extends Component{
 
         for(var i=0; i<companies.length;i++){
             if(companies[i].companyID+"" === companyID+""){
-              companies[i].Detail.IsFavorite = !companies[i].Detail.IsFavorite
+              companies[i].detail.isFavorite = !companies[i].detail.isFavorite
                 break;
             }
         }
@@ -70,7 +70,7 @@ export class CompanyList extends Component{
 
     render(){
         const searchFilteredProgress = this.props.companies.filter(company => {
-            return (company.Detail.CompanyName.toLowerCase().includes(this.state.searchField.toLowerCase()))
+            return (company.detail.companyName.toLowerCase().includes(this.state.searchField.toLowerCase()))
           })
         return(
             <div>
@@ -90,11 +90,11 @@ export class CompanyList extends Component{
               (searchFilteredProgress.length > 0)?
               searchFilteredProgress.map((data) => (
                 <div className = "sypp-Company-container">
-                  <Rating className ="sypp-starIcon" companyName = {data.companyID} stop={1} initialRating = {data.Detail.IsFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.companyID)}
+                  <Rating className ="sypp-starIcon" companyName = {data.companyID} stop={1} initialRating = {data.detail.isFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.companyID)}
                   emptySymbol="fa fa-star-o starSize starIcon"
                   fullSymbol = "fa fa-star starSize starIcon"
                   />
-                <div className = "sypp-CompanyList" onClick = {() => this.props.toCompanyDetail(data.companyID)}>{data.Detail.CompanyName}</div>
+                <div className = "sypp-CompanyList" onClick = {() => this.props.toCompanyDetail(data.companyID)}>{data.detail.companyName}</div>
                 </div>
               )):undefined
             }

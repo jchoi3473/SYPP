@@ -58,9 +58,9 @@ export class ProgressBar extends Component{
         const apps = this.props.apps
         for(var i=0;i<apps.length;i++){
             if(apps[i].applicationID === this.props.applicationID){
-                for(var j=0;j<apps[i].Tasks.length;j++){
-                    if(apps[i].Tasks[j].midTaskID === date.midTaskID){
-                        apps[i].Tasks[j].Status = !apps[i].Tasks[j].Status
+                for(var j=0;j<apps[i].tasks.length;j++){
+                    if(apps[i].tasks[j].midTaskID === date.midTaskID){
+                        apps[i].tasks[j].status = !apps[i].tasks[j].status
                         break;
                     }
                 }
@@ -78,7 +78,7 @@ export class ProgressBar extends Component{
         const apps = this.props.filteredProgress
         for(var i=0;i<apps.length;i++){
             if(apps[i].applicationID === this.props.applicationID){
-                apps[i].Detail.Status[0].Status = !apps[i].Detail.Status[0].Status
+                apps[i].detail.status[0].status = !apps[i].detail.status[0].status
             }
         }
         this.props.setApps(apps)

@@ -201,7 +201,7 @@ class ApplicationDetailComponents extends Component {
                 return (
                     <div>
                         {
-                        this.props.applicationDetail.Events.map((event) =>(
+                        this.props.applicationDetail.events.map((event) =>(
                             <ApplicationDetailEvents onSaveEventNote = {this.onSaveEventNote} Event = {event} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
                         ))
                         }
@@ -211,7 +211,7 @@ class ApplicationDetailComponents extends Component {
                 return (
                     <div>
                         {
-                        this.props.applicationDetail.Notes.map((note) =>(
+                        this.props.applicationDetail.notes.map((note) =>(
                             <ApplicationDetailNotes onSaveNote = {this.onSaveNote} Note = {note} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
                         ))
                         }
@@ -221,7 +221,7 @@ class ApplicationDetailComponents extends Component {
                 return (
                     <div>
                         {
-                        this.props.applicationDetail.Contacts.map((data) => (
+                        this.props.applicationDetail.contacts.map((data) => (
                             <ApplicationDetailContacts onSaveContactNote = {this.onSaveContactNote} contact = {data} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
                         ))
                         }
@@ -231,7 +231,7 @@ class ApplicationDetailComponents extends Component {
                 return (
                     <div>
                         {
-                        this.props.applicationDetail.FollowUps.map((FollowUp) =>(
+                        this.props.applicationDetail.followUps.map((FollowUp) =>(
                             <ApplicationDetailFollowUp onSaveConversation = {this.onSaveConversation} FollowUp = {FollowUp} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
                         ))
                         }
@@ -241,7 +241,7 @@ class ApplicationDetailComponents extends Component {
                 return (
                     <div>
                         {
-                        this.props.applicationDetail.Checklists.map((checklist) =>(
+                        this.props.applicationDetail.checklists.map((checklist) =>(
                             <ApplicationDetailChecklists onSaveChecklist = {this.onSaveChecklist} Checklist = {checklist} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
                         ))
                         }

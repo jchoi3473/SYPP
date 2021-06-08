@@ -8,6 +8,7 @@ import {updateFilteredProgress} from './../redux/filteredProgress-reducer/filter
 import './MainPage.scss';
 import './../components/radio/RadioButtons.css'
 import {getApplication} from './../lib/api'
+import { io } from "socket.io-client";
 
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
@@ -28,6 +29,10 @@ const mapDispatchToProps= dispatch =>{
   }
 }
 
+const socket = io("https://saveyourappdevelopment.azurewebsites.net", {
+  transports: ["/chathub/OnConnected"]
+});
+
 function MainPage(props){
     const [radioValue, setRadioValue] = useState('0');
     const radios =  
@@ -42,6 +47,7 @@ function MainPage(props){
         getApplication(JSON.parse(localStorage.getItem('user')).uID).then(applications => props.setApps(applications))
         // console.log(applications)
       }
+      socket.on()
     },[])
 
 

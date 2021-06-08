@@ -56,7 +56,7 @@ export class Progress extends Component{
 
         for(var i=0; i<apps.length;i++){
             if(apps[i].applicationID+"" === applicationID+""){
-                apps[i].Detail.IsFavorite = !apps[i].Detail.IsFavorite
+                apps[i].detail.isFavorite = !apps[i].detail.isFavorite
                 break;
             }
         }
@@ -68,11 +68,11 @@ export class Progress extends Component{
         const apps = this.props.apps
         apps.map((data) => {
             if(data.applicationID === applicationID){
-                data.Tasks = data.Tasks.concat({
-                    Time: date,
-                    Title: title,
+                data.Tasks = data.tasks.concat({
+                    time: date,
+                    title: title,
                     showDate : showDate,
-                    Status: false
+                    status: false
                 })
             }
         })
