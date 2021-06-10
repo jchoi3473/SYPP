@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {setApps} from './../redux/progress-reducer/progressAction'
 import {setSelectedCategories} from './../redux/addApp-reducer/addAppAction'
 import {updateFilteredProgress} from './../redux/filteredProgress-reducer/filteredProgressAction'
+import { HubConnectionBuilder } from '@microsoft/signalr';
 import './MainPage.scss';
 import './../components/radio/RadioButtons.css'
 import {getApplication} from './../lib/api'
@@ -37,12 +38,35 @@ function MainPage(props){
     { name: 'Templates', value: '2' },
     ]
 
+
     useEffect(() => {
       if(localStorage.getItem('jwt-token')){
         getApplication(JSON.parse(localStorage.getItem('user')).uID).then(applications => props.setApps(applications))
         // console.log(applications)
       }
     },[])
+
+    useEffect(() => {
+      const connection = new HubConnectionBuilder()
+          .withUrl('https://saveyourappdevelopment.azurewebsites.net/chathub/')
+          .withAutomaticReconnect()
+          .build();
+
+      connection.start()
+          .then(result => {
+              console.log('Connected!');
+              console.log(connection.connection.connectionId);
+              console.log(JSON.parse(localStorage.getItem('user')).uID)
+              connection.on('OnConnected', {
+                uID : JSON.parse(localStorage.getItem('user')).uID,
+                connectionID: connection.connection.connectionId
+              }).then(res => {
+                console.log(res)
+              });
+          })
+          .catch(e => console.log('Connection failed: ', e));
+  }, []);
+
 
 
     const radioChange = (e) => {
