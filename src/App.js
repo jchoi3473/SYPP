@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import MainPage from './main/MainPage';
 import Login from './login/Login';
 import {connect} from 'react-redux';
@@ -27,30 +28,61 @@ const mapDispatchToProps= dispatch =>{
   }
 }
 
-class App extends Component {
-  
-  async componentDidMount() {
-    const apps = await this.props.onRequestProgress();
-    const companies = await this.props.onRequestCompany();
-    var newCategory = [];
-    for (var i=0;i<this.props.categories.length;i++){
-      newCategory = newCategory.concat({
-        Type : this.props.categories[i].name,
-        SuggestionsOrSeleceted : []
-      })
-    }
-    this.props.setSelectedCategories(newCategory)
+// class App extends Component {
+
+// //   initializeUserInfo = async () => {
+// //     const loggedInfo =storage .get('loggedInfo'); // 로그인 정보를 로컬스토리지에서 가져옵니다.
+// //     if(!loggedInfo) return; // 로그인 정보가 없다면 여기서 멈춥니다.
+
+// //     const { UserActions } = this.props;
+// //     UserActions.setLoggedInfo(loggedInfo);
+// //     try {
+// //         await UserActions.checkStatus();
+// //     } catch (e) {
+// //         storage.remove('loggedInfo');
+// //         window.location.href = '/auth/login?expired';
+// //     }
+// // }
+//   // componentDidMount() {
+//   //   this.initializeUserInfo();
+//   // }
+
+//     // async componentDidMount() {
+//     //   const apps = await this.props.onRequestProgress();
+//     //   const companies = await this.props.onRequestCompany();
+//     //   var newCategory = [];
+//     //   for (var i=0;i<this.props.categories.length;i++){
+//     //     newCategory = newCategory.concat({
+//     //       Type : this.props.categories[i].name,
+//     //       SuggestionsOrSeleceted : []
+//     //     })
+//     //   }
+//     //   this.props.setSelectedCategories(newCategory)
+//     // }
+
+//     render(){
+//         // this.props.updateFilteredProgress(this.props.apps);
+
+  function App(props){
+
+    // useEffect(() => {
+    //   if(localStorage.getItem('jwt-token')){
+    //   console.log(localStorage.getItem('user'))
+    //   console.log(JSON.parse(localStorage.getItem('user')))
+    //   }
+    // },[])
+    
+      return (
+        <div className = "sypp-App">
+        <BrowserRouter>
+          <Switch>
+            <Route path = "/login" component = {Login}/>
+            <Route path = "/main" component = {MainPage}/>
+          </Switch>
+        </BrowserRouter>
+        </div>
+      );  
   }
 
-  render(){
-      this.props.updateFilteredProgress(this.props.apps);
-    return (
-      <div className = "sypp-App">
-        {/* <MainPage/> */}
-        <Login/>
-      </div>
-    );  
-  }
-}
 
 export default connect(mapStatetoProps,mapDispatchToProps)(App);

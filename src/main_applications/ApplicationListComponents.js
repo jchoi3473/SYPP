@@ -62,7 +62,7 @@ function CategoryButtons(props) {
         props.updateButtonValue('1')
         props.updateFilteredProgressTitle("Starred")
         for(var i=0;i<props.apps.length;i++){
-          if(props.apps[i].Detail.IsFavorite) 
+          if(props.apps[i].detail.isFavorite) 
             filtered = filtered.concat(props.apps[i])
         }
       }
@@ -86,22 +86,25 @@ function CategoryButtons(props) {
     const categoryDivided = () =>{
       var temp = []
       for(var i=0; i<props.apps.length; i++){
-          for(var j=0; j<props.apps[i].Detail.Categories.length;j++){
-              if(props.apps[i].Detail.Categories[j].Type === targetName){
-                for(var k=0; k<props.apps[i].Detail.Categories[j].SuggestionsOrSeleceted.length;k++){
-                  if(!temp.includes(props.apps[i].Detail.Categories[j].SuggestionsOrSeleceted[k])){
-                    temp = temp.concat(props.apps[i].Detail.Categories[j].SuggestionsOrSeleceted[k])
+          for(var j=0; j<props.apps[i].detail.categories.length;j++){
+            if(props.apps[i].detail.categories[j]){
+              if(props.apps[i].detail.categories[j].type === targetName){
+                for(var k=0; k<props.apps[i].detail.categories[j].suggestionsOrSeleceted.length;k++){
+                  if(!temp.includes(props.apps[i].detail.categories[j].suggestionsOrSeleceted[k])){
+                    temp = temp.concat(props.apps[i].detail.categories[j].suggestionsOrSeleceted[k])
+                    console.log(props.apps[i].detail.categories[j].suggestionsOrSeleceted[k])
                   }
                 }    
               }
+            }
           }
       }
-
+      console.log(temp)
     return(
       <div className = "sypp-tooltip-container">
       { 
         temp.map((entity) => (
-        <button className = "sypp-subCategory-button" name = {entity} onClick ={e => onClickButton(e)}>{entity}</button>
+        <button className = "sypp-subCategory-button" name = {entity.content} onClick ={e => onClickButton(e)}>{entity.content}</button>
         ))
       }
       </div>
@@ -121,10 +124,10 @@ function CategoryButtons(props) {
       var filtered = [] 
       for(var i=0; i<props.apps.length ;i++){
         //save i as an index
-        for(var j=0;j<props.apps[i].Detail.Categories.length;j++){
-          if(props.apps[i].Detail.Categories[j].Type === targetName){
-            for(var k=0; k<props.apps[i].Detail.Categories[j].SuggestionsOrSeleceted.length;k++){
-              if(e.target.getAttribute('name') === props.apps[i].Detail.Categories[j].SuggestionsOrSeleceted[k]){
+        for(var j=0;j<props.apps[i].detail.categories.length;j++){
+          if(props.apps[i].detail.categories[j].Type === targetName){
+            for(var k=0; k<props.apps[i].detail.categories[j].suggestionsOrSeleceted.length;k++){
+              if(e.target.getAttribute('name') === props.apps[i].detail.categories[j].suggestionsOrSeleceted[k]){
                 filtered = filtered.concat(props.apps[i])
               }
             }

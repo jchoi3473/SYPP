@@ -49,12 +49,20 @@ render(){
         ]
     const filteredProgress = []
     const categoryDivided = () =>{
+        var apps = this.props.apps
         var temp = []
-        for(var i=0; i<this.props.apps.length; i++){
-            for(var j=0; j<this.props.apps[i].Detail.Categories.length;j++){
-                if(!temp.includes(this.props.apps[i].Detail.Categories[j].Type) && this.props.apps[i].Detail.Categories[j].SuggestionsOrSeleceted.length>0){
-                        temp = temp.concat(this.props.apps[i].Detail.Categories[j].Type)}
+        if(apps.length > 0){
+            console.log("application list ", apps)
+            for(var i=0; i<apps.length; i++){
+                for(var j=0; j<apps[i].detail.categories.length;j++){
+                    if(apps[i].detail.categories[j]){
+                        console.log(apps[i].detail.categories[j].type)
+                    if(!temp.includes(apps[i].detail.categories[j].type) && apps[i].detail.categories[j].suggestionsOrSeleceted.length>0){
+                        temp = temp.concat(apps[i].detail.categories[j].type)
+                    }
                 }
+                }
+            }
         }
         for(var i=0;i<temp.length;i++){
             radioValue.push({
