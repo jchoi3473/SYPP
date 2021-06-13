@@ -61,8 +61,8 @@ export class ApplicationDetail extends Component{
                     {/* <button className = "button-back" onClick = {this.props.toApplicationList}> */}
                     <FontAwesomeIcon className = "sypp-angleLeft" icon={faAngleLeft} onClick ={e => this.props.toApplicationList()}/>  
                                       {/* </button> */}
-                    <div className = "sypp-textTitle sypp-companyName">{this.state.application.Detail.CompanyName}</div>
-                    <div className = "sypp-textTitle sypp-positionName">{this.state.application.Detail.PositionName}</div>
+                    <div className = "sypp-textTitle sypp-companyName">{this.state.application.detail.companyName}</div>
+                    <div className = "sypp-textTitle sypp-positionName">{this.state.application.detail.positionName}</div>
                     </div>
                 <ApplicationDetailComponents  applicationDetail = {this.state.application}/>
                 </div>          

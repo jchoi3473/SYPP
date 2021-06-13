@@ -112,26 +112,28 @@ function CategoryButtons(props) {
     )
   }
 
-    const onClickButton = (e) =>{
-      setRadioValue(targetValue)
-      props.updateButtonValue(targetValue)
-      props.updateFilteredProgressTitle(e.target.getAttribute('name'))
-      setTargetTitle(e.target.getAttribute('name'))
-      filterProgress(e)
-    }
+      const onClickButton = (e) =>{
+        setRadioValue(targetValue)
+        props.updateButtonValue(targetValue)
+        props.updateFilteredProgressTitle(e.target.getAttribute('name'))
+        setTargetTitle(e.target.getAttribute('name'))
+        filterProgress(e)
+      }
 
     const filterProgress = (e) =>{
       var filtered = [] 
       for(var i=0; i<props.apps.length ;i++){
         //save i as an index
         for(var j=0;j<props.apps[i].detail.categories.length;j++){
-          if(props.apps[i].detail.categories[j].Type === targetName){
+          if(props.apps[i].detail.categories[j]){
+          if(props.apps[i].detail.categories[j].type === targetName){
             for(var k=0; k<props.apps[i].detail.categories[j].suggestionsOrSeleceted.length;k++){
               if(e.target.getAttribute('name') === props.apps[i].detail.categories[j].suggestionsOrSeleceted[k]){
                 filtered = filtered.concat(props.apps[i])
               }
             }
           }
+        }
        }
     }
       props.updateFilteredProgress(filtered)
