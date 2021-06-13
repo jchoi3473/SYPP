@@ -9,7 +9,6 @@ import { HubConnectionBuilder } from '@microsoft/signalr';
 import './MainPage.scss';
 import './../components/radio/RadioButtons.css'
 import {getApplication} from './../lib/api'
-import { io } from "socket.io-client";
 
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
@@ -30,9 +29,6 @@ const mapDispatchToProps= dispatch =>{
   }
 }
 
-const socket = io("https://saveyourappdevelopment.azurewebsites.net", {
-  transports: ["/chathub/OnConnected"]
-});
 
 function MainPage(props){
     const [radioValue, setRadioValue] = useState('0');
@@ -42,14 +38,14 @@ function MainPage(props){
     { name: 'Companies', value: '1' },
     { name: 'Templates', value: '2' },
     ]
-
+    const [socketConnected, setSocketConnected] = useState(false);
 
     useEffect(() => {
       if(localStorage.getItem('jwt-token')){
         getApplication(JSON.parse(localStorage.getItem('user')).uID).then(applications => props.setApps(applications))
-        // console.log(applications)
+      }else{
+        props.history.push('/');
       }
-      socket.on()
     },[])
 
     useEffect(() => {
@@ -61,14 +57,15 @@ function MainPage(props){
       connection.start()
           .then(result => {
               console.log('Connected!');
+              setSocketConnected(true)
+              console.log("loaded?")
               console.log(connection.connection.connectionId);
               console.log(JSON.parse(localStorage.getItem('user')).uID)
-              connection.on('OnConnected', {
+              const connectionType = connection.on('OnConnected', {
                 uID : JSON.parse(localStorage.getItem('user')).uID,
                 connectionID: connection.connection.connectionId
-              }).then(res => {
-                console.log(res)
-              });
+              })
+              console.log(connectionType)
           })
           .catch(e => console.log('Connection failed: ', e));
   }, []);
@@ -81,27 +78,31 @@ function MainPage(props){
 
     const display = () =>{
         if(radioValue === '0'){
-            return (
-                <div>
-                    <Applications/>
-                </div>
-            )
+          return (
+            <div>
+                <Applications/>
+            </div>
+          )
         }else if(radioValue === '1'){
           return(
-              <div>
-                <Companies />
-              </div>
+            <div>
+              <Companies />
+            </div>
           )
         }     
         else {
-            return(
-                <div>more to go</div>
-            )
-        }
+          return(
+            <div>more to go</div>
+          )
+      }
     }
 
     return (
       <div>
+        {
+          //Import Loading Screen in the beginning
+          !socketConnected? <div>Loading Screen</div>:
+        <div>
         <div className = "sypp-main-button-container">
           <ButtonGroup toggle className = {props.classContainerProps}>
           {radios.map((radio, idx) => (
@@ -125,7 +126,8 @@ function MainPage(props){
             </ButtonGroup>
             </div>
             {display()}
-
+          </div>
+        }
       </div>
     );  
 }

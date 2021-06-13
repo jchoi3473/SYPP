@@ -27,31 +27,34 @@ class ApplicationDetailContacts extends Component{
             case '0' :
                 return(
                     <div className = "sypp-applicationDetailTextBody">
-                        {this.props.contact.Email.Email}
+                        {this.props.contact.email.email}
                     </div>
                 )
             case '1' :
                 return(
                     <div className = "sypp-applicationDetailTextBody">
-                        {this.props.contact.Phone.PhoneNumber}
+                        {this.props.contact.phone.phoneNumber}
                     </div>
                 )
             case '2' :
                 return(
                     <div className = "sypp-applicationDetailTextBody">
                         {
-                        this.props.contact.Convo.map((data) => (
-                            <div>
-                            <div className = "sypp-note-text-header">{' • ' +data.Header}</div>
+                        this.props.contact.convo.map((data) => (
+                            <div>   
                             {
-                            data.Contents_Text.length != 0 ?  
-                                data.Contents_Text.map((subText)=>(
-                                <div className = "sypp-note-text-subText">{' • ' +subText}</div>
-                                ))
-                            : undefined
+                            data.length !== 0 ?  
+                              <div>
+                              {
+                                data.marginType === 0? 
+                                <div className = "sypp-note-text-header">{' • ' +data.content}</div> :
+                                <div className = "sypp-note-text-subText">{' • ' +data.content}</div>
+                              }
+                              </div>
+                              : undefined
                             }
                             </div>
-                        ))
+                          ))
                     }
                     </div>
                 )
@@ -75,8 +78,8 @@ class ApplicationDetailContacts extends Component{
                 <div className = "sypp-applicationDetailContactsContainer"  >
                     <div>
                         <div className = "sypp-applicationDetailContactsTitle">
-                            <div className = "sypp-applicationDetailTextTitle">{this.props.contact.PersonalDetail.Firstname}</div>
-                            <div className = "sypp-applicationDetailTextTitle-body">{this.props.contact.PersonalDetail.Title}</div>
+                            <div className = "sypp-applicationDetailTextTitle">{this.props.contact.detail.firstname}</div>
+                            <div className = "sypp-applicationDetailTextTitle-body">{this.props.contact.detail.title}</div>
                         </div>
                         <ButtonGroup toggle className = {this.props.classContainerProps}>
                         {radios.map((radio, idx) => (
@@ -112,7 +115,7 @@ class ApplicationDetailContacts extends Component{
             >
                 <div className = 'sypp-create-detail-modal-container'>
                     <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
-                    <CreateEditContact onSaveContactNote = {this.props.onSaveContactNote} Contact = {this.props.contact} handleClose = {this.handleClose} type ={this.props.type} companyID = {this.props.companyID} applicationID = {this.props.applicationID}/>
+                    <CreateEditContact onSaveContactNote = {this.props.onSaveContactNote} contact = {this.props.contact} handleClose = {this.handleClose} type ={this.props.type} companyID = {this.props.companyID} applicationID = {this.props.applicationID}/>
                 </div>
             </Modal>
             </div>

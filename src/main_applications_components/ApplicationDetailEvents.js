@@ -31,26 +31,16 @@ class ApplicationDetailEvents extends React.Component {
     constructor(props) {
         super(props);
         const contentBlocksArray = []
-        for (var i=0;i<this.props.Event.Contents.length;i++){
-            if(this.props.Event.Contents.length !== 0){
+        for (var i=0;i<this.props.event.contents.length;i++){
+            if(this.props.event.contents.length !== 0){
                 contentBlocksArray.push(
                     new ContentBlock({
-                        key: this.props.Event.Contents[i].eventContentsID,
+                        key: this.props.event.contents[i].noteContentsID,
                         type: 'unordered-list-item',
-                        depth: 0,
-                        text: this.props.Event.Contents[i].Header
+                        depth: this.props.event.contents[i].marginType,
+                        text: this.props.event.contents[i].content
                       })
                 )
-                for(var j=0;j<this.props.Event.Contents[i].Contents_Text.length;j++){
-                    contentBlocksArray.push(
-                        new ContentBlock({
-                            key: genKey(),
-                            type: 'unordered-list-item',
-                            depth: 1,
-                            text: this.props.Event.Contents[i].Contents_Text[j]
-                          })
-                    )
-                }
             }
         }
         this.state = {
@@ -113,34 +103,28 @@ class ApplicationDetailEvents extends React.Component {
           <div className="sypp-ApplicationDetailNote-container sypp-EventContainer">
             <div className = "sypp-EventDetailContainer"  onClick={e => this.handleOpen(e)}>
             {/* <div className="ApplicationDetailNote-title-container"> */}
-              <div className = "sypp-applicationDetailTextTitle">{this.props.Event.Detail.Title}</div>
-              <div className = "sypp-EventDateTime">{Moment(this.props.Event.Detail.Time).format('MMM DD, YYYY - h:mma')}</div>
-              <div className = "sypp-EventDateTime">{this.props.Event.Detail.Location}</div>
+              <div className = "sypp-applicationDetailTextTitle">{this.props.event.detail.title}</div>
+              <div className = "sypp-EventDateTime">{Moment(this.props.event.detail.time).format('MMM DD, YYYY - h:mma')}</div>
+              <div className = "sypp-EventDateTime">{this.props.event.detail.location}</div>
             {/* </div> */}
-            {/* <Editor 
-              toolbarHidden
-              editorClassName="sypp-editor-class"
-              editorState={this.state.editorState}
-              onEditorStateChange={this._handleChange}
-              keyBindingFn={this.myKeyBindingFn}
-            /> */}
             {
-              this.props.Event.Contents.map((data) => (
-                <div>
-                <div className = "sypp-note-text-header">{' • ' +data.Header}</div>
+              this.props.event.contents.map((data) => (               
+                <div>   
                 {
-                  data.Contents_Text.length != 0 ?  
-                    data.Contents_Text.map((subText)=>(
-                      <div className = "sypp-note-text-subText">{' • ' +subText}</div>
-                    ))
+                data.length !== 0 ?  
+                  <div>
+                  {
+                    data.marginType === 0? 
+                    <div className = "sypp-note-text-header">{' • ' +data.content}</div> :
+                    <div className = "sypp-note-text-subText">{' • ' +data.content}</div>
+                  }
+                  </div>
                   : undefined
                 }
                 </div>
               ))
-
             }
             </div>
-
             <Modal 
             show={this.state.show}
             onHide={this.handleClose}
@@ -149,11 +133,11 @@ class ApplicationDetailEvents extends React.Component {
             className = "sypp-modal-content"
             >
                 <div className = 'sypp-create-detail-modal-container'>
-                    <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
-                    <CreateEditEvent _handleChange = {this._handleChange} onSaveEventNote = {this.props.onSaveEventNote} Event = {this.props.Event} handleClose = {this.handleClose} editorState = {this.state.editorState} applicationID = {this.props.applicationID} type ={this.props.type} companyID = {this.props.companyID}/>
+                    <button className ="sypp-button-close" onClick={() => this.handleClose()}>X</button>
+                    <CreateEditEvent _handleChange = {this._handleChange} onSaveEventNote = {this.props.onSaveEventNote} event = {this.props.event} handleClose = {this.handleClose} editorState = {this.state.editorState} applicationID = {this.props.applicationID} type ={this.props.type} companyID = {this.props.companyID}/>
                 </div>
             </Modal>
-          </div>
+        </div>
         );
       }
 }

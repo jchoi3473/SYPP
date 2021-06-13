@@ -7,7 +7,6 @@ import { Editor } from 'react-draft-wysiwyg';
 import {getDefaultKeyBinding, KeyBindingUtil, keyBindingFn} from 'draft-js';
 import 'draft-js/dist/Draft.css';
 
-import { v4 as uuidv4 } from 'uuid';
 import {connect} from 'react-redux'
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {setCompany} from './../../redux/company-reducer/companyAction'
@@ -53,13 +52,13 @@ export class CreateEditEvent extends Component {
         this.setState({
             type : this.props.type
         })
-        if(this.props.Event !== ''){            
+        if(this.props.event){            
             this.setState({
-                eventID: this.props.Event.eventID,
-                eventName : this.props.Event.Detail.Title,
-                eventLocation :this.props.Event.Detail.Location,
+                eventID: this.props.event.eventID,
+                eventName : this.props.event.detail.title,
+                eventLocation :this.props.event.detail.location,
                 eventNote : '',
-                eventDate : this.props.Event.Detail.Time,
+                eventDate : this.props.event.detail.time,
                 eventHour : 0,
                 eventMinute : 0,
                 eventTimeConvert : '',
@@ -101,17 +100,17 @@ export class CreateEditEvent extends Component {
             for(var i=0;i<this.props.apps.length;i++){
                 if(this.props.apps[i].applicationID === this.props.applicationID){
                     const key = genKey()
-                    apps[i].Events.push(  
+                    apps[i].events.push(  
                         {
                             eventID: key,
-                            Detail: {
+                            detail: {
                                 eventID: key,
                                 applicationID: this.props.applicationID,
-                                Time: this.state.eventDate,
-                                Location: this.state.eventLocation,
-                                Title: this.state.eventName
+                                time: this.state.eventDate,
+                                location: this.state.eventLocation,
+                                title: this.state.eventName
                             },
-                            Contents: newNoteContent
+                            contents: newNoteContent
                         }
                     )
                 }
@@ -124,19 +123,19 @@ export class CreateEditEvent extends Component {
             var apps = this.props.apps 
             for(var i=0;i<this.props.apps.length;i++){
                 if(this.props.apps[i].applicationID === this.props.applicationID){
-                    for(var j=0; j<this.props.apps[i].Events.length;j++){
-                        if(this.props.apps[i].Events[j].eventID === this.state.eventID){
+                    for(var j=0; j<this.props.apps[i].events.length;j++){
+                        if(this.props.apps[i].events[j].eventID === this.state.eventID){
                             console.log("this one is triggeredd?")
-                            apps[i].Events[j] = {
+                            apps[i].events[j] = {
                                 eventID: this.state.eventID,
-                                Detail: {
+                                detail: {
                                     eventID: this.state.eventID,
                                     applicationID: this.props.applicationID,
-                                    Time: this.state.eventDate,
-                                    Location: this.state.eventLocation,
-                                    Title: this.state.eventName
+                                    time: this.state.eventDate,
+                                    location: this.state.eventLocation,
+                                    title: this.state.eventName
                                 },
-                                Contents: newNoteContent
+                                contents: newNoteContent
                             }
                         }
                     }
@@ -152,17 +151,17 @@ export class CreateEditEvent extends Component {
             for(var i=0;i<this.props.companies.length;i++){
                 if(this.props.companies[i].companyID === this.props.companyID){
                     const key = genKey()
-                    companies[i].Events.push(  
+                    companies[i].events.push(  
                         {
                             eventID: key,
-                            Detail: {
+                            detail: {
                                 eventID: key,
                                 applicationID: this.props.companyID,
-                                Time: this.state.eventDate,
-                                Location: this.state.eventLocation,
-                                Title: this.state.eventName
+                                time: this.state.eventDate,
+                                location: this.state.eventLocation,
+                                title: this.state.eventName
                             },
-                            Contents: newNoteContent
+                            contents: newNoteContent
                         }
                     )
                 }
@@ -177,18 +176,18 @@ export class CreateEditEvent extends Component {
             for(var i=0;i<this.props.companies.length;i++){
                 if(this.props.companies[i].companyID === this.props.companyID){
                     for(var j=0; j<this.props.companies[i].Events.length;j++){
-                        if(this.props.companies[i].Events[j].eventID === this.state.eventID){
+                        if(this.props.companies[i].events[j].eventID === this.state.eventID){
                             console.log("this one is triggeredd?")
-                            companies[i].Events[j] = {
+                            companies[i].events[j] = {
                                 eventID: this.state.eventID,
-                                Detail: {
+                                detail: {
                                     eventID: this.state.eventID,
                                     applicationID: this.props.companyID,
-                                    Time: this.state.eventDate,
-                                    Location: this.state.eventLocation,
-                                    Title: this.state.eventName
+                                    time: this.state.eventDate,
+                                    location: this.state.eventLocation,
+                                    title: this.state.eventName
                                 },
-                                Contents: newNoteContent
+                                contents: newNoteContent
                             }
                         }
                     }

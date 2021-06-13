@@ -129,7 +129,7 @@ export class Progress extends Component{
                                         <div className = "sypp-progress-company" onClick = {e => this.props.toApplicationDetail(data.detail.applicationID)} >{data.detail.companyName}</div>
                                         <FontAwesomeIcon className = "sypp-trashIcon sypp-trashIcon-Hover" icon={faTrashAlt} onClick = {this.onClickDelete}/>
                                     </div>
-                                    <div className = "sypp-progress-position" onClick = {e => this.props.toApplicationDetail(data.detail.applicationID)}>{data.detail.PositionName}</div>
+                                    <div className = "sypp-progress-position" onClick = {e => this.props.toApplicationDetail(data.detail.applicationID)}>{data.detail.positionName}</div>
                                     </div>
                                 <ProgressBar applicationID = {data.detail.applicationID} applied = {data.applied} dates = {data.tasks} details = {data.detail.status[0]} onClickAdd = {this.onClickAdd}/>
                             </div>

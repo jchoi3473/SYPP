@@ -166,28 +166,28 @@ class ApplicationDetailComponents extends Component {
     triggerComponents = () =>{
         if(this.state.selectedValue === '0'){
             return(
-                <CreateEditEvent Event = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
+                <CreateEditEvent event = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
             // <div>Events</div>
             );
         }
         else if(this.state.selectedValue === '1'){
             return(
-                <CreateEditNote Note = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
+                <CreateEditNote note = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
             );
         }
         else if(this.state.selectedValue === '2'){
             return(
-                <CreateEditContact Contact = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
+                <CreateEditContact contact = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
             );
         }
         else if(this.state.selectedValue === '3'){
             return(
-                <CreateEditConversation FollowUp = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'} editorState = {''}/>
+                <CreateEditConversation followUp = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'} editorState = {''}/>
             );
         }
         else if(this.state.selectedValue === '4'){
             return(
-                <CreateEditChecklist Checklist = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'} editorState = {''}/>
+                <CreateEditChecklist checklist = {''} handleClose = {this.handleClose} applicationID = {this.props.applicationDetail.applicationID} type ={'application'} editorState = {''}/>
             );
         }
         return(
@@ -202,7 +202,7 @@ class ApplicationDetailComponents extends Component {
                     <div>
                         {
                         this.props.applicationDetail.events.map((event) =>(
-                            <ApplicationDetailEvents onSaveEventNote = {this.onSaveEventNote} Event = {event} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
+                            <ApplicationDetailEvents onSaveEventNote = {this.onSaveEventNote} event = {event} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
                         ))
                         }
                     </div>
@@ -212,7 +212,7 @@ class ApplicationDetailComponents extends Component {
                     <div>
                         {
                         this.props.applicationDetail.notes.map((note) =>(
-                            <ApplicationDetailNotes onSaveNote = {this.onSaveNote} Note = {note} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
+                            <ApplicationDetailNotes onSaveNote = {this.onSaveNote} note = {note} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
                         ))
                         }
                     </div>
@@ -232,7 +232,7 @@ class ApplicationDetailComponents extends Component {
                     <div>
                         {
                         this.props.applicationDetail.followUps.map((FollowUp) =>(
-                            <ApplicationDetailFollowUp onSaveConversation = {this.onSaveConversation} FollowUp = {FollowUp} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
+                            <ApplicationDetailFollowUp onSaveConversation = {this.onSaveConversation} followUp = {FollowUp} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
                         ))
                         }
                     </div>
@@ -242,7 +242,7 @@ class ApplicationDetailComponents extends Component {
                     <div>
                         {
                         this.props.applicationDetail.checklists.map((checklist) =>(
-                            <ApplicationDetailChecklists onSaveChecklist = {this.onSaveChecklist} Checklist = {checklist} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
+                            <ApplicationDetailChecklists onSaveChecklist = {this.onSaveChecklist} checklist = {checklist} applicationID = {this.props.applicationDetail.applicationID} type ={'application'}/>
                         ))
                         }
                     </div>

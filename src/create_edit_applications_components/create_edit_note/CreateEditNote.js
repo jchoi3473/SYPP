@@ -49,9 +49,9 @@ export class CreateEditNote extends Component {
         })
         if(this.props.Note !== ''){
             this.setState({
-                noteID: this.props.Note.noteID,
-                noteName : this.props.Note.Detail.Title,
-                noteDate : this.props.Note.Detail.Time,
+                noteID: this.props.note.noteID,
+                noteName : this.props.note.detail.title,
+                noteDate : this.props.note.detail.time,
                 editorState : this.props.editorState
             })
         }

@@ -38,26 +38,16 @@ class ApplicationDetailNotes extends React.Component {
     constructor(props) {
         super(props);
         const contentBlocksArray = []
-        for (var i=0;i<this.props.Note.Contents.length;i++){
-            if(this.props.Note.Contents.length !== 0){
+        for (var i=0;i<this.props.note.contents.length;i++){
+            if(this.props.note.contents.length !== 0){
                 contentBlocksArray.push(
                     new ContentBlock({
-                        key: this.props.Note.Contents[i].noteContentsID,
+                        key: this.props.Note.contents[i].noteContentsID,
                         type: 'unordered-list-item',
-                        depth: 0,
-                        text: this.props.Note.Contents[i].Header
+                        depth: this.props.note.contents[i].marginType,
+                        text: this.props.note.contents[i].content
                       })
                 )
-                for(var j=0;j<this.props.Note.Contents[i].Contents_Text.length;j++){
-                    contentBlocksArray.push(
-                        new ContentBlock({
-                            key: genKey(),
-                            type: 'unordered-list-item',
-                            depth: 1,
-                            text: this.props.Note.Contents[i].Contents_Text[j]
-                          })
-                    )
-                }
             }
         }
           this.state = {
@@ -122,30 +112,26 @@ class ApplicationDetailNotes extends React.Component {
           <div className= "sypp-ApplicationDetailNote-container">
             <div className="sypp-ApplicationDetailNote-title-container" onClick = {this.handleOpen}>
             <div className = "sypp-ApplicationDetailNote-title">
-            <div className = "sypp-applicationDetailTextTitle">{this.props.Note.Detail.Title}</div>
+            <div className = "sypp-applicationDetailTextTitle">{this.props.note.detail.title}</div>
             </div>
             <div>
             {
-              this.props.Note.Contents.map((data) => (
+            this.props.note.contents.map((data) => (               
+              <div>   
+              {
+              data.length !== 0 ?  
                 <div>
-                <div className = "sypp-note-text-header">{' • ' +data.Header}</div>
                 {
-                  data.Contents_Text.length != 0 ?  
-                    data.Contents_Text.map((subText)=>(
-                      <div className = "sypp-note-text-subText">{' • ' +subText}</div>
-                    ))
-                  : undefined
+                  data.marginType === 0? 
+                  <div className = "sypp-note-text-header">{' • ' +data.content}</div> :
+                  <div className = "sypp-note-text-subText">{' • ' +data.content}</div>
                 }
                 </div>
-              ))
+                : undefined
+              }
+              </div>
+            ))
             }
-            {/* <Editor 
-              toolbarHidden
-              editorClassName="sypp-editor-class"
-              editorState={this.state.editorState}
-              onEditorStateChange={this._handleChange}
-              keyBindingFn={this.myKeyBindingFn}
-            /> */}
             </div>
             </div>
             <Modal 
@@ -157,7 +143,7 @@ class ApplicationDetailNotes extends React.Component {
             >
                 <div className = 'sypp-create-detail-modal-container'>
                     <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
-                    <CreateEditNote  _handleChange = {this._handleChange} onSaveNote = {this.props.onSaveNote} Note = {this.props.Note} handleClose = {this.handleClose} editorState = {this.state.editorState} applicationID = {this.props.applicationID} type ={this.props.type} companyID = {this.props.companyID}/>
+                    <CreateEditNote  _handleChange = {this._handleChange} onSaveNote = {this.props.onSaveNote} note = {this.props.note} handleClose = {this.handleClose} editorState = {this.state.editorState} applicationID = {this.props.applicationID} type ={this.props.type} companyID = {this.props.companyID}/>
                 </div>
             </Modal>
           </div>
