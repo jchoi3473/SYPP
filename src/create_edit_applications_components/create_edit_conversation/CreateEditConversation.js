@@ -52,10 +52,10 @@ export class CreateEditConversation extends Component {
         })
         if(this.props.FollowUp !== ''){
             this.setState({
-                followUpID : this.props.FollowUp.followUpID,
-                name : this.props.FollowUp.Personnel.Name,
-                time : this.props.FollowUp.Time,
-                position : this.props.FollowUp.Personnel.Position,
+                followUpID : this.props.followUp.followUpID,
+                name : this.props.followUp.detail.personnel.firstname,
+                time : this.props.followUp.detail.time,
+                position : this.props.followUp.detail.personnel.title,
                 editorState : this.props.editorState
             })
         }

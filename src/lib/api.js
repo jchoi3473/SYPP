@@ -27,6 +27,17 @@ import axios from 'axios';
             return error
         } 
     }
+
+    export const getCompany = async function(uID){
+      console.log(uID)
+      try {
+          const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/company/'+uID+'/GetCompanies')
+          console.log(res)
+          return res.status == 200 ? res.data : "error";
+      } catch (error) {
+          return error
+      } 
+  }
 // export const checkEmailExists = (email) => axios.get('/api/auth/exists/email/' + email);
 // export const checkUsernameExists = (username) => axios.get('/api/auth/exists/username/' + username);
 

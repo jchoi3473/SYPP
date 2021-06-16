@@ -3,12 +3,13 @@ import Applications from './../main_applications/Applications'
 import Companies from './../main_companies/Companies'
 import {connect} from 'react-redux'
 import {setApps} from './../redux/progress-reducer/progressAction'
+import {setCompany} from './../redux/company-reducer/companyAction'
 import {setSelectedCategories} from './../redux/addApp-reducer/addAppAction'
 import {updateFilteredProgress} from './../redux/filteredProgress-reducer/filteredProgressAction'
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import './MainPage.scss';
 import './../components/radio/RadioButtons.css'
-import {getApplication} from './../lib/api'
+import {getApplication, getCompany} from './../lib/api'
 
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
@@ -24,6 +25,7 @@ const mapStatetoProps = state => {
 const mapDispatchToProps= dispatch =>{
   return {
       setApps: (applications) => dispatch(setApps(applications)),
+      setCompany: (companies) => dispatch(setCompany(companies)),
       setSelectedCategories: (categories) => dispatch(setSelectedCategories(categories)),
       updateFilteredProgress: (applications) => dispatch(updateFilteredProgress(applications)),
   }
@@ -43,6 +45,7 @@ function MainPage(props){
     useEffect(() => {
       if(localStorage.getItem('jwt-token')){
         getApplication(JSON.parse(localStorage.getItem('user')).uID).then(applications => props.setApps(applications))
+        getCompany(JSON.parse(localStorage.getItem('user')).uID).then(companies => props.setCompany(companies))
       }else{
         props.history.push('/');
       }

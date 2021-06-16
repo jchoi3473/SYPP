@@ -52,38 +52,28 @@ export class CreateEditContact extends Component {
         })
         if(this.props.Contact !== ''){
             const contentBlocksArray = []
-            for (var i=0;i<this.props.Contact.Convo.length;i++){
-            if(this.props.Contact.Convo.length !== 0){
+            for (var i=0;i<this.props.contact.convo.length;i++){
+            if(this.props.contact.convo.length !== 0){
                 contentBlocksArray.push(
                     new ContentBlock({
-                        key: this.props.Contact.Convo[i].noteContentsID,
+                        key: this.props.contact.convo[i].noteContentsID,
                         type: 'unordered-list-item',
-                        depth: 0,
-                        text: this.props.Contact.Convo[i].Header
+                        depth: this.props.contact.convo[i].marginType,
+                        text: this.props.contact.convo[i].content
                       })
                 )
-                for(var j=0;j<this.props.Contact.Convo[i].Contents_Text.length;j++){
-                    contentBlocksArray.push(
-                        new ContentBlock({
-                            key: genKey(),
-                            type: 'unordered-list-item',
-                            depth: 1,
-                            text: this.props.Contact.Convo[i].Contents_Text[j]
-                          })
-                    )
-                }
             }
         }
             console.log(this.props.Contact)
 
             this.setState({
-                contactID : this.props.Contact.contactID,
-                Firstname : this.props.Contact.PersonalDetail.Firstname,
-                Title : this.props.Contact.PersonalDetail.Title,
-                Email : this.props.Contact.Email.Email,
-                emailID : this.props.Contact.Email.emailID,
-                PhoneNumber : this.props.Contact.Phone.PhoneNumber,
-                phoneID: this.props.Contact.Phone.phoneID,
+                contactID : this.props.contact.contactID,
+                Firstname : this.props.contact.detail.firstname,
+                Title : this.props.contact.detail.title,
+                Email : this.props.contact.email.email,
+                emailID : this.props.contact.email.emailID,
+                PhoneNumber : this.props.contact.phone.phoneNumber,
+                phoneID: this.props.contact.phone.phoneID,
                 editorState : EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray))
             })
         }
