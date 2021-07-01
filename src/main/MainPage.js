@@ -6,11 +6,13 @@ import {setApps} from './../redux/progress-reducer/progressAction'
 import {setCompany} from './../redux/company-reducer/companyAction'
 import {setSelectedCategories} from './../redux/addApp-reducer/addAppAction'
 import {updateFilteredProgress} from './../redux/filteredProgress-reducer/filteredProgressAction'
+import {setConnection} from '../redux/connection-reducer/connectionAction'
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import './MainPage.scss';
 import './../components/radio/RadioButtons.css'
 import {getApplication, getCompany} from './../lib/api'
-import {createConnection, socketOnConnected} from './../lib/WebSocket'
+import createConnection from './../lib/WebSocket'
+import {socketOnConnected} from './../lib/WebSocket'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
@@ -28,6 +30,7 @@ const mapDispatchToProps= dispatch =>{
       setCompany: (companies) => dispatch(setCompany(companies)),
       setSelectedCategories: (categories) => dispatch(setSelectedCategories(categories)),
       updateFilteredProgress: (applications) => dispatch(updateFilteredProgress(applications)),
+      setConnection: (connection) => dispatch(setConnection(connection)),
   }
 }
 
@@ -46,16 +49,31 @@ function MainPage(props){
       if(localStorage.getItem('jwt-token')){
         getApplication(JSON.parse(localStorage.getItem('user')).uID).then(applications => props.setApps(applications))
         getCompany(JSON.parse(localStorage.getItem('user')).uID).then(companies => props.setCompany(companies))
+        setSocketConnected(true)
       }else{
         props.history.push('/');
       }
     },[])
 
     useEffect(() => {
-      async function fetchSocket() { 
-        const result1 = await createConnection()
-        const result2 = await socketOnConnected()
-        }
+      const connection = new HubConnectionBuilder()
+        .withUrl('https://saveyourappdevelopment.azurewebsites.net/chathub/')
+        .withAutomaticReconnect()
+        .build();
+      setConnection(connection);        
+
+      connection.start()
+      .then(result => {
+          // setSocketConnected(true)
+          connection.on('OnConnected', {
+              uID : JSON.parse(localStorage.getItem('user')).uID,
+              connectionID: connection.connection.connectionId
+          })
+          connection.on('Application_Add_Update_Received', applicationID => {
+            getApplication(applicationID).then(applications => props.setApps(applications))
+          })
+      })
+      .catch(e => console.log('Connection failed: ', e));
       // const connection = new HubConnectionBuilder()
       //     .withUrl('https://saveyourappdevelopment.azurewebsites.net/chathub/')
       //     .withAutomaticReconnect()
