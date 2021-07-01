@@ -10,7 +10,7 @@ import { HubConnectionBuilder } from '@microsoft/signalr';
 import './MainPage.scss';
 import './../components/radio/RadioButtons.css'
 import {getApplication, getCompany} from './../lib/api'
-
+import {createConnection, socketOnConnected} from './../lib/WebSocket'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
@@ -52,25 +52,27 @@ function MainPage(props){
     },[])
 
     useEffect(() => {
-      const connection = new HubConnectionBuilder()
-          .withUrl('https://saveyourappdevelopment.azurewebsites.net/chathub/')
-          .withAutomaticReconnect()
-          .build();
+      async function fetchSocket() { 
+        const result1 = await createConnection()
+        const result2 = await socketOnConnected()
+        }
+      // const connection = new HubConnectionBuilder()
+      //     .withUrl('https://saveyourappdevelopment.azurewebsites.net/chathub/')
+      //     .withAutomaticReconnect()
+      //     .build();
 
-      connection.start()
-          .then(result => {
-              console.log('Connected!');
-              setSocketConnected(true)
-              console.log("loaded?")
-              console.log(connection.connection.connectionId);
-              console.log(JSON.parse(localStorage.getItem('user')).uID)
-              const connectionType = connection.on('OnConnected', {
-                uID : JSON.parse(localStorage.getItem('user')).uID,
-                connectionID: connection.connection.connectionId
-              })
-              console.log(connectionType)
-          })
-          .catch(e => console.log('Connection failed: ', e));
+      // connection.start()
+      //     .then(result => {
+      //         setSocketConnected(true)
+      //         console.log(connection.connection.connectionId);
+      //         console.log(JSON.parse(localStorage.getItem('user')).uID)
+      //         const connectionType = connection.on('OnConnected', {
+      //           uID : JSON.parse(localStorage.getItem('user')).uID,
+      //           connectionID: connection.connection.connectionId
+      //         })
+      //         console.log(connectionType)
+      //     })
+      //     .catch(e => console.log('Connection failed: ', e));
   }, []);
 
 

@@ -79,4 +79,3 @@ const mapStatetoProps = state => {
   }
 
 export default connect(mapStatetoProps,mapDispatchToProps)(Applied)
-//Add x button bootstrap or material-ui x 

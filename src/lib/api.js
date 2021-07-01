@@ -14,7 +14,6 @@ import axios from 'axios';
         return response.data
         // props.history.push('/main');
       }
-      
     };
 
     export const getApplication = async function(uID){
