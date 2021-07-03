@@ -14,7 +14,7 @@ export const connectionReducer  = (state = INITIAL_STATE, action) =>{
             }
         case 'REQUEST_CONNECTION_SUCCESS':
             return {
-                user: action.payload,
+                connection: action.payload,
                 isPending: false   
             }
         case 'REQUEST_CONNECTION_FAILED':

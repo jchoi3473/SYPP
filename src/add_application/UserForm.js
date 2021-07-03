@@ -13,7 +13,8 @@ import {requestProgress} from './../redux/progress-reducer/progressAction'
 const mapStatetoProps = state => {
     return{
         addApp: state.addApp,
-        categories: state.categories.categories
+        categories: state.categories.categories,
+        connection: state.connection.connection
     }
 } 
 
@@ -36,8 +37,22 @@ export class UserForm extends Component {
         // this.props.postNewApp(this.props.addApp)
         console.log("Triggered")
         const app = await this.props.postNewApp(this.props.addApp)
-        console.log("Triggered")
+        console.log("This was returned: ", app)
+        this.props.connection.start()
+        .then(result => {
+            // setSocketConnected(true)
+            this.props.connection.on('Application_Add_Update', {
+                uID : JSON.parse(localStorage.getItem('user')).uID,
+                applicationID: app.applicationID
+            })
+        }).catch(e => console.log('Connection failed: ', e));
+
         const app2 = setTimeout(()=> this.props.onRequestProgress(), 500) 
+
+        // this.props.connection.on('Application_Checklists_Update_Received', applicationID => {
+        //     getApplication(applicationID).then(applications => props.setApps(applications))
+        //   })
+
         var newCategory = this.props.addApp.Categories;
         for (var i=0;i<this.props.addApp.Categories.length;i++){
         console.log(this.props.categories[i])

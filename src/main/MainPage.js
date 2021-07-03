@@ -60,7 +60,7 @@ function MainPage(props){
         .withUrl('https://saveyourappdevelopment.azurewebsites.net/chathub/')
         .withAutomaticReconnect()
         .build();
-      setConnection(connection);        
+      props.setConnection(connection);        
 
       connection.start()
       .then(result => {
@@ -72,25 +72,40 @@ function MainPage(props){
           connection.on('Application_Add_Update_Received', applicationID => {
             getApplication(applicationID).then(applications => props.setApps(applications))
           })
+          connection.on('Application_Task_Update_Received', applicationID => {
+            getApplication(applicationID).then(applications => props.setApps(applications))
+          })
+          connection.on('Application_IsFavorite_Update_Received', applicationID => {
+            getApplication(applicationID).then(applications => props.setApps(applications))
+          })
+          connection.on('Application_Notes_Update_Received', applicationID => {
+            getApplication(applicationID).then(applications => props.setApps(applications))
+          })
+          connection.on('Application_Contacts_Update_Received', applicationID => {
+            getApplication(applicationID).then(applications => props.setApps(applications))
+          })
+          connection.on('Application_FollowUps_Update_Received', applicationID => {
+            getApplication(applicationID).then(applications => props.setApps(applications))
+          })
+          connection.on('Application_Checklists_Update_Received', applicationID => {
+            getApplication(applicationID).then(applications => props.setApps(applications))
+          })
+          connection.on('Application_Events_Delete_Received', applicationID => {
+            getApplication(applicationID).then(applications => props.setApps(applications))
+          })
+          connection.on('Application_Notes_Delete_Received', applicationID => {
+            getApplication(applicationID).then(applications => props.setApps(applications))
+          })
+          connection.on('Application_FollowUps_Delete_Received', applicationID => {
+            getApplication(applicationID).then(applications => props.setApps(applications))
+          })
+          connection.on('Application_Checklists_Delete_Received', applicationID => {
+            getApplication(applicationID).then(applications => props.setApps(applications))
+          })
+
       })
       .catch(e => console.log('Connection failed: ', e));
-      // const connection = new HubConnectionBuilder()
-      //     .withUrl('https://saveyourappdevelopment.azurewebsites.net/chathub/')
-      //     .withAutomaticReconnect()
-      //     .build();
-
-      // connection.start()
-      //     .then(result => {
-      //         setSocketConnected(true)
-      //         console.log(connection.connection.connectionId);
-      //         console.log(JSON.parse(localStorage.getItem('user')).uID)
-      //         const connectionType = connection.on('OnConnected', {
-      //           uID : JSON.parse(localStorage.getItem('user')).uID,
-      //           connectionID: connection.connection.connectionId
-      //         })
-      //         console.log(connectionType)
-      //     })
-      //     .catch(e => console.log('Connection failed: ', e));
+      
   }, []);
 
 

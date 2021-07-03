@@ -20,10 +20,10 @@ export const socketOnConnected = (connection) => {
                     uID : JSON.parse(localStorage.getItem('user')).uID,
                     connectionID: connection.connection.connectionId
                 })
-                connection.on('Application_Add_Update_Received', applicationID => {
+                // connection.on('Application_Add_Update_Received', applicationID => {
                     
-                    setChat(updatedChat);
-                })
+                //     setChat(updatedChat);
+                // })
             })
             .catch(e => console.log('Connection failed: ', e));
         return true

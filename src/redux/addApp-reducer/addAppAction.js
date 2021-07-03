@@ -1,4 +1,6 @@
 import AddAppTypes from './addAppTypes'
+import axios from 'axios';
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 
 
 //
@@ -31,48 +33,76 @@ export const setInterviewDate = (interviewDate) => ({
 
 
 
-export const postNewApp = (app) => (dispatch) =>{
-    dispatch({type: 'POST_NEWAPP_PENDING'});
+export function postNewApp(app) {
+    const uID = JSON.parse(localStorage.getItem('user')).uID
     // fetch('http://teamdevelopmentserver.azurewebsites.net/applications/create', {
-    fetch('http://localhost:3000/newapp', {
-      method: 'post',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        // applicationDetail: app.applicationDetail,
-        _id: null,
-        applicationID: null,
-        uID: null,
-        authID: null,
-        Tasks:[],
-        Detail:{
-            applicationID: null,
-            uID: null,
-            CompanyName: app.applicationDetail.companyName,
-            PositionName: app.applicationDetail.positionName,
-            IsFavorite: app.applicationDetail.pinned,
-            companyID: null,
-            positionID: null,
-            Status: [
+    const userInfo = {
+        detail:{
+            uID: uID,
+            companyName: app.applicationDetail.companyName,
+            positionName: app.applicationDetail.positionName,
+            isFavorite: app.applicationDetail.pinned,
+            status: [
                 {
                     midTaskID: null,
-                    Time: app.dates[0].date,
-                    Title: "Applied",
-                    Status: app.dates[0].completed,
-                    IsFavorite : false,
+                    time: app.dates[0].date,
+                    title: "Applied",
+                    status: app.dates[0].completed,
+                    isFavorite : false,
                     showDate: app.dates[0].showDate
                 }
             ],
-            Categories: app.Categories
         },       
-      })
-    })
-    .then(response => console.log(response.json()))
-    .then(() => dispatch({
-            type: 'POST_NEWAPP_SUCCESS',
-        })
-    )
-    .catch(error => dispatch({
-        type: 'POST_NEWAPP_FAILED',
-        payload: error
-    }))
+    }
+    var responseResult = {}
+    return async dispatch => {
+        dispatch({type: 'POST_NEWAPP_PENDING'});
+        function onSuccess(success) {
+          dispatch({ type: 'POST_NEWAPP_SUCCESS'});
+          return responseResult;
+        }
+        function onError(error) {
+          dispatch({ type: 'POST_NEWAPP_FAILED', error });
+          return error;
+        }
+        try {
+          const success = await axios.post("https://saveyourappdevelopment.azurewebsites.net/applications/"+uID+"/Create", userInfo)
+          .then(response => response.data).then(response => {
+                responseResult = response
+                console.log(response)
+                console.log(responseResult)
+            });
+          return onSuccess(success);
+        } catch (error) {
+          return onError(error);
+        }
+      }
+
+
+
+
+
+
+
+
+    // const response = await axios.post(
+    // "https://saveyourappdevelopment.azurewebsites.net/applications/"+uID+"/Create",
+    // userInfo
+    // )
+    // .then(response => response.data).then(response => {
+    //     responseResult = response
+    //     console.log(response)
+    //     console.log(responseResult)
+    // })
+    // .then(() => dispatch({
+    //         type: 'POST_NEWAPP_SUCCESS',
+    //     })
+    // ).then(() => {
+    //     return responseResult
+    // })
+    // .catch(error => dispatch({
+    //     type: 'POST_NEWAPP_FAILED',
+    //     payload: error
+    // }))
+    // return responseResult
 }
