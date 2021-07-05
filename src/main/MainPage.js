@@ -43,13 +43,18 @@ function MainPage(props){
     { name: 'Companies', value: '1' },
     { name: 'Templates', value: '2' },
     ]
-    const [socketConnected, setSocketConnected] = useState(false);
+    const [appLoaded, setAppLoaded] = useState(false);
+    const [companyLoaded, setCompanyLoaded] = useState(false);
 
     useEffect(() => {
       if(localStorage.getItem('jwt-token')){
-        getApplication(JSON.parse(localStorage.getItem('user')).uID).then(applications => props.setApps(applications))
-        getCompany(JSON.parse(localStorage.getItem('user')).uID).then(companies => props.setCompany(companies))
-        setSocketConnected(true)
+        getApplication(JSON.parse(localStorage.getItem('user')).uID).then(applications => 
+          {props.setApps(applications)
+            setAppLoaded(true)})
+        getCompany(JSON.parse(localStorage.getItem('user')).uID).then(companies => 
+          {props.setCompany(companies)
+          setCompanyLoaded(true)
+          })
       }else{
         props.history.push('/');
       }
@@ -113,19 +118,37 @@ function MainPage(props){
     const radioChange = (e) => {
     setRadioValue(e.target.value)
     }
+    
+    // const getInfo = () =>{
+    //      if(localStorage.getItem('jwt-token')){
+    //     getApplication(JSON.parse(localStorage.getItem('user')).uID).then(applications => props.setApps(applications))
+    //     getCompany(JSON.parse(localStorage.getItem('user')).uID).then(companies => props.setCompany(companies))
+    //     setSocketConnected(true)
+    //   }else{
+    //     props.history.push('/');
+    //   }
+    // }
 
     const display = () =>{
         if(radioValue === '0'){
           return (
+            <>
+            {!appLoaded? <div>Loading Screen</div>:
             <div>
                 <Applications/>
             </div>
+            }
+            </>
           )
         }else if(radioValue === '1'){
           return(
+            <>
+            {!companyLoaded? <div>Loading Screen</div>:
             <div>
-              <Companies />
+              <Companies/>
             </div>
+            }
+            </>
           )
         }     
         else {
@@ -134,12 +157,9 @@ function MainPage(props){
           )
       }
     }
-
+    
     return (
       <div>
-        {
-          //Import Loading Screen in the beginning
-          !socketConnected? <div>Loading Screen</div>:
         <div>
         <div className = "sypp-main-button-container">
           <ButtonGroup toggle className = {props.classContainerProps}>
@@ -165,7 +185,6 @@ function MainPage(props){
             </div>
             {display()}
           </div>
-        }
       </div>
     );  
 }

@@ -21,7 +21,7 @@ import axios from 'axios';
         try {
             const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/GetApplications')
             console.log(res)
-            return res.status == 200 ? res.data : "error";
+            return res.status === 200 ? res.data : "error";
         } catch (error) {
             return error
         } 
@@ -32,7 +32,7 @@ import axios from 'axios';
       try {
           const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/company/'+uID+'/GetCompanies')
           console.log(res)
-          return res.status == 200 ? res.data : "error";
+          return res.status === 200 ? res.data : "error";
       } catch (error) {
           return error
       } 
@@ -44,4 +44,4 @@ import axios from 'axios';
 // export const localLogin = ({email, password}) => axios.post('/api/auth/login/local', { email, password });
 
 // export const checkStatus = () => axios.get('/api/auth/check');
-// export const logout = () => axios.post('/api/auth/logout');
+// export const logout = () => axios.post('/api/auth/logout');7  v
