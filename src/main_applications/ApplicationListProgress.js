@@ -7,8 +7,8 @@ import './../components/progress/ProgressBar.scss'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Dropdown from 'react-dropdown';
-
-import ReactTooltip from "react-tooltip";
+import axios from 'axios';
+import {updateFavorite} from './../lib/api'
 import './ApplicationList.scss'
 // import Rating from "@material-ui/lab/Rating";
  import Rating from 'react-rating';
@@ -31,7 +31,8 @@ const mapStatetoProps = state => {
     return{
         apps: state.progress.applications,
         filteredProgress: state.filteredProgress.applications,
-        selectedTitle: state.filteredProgress.selectedTitle
+        selectedTitle: state.filteredProgress.selectedTitle,
+        connection: state.connection.connection
     }
 }
 const mapDispatchToProps= dispatch =>{
@@ -67,16 +68,30 @@ export class ApplicationListProgress extends Component{
     }
     //UID, APP ID, TASK use post call
     //return task with id
-    onClickIsFavorite = (applicationID) =>{
+    
+    async onClickIsFavorite(applicationID){
         var apps = this.props.apps
+        console.log("is this triggered")
 
         for(var i=0; i<apps.length;i++){
             if(apps[i].applicationID+"" === applicationID+""){
-                apps[i].detail.isFavorite = !apps[i].detail.isFavorite
+                await updateFavorite(JSON.parse(localStorage.getItem('user')).uID, applicationID, !apps[i].detail.isFavorite).then(result => 
+                    {console.log(result)})
+                if (this.props.connection) {
+                    try {
+                        console.log("connect send init")
+                        this.props.connection.send('Application_IsFavorite_Update', {
+                            uID : JSON.parse(localStorage.getItem('user')).uID,
+                            applicationID: applicationID,
+                            IsFavorite: !apps[i].detail.isFavorite
+                    })
+                    } catch(e) {
+                        console.log(e);
+                    }
+                    }
                 break;
             }
         }
-        this.props.setApps(apps)
         this.setState({})
     }
     //mid task add, need to make fetch call

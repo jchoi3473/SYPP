@@ -75,13 +75,16 @@ function MainPage(props){
               connectionID: connection.connection.connectionId
           })
           connection.on('Application_Add_Update_Received', applicationID => {
+            console.log("application update recieved")
             getApplication(applicationID).then(applications => props.setApps(applications))
           })
           connection.on('Application_Task_Update_Received', applicationID => {
             getApplication(applicationID).then(applications => props.setApps(applications))
           })
-          connection.on('Application_IsFavorite_Update_Received', applicationID => {
-            getApplication(applicationID).then(applications => props.setApps(applications))
+          connection.on('Application_IsFavorite_Update_Received', (applicationID, IsFavorite) => {
+            console.log("is favortie updated")
+            
+            // getApplication(applicationID).then(applications => props.setApps(applications))
           })
           connection.on('Application_Notes_Update_Received', applicationID => {
             getApplication(applicationID).then(applications => props.setApps(applications))
