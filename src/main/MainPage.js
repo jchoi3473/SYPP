@@ -45,6 +45,7 @@ function MainPage(props){
     ]
     const [appLoaded, setAppLoaded] = useState(false);
     const [companyLoaded, setCompanyLoaded] = useState(false);
+    const [connection, setConnection] = useState(null);
 
     useEffect(() => {
       if(localStorage.getItem('jwt-token')){
@@ -65,8 +66,17 @@ function MainPage(props){
         .withUrl('https://saveyourappdevelopment.azurewebsites.net/chathub/')
         .withAutomaticReconnect()
         .build();
-      props.setConnection(connection);        
+      props.setConnection(connection);
 
+      connection.on("Application_IsFavorite_Update_Received", 
+        console.log("application update recieved")
+        // getApplication(applicationID).then(applications => props.setApps(applications))
+      )
+
+      connection.start()
+      .then(() => console.info('SignalR Connected'))
+      .catch(err => console.error('SignalR Connection Error: ', err));
+      /*
       connection.start()
       .then(result => {
           // setSocketConnected(true)
@@ -113,14 +123,21 @@ function MainPage(props){
 
       })
       .catch(e => console.log('Connection failed: ', e));
-      
-  }, []);
+      */
 
-
-
-    const radioChange = (e) => {
-    setRadioValue(e.target.value)
+  },[]);
+  useEffect(() => {
+    if(connection){
+      connection.on("Application_IsFavorite_Update_Received", 
+      console.log("application update recieved")
+      // getApplication(applicationID).then(applications => props.setApps(applications))
+      )
     }
+  })
+
+  const radioChange = (e) => {
+  setRadioValue(e.target.value)
+  }
     
     // const getInfo = () =>{
     //      if(localStorage.getItem('jwt-token')){

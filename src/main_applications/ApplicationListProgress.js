@@ -69,18 +69,24 @@ export class ApplicationListProgress extends Component{
     //UID, APP ID, TASK use post call
     //return task with id
     
-    async onClickIsFavorite(applicationID){
+    async onClickIsFavorite (applicationID){
         var apps = this.props.apps
         console.log("is this triggered")
 
         for(var i=0; i<apps.length;i++){
             if(apps[i].applicationID+"" === applicationID+""){
-                await updateFavorite(JSON.parse(localStorage.getItem('user')).uID, applicationID, !apps[i].detail.isFavorite).then(result => 
-                    {console.log(result)})
+                await updateFavorite(JSON.parse(localStorage.getItem('user')).uID, applicationID, !apps[i].detail.isFavorite)
                 if (this.props.connection) {
                     try {
-                        console.log("connect send init")
-                        this.props.connection.send('Application_IsFavorite_Update', {
+                        console.log(this.props.connection)
+                        console.log(JSON.parse(localStorage.getItem('user')).uID)
+                        console.log("before update connectionID")
+                        await this.props.connection.send('UpdateConnectionID', {
+                            uID : JSON.parse(localStorage.getItem('user')).uID,
+                            connectionID: this.props.connection.connection.connectionId
+                        })
+                        console.log("after update connectionID")
+                        await this.props.connection.send('Application_IsFavorite_Update', {
                             uID : JSON.parse(localStorage.getItem('user')).uID,
                             applicationID: applicationID,
                             IsFavorite: !apps[i].detail.isFavorite
