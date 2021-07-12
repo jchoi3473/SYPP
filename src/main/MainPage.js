@@ -68,13 +68,15 @@ function MainPage(props){
         .build();
       props.setConnection(connection);
 
-      connection.on("Application_IsFavorite_Update_Received", 
-        console.log("application update recieved")
-        // getApplication(applicationID).then(applications => props.setApps(applications))
-      )
-
       connection.start()
-      .then(() => console.info('SignalR Connected'))
+      .then(result =>{
+        console.info('SignalR Connected')
+        connection.on("Application_IsFavorite_Update_Received", (applicationID, isFavorite) => {
+          console.log("Is Favorite Listener activated")
+          console.log(applicationID)
+          console.log(isFavorite)
+      }) 
+      } )
       .catch(err => console.error('SignalR Connection Error: ', err));
       /*
       connection.start()
@@ -128,8 +130,9 @@ function MainPage(props){
   },[]);
   useEffect(() => {
     if(connection){
-      connection.on("Application_IsFavorite_Update_Received", 
-      console.log("application update recieved")
+      connection.on("Application_IsFavorite_Update_Received", (data) => {
+        console.log("application update recieved")
+      }
       // getApplication(applicationID).then(applications => props.setApps(applications))
       )
     }

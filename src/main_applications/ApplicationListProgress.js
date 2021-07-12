@@ -66,35 +66,20 @@ export class ApplicationListProgress extends Component{
             isHovering: !state.isHovering,
         };
     }
-    //UID, APP ID, TASK use post call
-    //return task with id
     
     async onClickIsFavorite (applicationID){
         var apps = this.props.apps
-        console.log("is this triggered")
-
         for(var i=0; i<apps.length;i++){
             if(apps[i].applicationID+"" === applicationID+""){
                 await updateFavorite(JSON.parse(localStorage.getItem('user')).uID, applicationID, !apps[i].detail.isFavorite)
                 if (this.props.connection) {
                     try {
-                        console.log(this.props.connection)
-                        console.log(JSON.parse(localStorage.getItem('user')).uID)
-                        console.log("before update connectionID")
-                        await this.props.connection.send('UpdateConnectionID', {
-                            uID : JSON.parse(localStorage.getItem('user')).uID,
-                            connectionID: this.props.connection.connection.connectionId
-                        })
-                        console.log("after update connectionID")
-                        await this.props.connection.send('Application_IsFavorite_Update', {
-                            uID : JSON.parse(localStorage.getItem('user')).uID,
-                            applicationID: applicationID,
-                            IsFavorite: !apps[i].detail.isFavorite
-                    })
+                        await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                        await this.props.connection.invoke('Application_IsFavorite_Update', JSON.parse(localStorage.getItem('user')).uID, applicationID, !apps[i].detail.isFavorite)                  
                     } catch(e) {
                         console.log(e);
                     }
-                    }
+                }
                 break;
             }
         }
