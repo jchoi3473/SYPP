@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Applications from './../main_applications/Applications'
 import Companies from './../main_companies/Companies'
 import {connect} from 'react-redux'
@@ -46,6 +46,8 @@ function MainPage(props){
     const [appLoaded, setAppLoaded] = useState(false);
     const [companyLoaded, setCompanyLoaded] = useState(false);
     const [connection, setConnection] = useState(null);
+    const latestApp = useRef(null);
+    latestApp.current = props.apps;
 
     useEffect(() => {
       if(localStorage.getItem('jwt-token')){
@@ -73,10 +75,23 @@ function MainPage(props){
         console.info('SignalR Connected')
         connection.on("Application_IsFavorite_Update_Received", (applicationID, isFavorite) => {
           console.log("Is Favorite Listener activated")
-          console.log(applicationID)
-          console.log(isFavorite)
-      }) 
-      } )
+          const apps = [...latestApp.current];
+          for(var i=0; i<apps.length;i++){
+            if(apps[i].applicationID === applicationID){
+              apps[i].detail.isFavorite = isFavorite
+              props.setApps(apps)
+              break;
+            }
+          }
+      })
+        connection.on('Application_Add_Update_Received', applicationID => {
+          setAppLoaded(false)
+          console.log("application update recieved")
+          getApplication(applicationID).then(applications => {
+            props.setApps(applications)
+            setAppLoaded(true)})
+          })
+      })
       .catch(err => console.error('SignalR Connection Error: ', err));
       /*
       connection.start()

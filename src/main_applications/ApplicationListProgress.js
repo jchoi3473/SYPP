@@ -71,11 +71,13 @@ export class ApplicationListProgress extends Component{
         var apps = this.props.apps
         for(var i=0; i<apps.length;i++){
             if(apps[i].applicationID+"" === applicationID+""){
-                await updateFavorite(JSON.parse(localStorage.getItem('user')).uID, applicationID, !apps[i].detail.isFavorite)
+                apps[i].detail.isFavorite = !apps[i].detail.isFavorite
+                this.props.setApps(apps)                
+                await updateFavorite(JSON.parse(localStorage.getItem('user')).uID, applicationID, apps[i].detail.isFavorite)
                 if (this.props.connection) {
                     try {
                         await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
-                        await this.props.connection.invoke('Application_IsFavorite_Update', JSON.parse(localStorage.getItem('user')).uID, applicationID, !apps[i].detail.isFavorite)                  
+                        await this.props.connection.invoke('Application_IsFavorite_Update', JSON.parse(localStorage.getItem('user')).uID, applicationID, apps[i].detail.isFavorite)  
                     } catch(e) {
                         console.log(e);
                     }

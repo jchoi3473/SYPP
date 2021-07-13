@@ -38,19 +38,17 @@ export class UserForm extends Component {
         // this.props.postNewApp(this.props.addApp)
         console.log("Triggered")
         const app = await this.props.postNewApp(this.props.addApp)
-        console.log("This was returned: ", app)
         if (this.props.connection) {
             try {
-            console.log("connect send init")
-            this.props.connection.send('Application_Add_Update', {
-                uID : JSON.parse(localStorage.getItem('user')).uID,
-                applicationID: app.applicationID
-            })
+                await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                await this.props.connection.invoke('Application_Add_Update', JSON.parse(localStorage.getItem('user')).uID, app.applicationID)  
             } catch(e) {
                 console.log(e);
             }
         }
-        const app2 = setTimeout(()=> this.props.onRequestProgress(), 500) 
+        console.log("This was returned: ", app)
+
+        // const app2 = setTimeout(()=> this.props.onRequestProgress(), 500) 
 
         // this.props.connection.on('Application_Checklists_Update_Received', applicationID => {
         //     getApplication(applicationID).then(applications => props.setApps(applications))
