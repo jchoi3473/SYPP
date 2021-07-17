@@ -47,7 +47,9 @@ function MainPage(props){
     const [companyLoaded, setCompanyLoaded] = useState(false);
     const [connection, setConnection] = useState(null);
     const latestApp = useRef(null);
+    const lastesCompany = useRef(null);
     latestApp.current = props.apps;
+    lastesCompany.current= props.companies;
 
     useEffect(() => {
       if(localStorage.getItem('jwt-token')){
@@ -73,6 +75,22 @@ function MainPage(props){
       connection.start()
       .then(result =>{
         console.info('SignalR Connected')
+        //List of Socket Listeners
+        connection.on('Application_Add_Update_Received', applicationID => {
+          setAppLoaded(false)
+          console.log("application update recieved")
+          getApplication(applicationID).then(applications => {
+            props.setApps(applications)
+            setAppLoaded(true)})
+        })
+        connection.on('Company_Add_Update_Received', companyID => {
+          setCompanyLoaded(false)
+          console.log("company update recieved")
+          getCompany(JSON.parse(localStorage.getItem('user')).uID).then(companies => 
+            {props.setCompany(companies)
+            setCompanyLoaded(true)
+          })
+        })
         connection.on("Application_IsFavorite_Update_Received", (applicationID, isFavorite) => {
           console.log("Is Favorite Listener activated")
           const apps = [...latestApp.current];
@@ -83,14 +101,19 @@ function MainPage(props){
               break;
             }
           }
-      })
-        connection.on('Application_Add_Update_Received', applicationID => {
-          setAppLoaded(false)
-          console.log("application update recieved")
-          getApplication(applicationID).then(applications => {
-            props.setApps(applications)
-            setAppLoaded(true)})
-          })
+        })
+        connection.on("Company_IsFavorite_Update_Received", (companyID, isFavorite) => {
+          console.log("Is Favorite Listener activated")
+          const companies = [...lastesCompany.current];
+          for(var i=0; i<companies.length;i++){
+            if(companies[i].companyID === companyID){
+              companies[i].detail.isFavorite = isFavorite
+              props.setCompany(companies)
+              break;
+            }
+          }
+        })
+
       })
       .catch(err => console.error('SignalR Connection Error: ', err));
       /*
@@ -143,30 +166,19 @@ function MainPage(props){
       */
 
   },[]);
-  useEffect(() => {
-    if(connection){
-      connection.on("Application_IsFavorite_Update_Received", (data) => {
-        console.log("application update recieved")
-      }
-      // getApplication(applicationID).then(applications => props.setApps(applications))
-      )
-    }
-  })
+  // useEffect(() => {
+  //   if(connection){
+  //     connection.on("Application_IsFavorite_Update_Received", (data) => {
+  //       console.log("application update recieved")
+  //     }
+  //     // getApplication(applicationID).then(applications => props.setApps(applications))
+  //     )
+  //   }
+  // })
 
   const radioChange = (e) => {
   setRadioValue(e.target.value)
   }
-    
-    // const getInfo = () =>{
-    //      if(localStorage.getItem('jwt-token')){
-    //     getApplication(JSON.parse(localStorage.getItem('user')).uID).then(applications => props.setApps(applications))
-    //     getCompany(JSON.parse(localStorage.getItem('user')).uID).then(companies => props.setCompany(companies))
-    //     setSocketConnected(true)
-    //   }else{
-    //     props.history.push('/');
-    //   }
-    // }
-
     const display = () =>{
         if(radioValue === '0'){
           return (

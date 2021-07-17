@@ -6,13 +6,13 @@ import './CompanyList.scss'
 import {setCompany} from './../redux/company-reducer/companyAction'
 import {connect} from 'react-redux'
 import Modal from 'react-bootstrap/Modal';
-
-
+import { updateFavorite, postCompany } from '../lib/api';
 
 
 const mapStatetoProps = state => {
     return{
         companies: state.companies.companies,
+        connection: state.connection.connection
     }
 }
 const mapDispatchToProps= dispatch =>{
@@ -31,30 +31,54 @@ export class CompanyList extends Component{
             companyName : ''
         }
       }
-      onChangeCompanyName = (e) =>{
-        this.setState({
-          companyName : e.target.value
-        })
-      }
-      onSearchChange = (e) =>{
-        this.setState({
-            searchField: e.target.value
-        })
-        console.log(this.state.searchField)
-      }
-
-      onClickIsFavorite = (companyID) =>{
+    onChangeCompanyName = (e) =>{
+      this.setState({
+        companyName : e.target.value
+      })
+    }
+    onSearchChange = (e) =>{
+      this.setState({
+          searchField: e.target.value
+      })
+      console.log(this.state.searchField)
+    }
+    async onClickIsFavorite (companyID){
         var companies = this.props.companies
-
         for(var i=0; i<companies.length;i++){
-            if(companies[i].companyID+"" === companyID+""){
-              companies[i].detail.isFavorite = !companies[i].detail.isFavorite
+          if(companies[i].companyID+"" === companyID+""){
+            companies[i].detail.isFavorite = !companies[i].detail.isFavorite
+            this.props.setCompany(companies)
+                await updateFavorite(JSON.parse(localStorage.getItem('user')).uID, "company", companyID, companies[i].detail.isFavorite)
+                if (this.props.connection) {
+                    try {
+                        await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                        await this.props.connection.invoke('Company_IsFavorite_Update', JSON.parse(localStorage.getItem('user')).uID, companyID, companies[i].detail.isFavorite)  
+                    } catch(e) {
+                        console.log(e);
+                    }
+                }
                 break;
             }
         }
-        this.props.setCompany(companies)
         this.setState({})
     }
+
+    async onClickSave(){
+      const result = await postCompany(this.state.companyName)
+      console.log(result)
+      this.handleClose()
+      if (this.props.connection) {
+        try {
+            await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+            await this.props.connection.invoke('Company_Add_Update', JSON.parse(localStorage.getItem('user')).uID, result.companyID)  
+        } catch(e) {
+            console.log(e);
+        }
+      }
+    }
+
+
+
     handleClose = () =>{
       this.setState({
         show: false
@@ -119,7 +143,7 @@ export class CompanyList extends Component{
                         value={this.state.companyName}
                 />
                 </div>
-                  <button className ="sypp-company-button-next">
+                  <button className ="sypp-company-button-next" onClick = {()=> this.onClickSave()}>
                          Save
                   </button>
               </div>
