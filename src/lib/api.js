@@ -85,6 +85,39 @@ export const postCompany = async function(companyName){
 }
 
 
+export const createEvent = async function(type, event){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+    if(type==="application"){
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/CreateEvent', event)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }else if(type==="company"){
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/company/'+uID+'/CreateEvent', event)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }
+  } catch (error) {
+      return error
+  } 
+}
+
+export const updateEvent = async function(type, event){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+    if(type==="application"){
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/UpdateEvent', event)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }else if(type==="company"){
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/company/'+uID+'/UpdateEvent', event)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }
+  } catch (error) {
+      return error
+  } 
+}
 
 
 

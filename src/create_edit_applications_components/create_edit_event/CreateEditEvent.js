@@ -11,6 +11,7 @@ import {connect} from 'react-redux'
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {setCompany} from './../../redux/company-reducer/companyAction'
 import {updateApplicationDetail} from './../../redux/applicationDetail-reducer/ApplicationDetailAction'
+import { createEvent, updateEvent } from '../../lib/api';
 
 const mapStatetoProps = state => {
     return{
@@ -32,18 +33,22 @@ const mapStatetoProps = state => {
 
 
 export class CreateEditEvent extends Component {
-    state = {
-        type: '',
-        step: 1,
-        eventID : '',
-        eventName : '',
-        eventLocation :'',
-        eventNote : '',
-        eventDate : '',
-        eventHour : 0,
-        eventMinute : 0,
-        eventTimeConvert : '',
-        editorState : ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            type: '',
+            step: 1,
+            eventID : '',
+            eventName : '',
+            eventLocation :'',
+            eventNote : '',
+            eventDate : '',
+            eventHour : 0,
+            eventMinute : 0,
+            eventTimeConvert : '',
+            editorState : '',
+            creating: true
+        }
     }
 
     //componentDidMount will determine if this is a new Event
@@ -52,7 +57,8 @@ export class CreateEditEvent extends Component {
         this.setState({
             type : this.props.type
         })
-        if(this.props.event){            
+        console.log(this.state.eventID)      
+        if(this.props.event !== ''){     
             this.setState({
                 eventID: this.props.event.eventID,
                 eventName : this.props.event.detail.title,
@@ -62,7 +68,8 @@ export class CreateEditEvent extends Component {
                 eventHour : 0,
                 eventMinute : 0,
                 eventTimeConvert : '',
-                editorState : this.props.editorState
+                editorState : this.props.editorState,
+                creating: false
             })
         }
     }
@@ -70,52 +77,52 @@ export class CreateEditEvent extends Component {
 //API CALL HERE
 // //Send Post request, close modal(save button)
 
-    onSaveButton = (editorState) => {
+    onSaveButton = async(editorState) => {
         // this.props.postNewApp(this.props.addApp)
     var newNoteContent = []
-    if(editorState !== ''){
-        newNoteContent = [{
-        eventContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
-        Header : editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
-        Contents_Text : []
-      }];
-      var tracker = 0;
-        for(var i=1;i<editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
-          if(editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth === 0){
-            tracker++;
-            newNoteContent.push({
-              eventContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
-              Header : editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
-              Contents_Text : []
-            })
-          }
-          else{
-            newNoteContent[tracker].Contents_Text.push(editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
-          }
+
+        if(editorState !== ''){
+        //     newNoteContent = [{
+        //     eventContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
+        //     Header : editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
+        //     Contents_Text : []
+        //   }];
+            for(var i=1;i<editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
+                newNoteContent.push({
+                noteContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
+                content : editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
+                belongingID : this.props.event.eventID,
+                depth : editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth
+                })
+            }
         }
-    }
+    // console.log(this.state.eventID)
         //Creating a new event
-        if(this.state.eventID === '' && this.state.type ==='application'){
+        console.log(newNoteContent)
+        console.log(editorState)
+        if(this.state.creating&& this.state.type ==='application'){
             var apps = this.props.apps
             for(var i=0;i<this.props.apps.length;i++){
                 if(this.props.apps[i].applicationID === this.props.applicationID){
                     const key = genKey()
-                    apps[i].events.push(  
+                    const event =   
                         {
-                            eventID: key,
                             detail: {
-                                eventID: key,
                                 applicationID: this.props.applicationID,
                                 time: this.state.eventDate,
                                 location: this.state.eventLocation,
                                 title: this.state.eventName
                             },
-                            contents: newNoteContent
+                            contents: newNoteContent,
+                            eventID: '',
+                            files: []
                         }
-                    )
+                    apps[i].events.push(event)
+                    this.props.setApps(apps)
+                    const result = await createEvent('application', apps[i].events)
+                    console.log(result)
                 }
             }
-            this.props.setApps(apps)
         }
         //editing an existing event, app
         else if(this.state.eventID !== '' && this.state.type ==='application'){
@@ -125,7 +132,6 @@ export class CreateEditEvent extends Component {
                 if(this.props.apps[i].applicationID === this.props.applicationID){
                     for(var j=0; j<this.props.apps[i].events.length;j++){
                         if(this.props.apps[i].events[j].eventID === this.state.eventID){
-                            console.log("this one is triggeredd?")
                             apps[i].events[j] = {
                                 eventID: this.state.eventID,
                                 detail: {
@@ -137,6 +143,8 @@ export class CreateEditEvent extends Component {
                                 },
                                 contents: newNoteContent
                             }
+
+
                         }
                     }
                 }
@@ -144,7 +152,6 @@ export class CreateEditEvent extends Component {
             this.props.setApps(apps)
             this.props.onSaveEventNote()
             this.props._handleChange(editorState)
-
         }
         else if(this.state.eventID === '' && this.state.type ==='company'){
             var companies = this.props.companies
