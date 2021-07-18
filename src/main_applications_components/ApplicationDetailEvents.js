@@ -59,7 +59,7 @@ class ApplicationDetailEvents extends React.Component {
       myKeyBindingFn = (e) => {
         switch (e.keyCode) {
           case 9: // TAB
-            if(this.currentBlockIndex() == 0){
+            if(this.currentBlockIndex() === 0){
               return undefined
             }
             else {

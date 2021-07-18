@@ -42,7 +42,7 @@ export class CreateEditEvent extends Component {
             eventName : '',
             eventLocation :'',
             eventNote : '',
-            eventDate : '',
+            eventDate : new Date(),
             eventHour : 0,
             eventMinute : 0,
             eventTimeConvert : '',
@@ -57,7 +57,6 @@ export class CreateEditEvent extends Component {
         this.setState({
             type : this.props.type
         })
-        console.log(this.state.eventID)      
         if(this.props.event !== ''){     
             this.setState({
                 eventID: this.props.event.eventID,
@@ -71,6 +70,7 @@ export class CreateEditEvent extends Component {
                 editorState : this.props.editorState,
                 creating: false
             })
+            console.log(this.props.event.eventID)      
         }
     }
 
@@ -87,12 +87,12 @@ export class CreateEditEvent extends Component {
         //     Header : editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
         //     Contents_Text : []
         //   }];
-            for(var i=1;i<editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
+            for(var i=0;i<editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
                 newNoteContent.push({
                 noteContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
                 content : editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
                 belongingID : this.props.event.eventID,
-                depth : editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth
+                marginType : editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth
                 })
             }
         }
@@ -104,22 +104,23 @@ export class CreateEditEvent extends Component {
             var apps = this.props.apps
             for(var i=0;i<this.props.apps.length;i++){
                 if(this.props.apps[i].applicationID === this.props.applicationID){
-                    const key = genKey()
                     const event =   
                         {
+                            eventID: null,
                             detail: {
                                 applicationID: this.props.applicationID,
+                                eventID: null,
                                 time: this.state.eventDate,
                                 location: this.state.eventLocation,
-                                title: this.state.eventName
+                                title: this.state.eventName,
+                                companyID: null
                             },
                             contents: newNoteContent,
-                            eventID: '',
                             files: []
                         }
                     apps[i].events.push(event)
                     this.props.setApps(apps)
-                    const result = await createEvent('application', apps[i].events)
+                    const result = await createEvent('application', event)
                     console.log(result)
                 }
             }
