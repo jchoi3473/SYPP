@@ -2,16 +2,13 @@ import React, {Component} from 'react';
 import EventDetail from './EventDetail'
 import EventSelectDate from './EventSelectDate'
 
-import { RichUtils, ContentBlock, genKey, ContentState, EditorState} from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import {getDefaultKeyBinding, KeyBindingUtil, keyBindingFn} from 'draft-js';
 import 'draft-js/dist/Draft.css';
 
 import {connect} from 'react-redux'
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {setCompany} from './../../redux/company-reducer/companyAction'
 import {updateApplicationDetail} from './../../redux/applicationDetail-reducer/ApplicationDetailAction'
-import { createEvent, updateEvent } from '../../lib/api';
+import { createEvent, updateEvent, deleteEvent } from '../../lib/api';
 
 const mapStatetoProps = state => {
     return{
@@ -19,6 +16,7 @@ const mapStatetoProps = state => {
         pending: state.progress.isPending,
         categories: state.categories.categories, 
         companies: state.companies.companies,
+        connection: state.connection.connection
     }
   }
   
@@ -38,7 +36,7 @@ export class CreateEditEvent extends Component {
         this.state = {
             type: '',
             step: 1,
-            eventID : '',
+            eventID : null,
             eventName : '',
             eventLocation :'',
             eventNote : '',
@@ -47,6 +45,7 @@ export class CreateEditEvent extends Component {
             eventMinute : 0,
             eventTimeConvert : '',
             editorState : '',
+            companyID: null,
             creating: true
         }
     }
@@ -82,11 +81,6 @@ export class CreateEditEvent extends Component {
     var newNoteContent = []
 
         if(editorState !== ''){
-        //     newNoteContent = [{
-        //     eventContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
-        //     Header : editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
-        //     Contents_Text : []
-        //   }];
             for(var i=0;i<editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
                 newNoteContent.push({
                 noteContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
@@ -96,115 +90,79 @@ export class CreateEditEvent extends Component {
                 })
             }
         }
-    // console.log(this.state.eventID)
-        //Creating a new event
         console.log(newNoteContent)
         console.log(editorState)
-        if(this.state.creating&& this.state.type ==='application'){
+        if(this.state.type ==='application'){
             var apps = this.props.apps
             for(var i=0;i<this.props.apps.length;i++){
                 if(this.props.apps[i].applicationID === this.props.applicationID){
                     const event =   
                         {
-                            eventID: null,
+                            eventID: this.state.eventID,
                             detail: {
                                 applicationID: this.props.applicationID,
-                                eventID: null,
+                                eventID: this.state.eventID,
                                 time: this.state.eventDate,
                                 location: this.state.eventLocation,
                                 title: this.state.eventName,
-                                companyID: null
+                                companyID: this.state.companyID
                             },
                             contents: newNoteContent,
                             files: []
                         }
-                    apps[i].events.push(event)
-                    this.props.setApps(apps)
-                    const result = await createEvent('application', event)
-                    console.log(result)
-                }
-            }
-        }
-        //editing an existing event, app
-        else if(this.state.eventID !== '' && this.state.type ==='application'){
-            console.log(this.state.eventID)
-            var apps = this.props.apps 
-            for(var i=0;i<this.props.apps.length;i++){
-                if(this.props.apps[i].applicationID === this.props.applicationID){
-                    for(var j=0; j<this.props.apps[i].events.length;j++){
-                        if(this.props.apps[i].events[j].eventID === this.state.eventID){
-                            apps[i].events[j] = {
-                                eventID: this.state.eventID,
-                                detail: {
-                                    eventID: this.state.eventID,
-                                    applicationID: this.props.applicationID,
-                                    time: this.state.eventDate,
-                                    location: this.state.eventLocation,
-                                    title: this.state.eventName
-                                },
-                                contents: newNoteContent
-                            }
-
-
+                    let result = {}
+                    if(this.state.creating){
+                        result = await createEvent('application', event)
+                    }
+                    else{
+                        result = await updateEvent('application', event)
+                    }
+                    if (this.props.connection){
+                        try {
+                            await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                            await this.props.connection.invoke('Application_Events_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, result.eventID)  
+                        } catch(e) {
+                            console.log(e);
                         }
                     }
                 }
             }
-            this.props.setApps(apps)
-            this.props.onSaveEventNote()
-            this.props._handleChange(editorState)
         }
-        else if(this.state.eventID === '' && this.state.type ==='company'){
-            var companies = this.props.companies
+        else if(this.state.type ==='company'){
             for(var i=0;i<this.props.companies.length;i++){
                 if(this.props.companies[i].companyID === this.props.companyID){
-                    const key = genKey()
-                    companies[i].events.push(  
+                    const event =   
                         {
-                            eventID: key,
+                            eventID: this.state.eventID,
                             detail: {
-                                eventID: key,
-                                applicationID: this.props.companyID,
+                                applicationID: this.props.applicationID,
+                                eventID: this.state.eventID,
                                 time: this.state.eventDate,
                                 location: this.state.eventLocation,
-                                title: this.state.eventName
+                                title: this.state.eventName,
+                                companyID: this.state.companyID
                             },
-                            contents: newNoteContent
+                            contents: newNoteContent,
+                            files: []
                         }
-                    )
-                }
-            }
-            this.props.onSaveEventNote()
-            this.props.setCompany(companies)
-            this.setState({})
-        }
-        else if(this.state.eventID !== '' && this.state.type ==='company'){
-            console.log(this.state.eventID)
-            var companies = this.props.companies 
-            for(var i=0;i<this.props.companies.length;i++){
-                if(this.props.companies[i].companyID === this.props.companyID){
-                    for(var j=0; j<this.props.companies[i].Events.length;j++){
-                        if(this.props.companies[i].events[j].eventID === this.state.eventID){
-                            console.log("this one is triggeredd?")
-                            companies[i].events[j] = {
-                                eventID: this.state.eventID,
-                                detail: {
-                                    eventID: this.state.eventID,
-                                    applicationID: this.props.companyID,
-                                    time: this.state.eventDate,
-                                    location: this.state.eventLocation,
-                                    title: this.state.eventName
-                                },
-                                contents: newNoteContent
-                            }
+                    let result = {}
+                    if(this.state.creating){
+                        result = await createEvent('company', event)
+                    }
+                    else{
+                        result = await updateEvent('company', event)
+                    }
+                    if (this.props.connection){
+                        try {
+                            console.log("Triggered")
+                            await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                            await this.props.connection.invoke('Company_Events_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.companyID, result.eventID)  
+                        } catch(e) {
+                            console.log(e);
                         }
                     }
                 }
             }
-            this.props.setCompany(companies)
-            this.props.onSaveEventNote()
-            this.props._handleChange(editorState)
-            this.setState({})
         }
         this.props.handleClose()
     }
@@ -254,7 +212,41 @@ export class CreateEditEvent extends Component {
             editorState: editorState
         })
     }
-
+    onDelete = async() =>{
+        if(this.state.type ==='application'){
+            if(this.state.creating){
+                this.props.handleClose()
+            }else{
+                await deleteEvent("application",this.props.applicationID,this.state.eventID)
+                if (this.props.connection){
+                    try {
+                        console.log("Triggered")
+                        await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                        await this.props.connection.invoke('Application_Events_Delete', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, this.state.eventID)  
+                    } catch(e) {
+                        console.log(e);
+                    }
+                }
+            }
+        }
+        else if(this.state.type ==='company'){
+            if(this.state.creating){
+                this.props.handleClose()
+            }else{
+                await deleteEvent("company",this.props.companyID,this.state.eventID)
+                if (this.props.connection){
+                    try {
+                        console.log("Triggered")
+                        await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                        await this.props.connection.invoke('Company_Event_Delete', JSON.parse(localStorage.getItem('user')).uID, this.props.companyID, this.state.eventID)  
+                    } catch(e) {
+                        console.log(e);
+                    }
+                }
+            }
+        }
+        this.props.handleClose()
+    }
 
     
     render(){
@@ -274,6 +266,7 @@ export class CreateEditEvent extends Component {
                             editorState = {this.props.editorState}
                             handleEditorState = {this.handleEditorState}
                             onSaveButton = {this.onSaveButton}
+                            onDelete = {this.onDelete}
                         />
                     </div>
                 );

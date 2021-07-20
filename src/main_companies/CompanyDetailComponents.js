@@ -110,28 +110,28 @@ class CompanyDetailComponents extends Component{
     triggerComponents = () =>{
         if(this.state.selectedValue === '0'){
             return(
-                <CreateEditEvent Event = {''} onSaveEventNote = {this.onSaveEventNote} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
+                <CreateEditEvent event = {''} onSaveEventNote = {this.onSaveEventNote} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
             // <div>Events</div>
             );
         }
         else if(this.state.selectedValue === '1'){
             return(
-                <CreateEditNote Note = {''} onSaveNote = {this.onSaveNote} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
+                <CreateEditNote note = {''} onSaveNote = {this.onSaveNote} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
             );
         }
         else if(this.state.selectedValue === '2'){
             return(
-                <CreateEditContact Contact = {''} onSaveContactNote = {this.onSaveContactNote} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
+                <CreateEditContact contact = {''} onSaveContactNote = {this.onSaveContactNote} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
             );
         }
         else if(this.state.selectedValue === '3'){
             return(
-                <CreateEditConversation FollowUp = {''} onSaveConversation = {this.onSaveConversation} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
+                <CreateEditConversation followUp = {''} onSaveConversation = {this.onSaveConversation} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'}/>
             );
         }
          else if(this.state.selectedValue === '4'){
             return(
-                <CreateEditChecklist onSaveChecklist = {this.onSaveChecklist} Checklist = {''} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'} editorState = {''}/>
+                <CreateEditChecklist onSaveChecklist = {this.onSaveChecklist} checklist = {''} handleClose = {this.handleClose} companyID = {this.props.companyDetail.companyID} type ={'company'} editorState = {''}/>
             );
         }
         return(

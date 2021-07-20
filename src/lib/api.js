@@ -84,6 +84,22 @@ export const postCompany = async function(companyName){
   } 
 }
 
+export const getEvent = async function(type, typeID, eventID){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+    if(type==="application"){
+      const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/'+typeID+'/GetEvent/'+eventID)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }else if(type==="company"){
+      const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/company/'+uID+'/'+typeID+'/GetEvent/'+eventID)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }
+  } catch (error) {
+      return error
+  } 
+}
 
 export const createEvent = async function(type, event){
   const uID = JSON.parse(localStorage.getItem('user')).uID
@@ -119,13 +135,87 @@ export const updateEvent = async function(type, event){
   } 
 }
 
+export const deleteEvent = async function(type, typeID, eventID){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+    if(type==="application"){
+      const res = await axios.delete('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/'+typeID+'/DeleteEvent/'+eventID)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }else if(type==="company"){
+      const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/company/'+uID+'/'+typeID+'/DeleteEvent/'+eventID)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }
+  } catch (error) {
+      return error
+  } 
+}
 
+export const getNote = async function(type, typeID, noteID){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+    if(type==="application"){
+      const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/'+typeID+'/GetNote/'+noteID)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }else if(type==="company"){
+      const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/company/'+uID+'/'+typeID+'/GetNote/'+noteID)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }
+  } catch (error) {
+      return error
+  } 
+}
 
-// export const checkEmailExists = (email) => axios.get('/api/auth/exists/email/' + email);
-// export const checkUsernameExists = (username) => axios.get('/api/auth/exists/username/' + username);
+export const createNote = async function(type, note){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+    if(type==="application"){
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/CreateNote', note)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }else if(type==="company"){
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/company/'+uID+'/CreateNote', note)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }
+  } catch (error) {
+      return error
+  } 
+}
 
-// export const localRegister = ({email, username, password}) => axios.post('/api/auth/register/local', { email, username, password });
-// export const localLogin = ({email, password}) => axios.post('/api/auth/login/local', { email, password });
+export const updateNote = async function(type, note){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+    if(type==="application"){
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/UpdateNote', note)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }else if(type==="company"){
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/company/'+uID+'/UpdateNote', note)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }
+  } catch (error) {
+      return error
+  } 
+}
 
-// export const checkStatus = () => axios.get('/api/auth/check');
-// export const logout = () => axios.post('/api/auth/logout');7  v
+export const deleteNote = async function(type, typeID, noteID){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+    if(type==="application"){
+      const res = await axios.delete('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/'+typeID+'/DeleteNote/'+noteID)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }else if(type==="company"){
+      const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/company/'+uID+'/'+typeID+'/DeleteNote/'+noteID)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+    }
+  } catch (error) {
+      return error
+  } 
+}

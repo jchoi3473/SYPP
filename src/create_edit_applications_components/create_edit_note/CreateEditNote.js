@@ -12,6 +12,8 @@ import {setCompany} from './../../redux/company-reducer/companyAction'
 import {updateApplicationDetail} from './../../redux/applicationDetail-reducer/ApplicationDetailAction'
 import './../create_edit_event/CreateEvent.scss'
 import './../CreateEditDetail.scss'
+import { createNote, updateNote, deleteNote } from '../../lib/api';
+
 
 const mapStatetoProps = state => {
     return{
@@ -19,6 +21,7 @@ const mapStatetoProps = state => {
         pending: state.progress.isPending,
         categories: state.categories.categories, 
         companies: state.companies.companies,
+        connection: state.connection.connection
     }
   }
   
@@ -35,10 +38,11 @@ const mapStatetoProps = state => {
 export class CreateEditNote extends Component {
     state = {
         type: '',
-        noteID : '',
+        noteID : null,
         noteDate : new Date(),
         noteName : '',
-        editorState : ''
+        editorState : '',
+        creating: true
     }
 
     //componentDidMount will determine if this is a new Event
@@ -47,12 +51,13 @@ export class CreateEditNote extends Component {
         this.setState({
             type : this.props.type
         })
-        if(this.props.Note !== ''){
+        if(this.props.note !== ''){
             this.setState({
                 noteID: this.props.note.noteID,
                 noteName : this.props.note.detail.title,
                 noteDate : this.props.note.detail.time,
-                editorState : this.props.editorState
+                editorState : this.props.editorState,
+                creating: false
             })
         }
     }
@@ -60,122 +65,89 @@ export class CreateEditNote extends Component {
 //API CALL HERE
 // //Send Post request, close modal(save button)
 
-    onSaveButton = () => {
+    onSaveButton = async() => {
         // this.props.postNewApp(this.props.addApp)
+        const editorState = this.state.editorState
         var newNoteContent = []
-        if(this.state.editorState !== ''){
-            var newNoteContent = [{
-            noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
-            Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
-            Contents_Text : []
-        }];
-            var tracker = 0;
-            for(var i=1;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
-                if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth === 0){
-                    tracker++;
-                    newNoteContent.push({
-                    noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
-                    Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
-                    Contents_Text : []
-                    })
-                }
-                else{
-                    newNoteContent[tracker].Contents_Text.push(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
-                }
+        if(editorState !== ''){
+            for(var i=0;i<editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
+                newNoteContent.push({
+                noteContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
+                content : editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
+                belongingID : this.props.note.noteID,
+                marginType : editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth
+                })
             }
         }
 
         //Creating a new event
-        if(this.state.noteID === '' && this.state.type ==='application'){
-            var apps = this.props.apps
+        if(this.state.type ==='application'){
             for(var i=0;i<this.props.apps.length;i++){
                 if(this.props.apps[i].applicationID === this.props.applicationID){
-                    const key = genKey()
-                    apps[i].Notes.push(  
-                        {
-                            noteID: key,
-                            Detail: {
-                                noteID: key,
-                                Time: this.state.noteDate,
-                                Title: this.state.noteName
-                            },
-                            Contents: newNoteContent
-                        }
-                    )
-                }
-            }
-            this.props.setApps(apps)
-        }
-        //editing an existing event, app
-        else if(this.state.noteID !== '' && this.state.type ==='application'){
-            var apps = this.props.apps 
-            for(var i=0;i<this.props.apps.length;i++){
-                console.log("this one is triggeredd?")
-                if(this.props.apps[i].applicationID === this.props.applicationID){
-                    for(var j=0; j<this.props.apps[i].Notes.length;j++){
-                        if(this.props.apps[i].Notes[j].noteID === this.state.noteID){
-                            apps[i].Notes[j] = {
-                                noteID: this.state.noteID,
-                                Detail: {
-                                    noteID: this.state.noteID,
-                                    Time: this.state.noteDate,
-                                    Title: this.state.noteName
-                                },
-                                Contents: newNoteContent
-                            }
+                    const note =   
+                    {
+                        noteID: this.state.noteID,
+                        detail: {
+                            noteID: this.state.noteID,
+                            time: this.state.noteDate,
+                            title: this.state.noteName
+                        },
+                        contents: newNoteContent,
+                        files: []
+                    }
+                    let result = {}
+                    if(this.state.creating){
+                        result = await createNote('application', note)
+                    }
+                    else{
+                        result = await updateNote('application', note)
+                    }
+                    console.log(result)
+                    if (this.props.connection){
+                        try {
+                            await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                            await this.props.connection.invoke('Application_Notes_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, result.noteID)  
+                        } catch(e) {
+                            console.log(e);
                         }
                     }
                 }
             }
-            this.props.setApps(apps)
-            this.props._handleChange(this.state.editorState)
-            this.props.onSaveNote()
         }
         //company detail fixing part, when it doesnt exist 
-        else if(this.state.noteID === '' && this.state.type ==='company'){
-            var companies = this.props.companies
+        else if(this.state.type ==='company'){
             for(var i=0;i<this.props.companies.length;i++){
                 if(this.props.companies[i].companyID === this.props.companyID){
-                    const key = genKey()
-                    console.log("this one is triggeredd...")
-                    companies[i].Notes.push(  
-                        {
-                            noteID: key,
-                            Detail: {
-                                noteID: key,
-                                Time: this.state.noteDate,
-                                Title: this.state.noteName
-                            },
-                            Contents: newNoteContent
-                        }
-                    )
-                }
-            }
-            this.props.setCompany(companies)
-        }
-        else if(this.state.noteID !== '' && this.state.type ==='company'){
-            var companies = this.props.companies 
-            for(var i=0;i<this.props.companies.length;i++){
-                console.log("this one is triggeredd?")
-                if(this.props.companies[i].companyID === this.props.companyID){
-                    for(var j=0; j<this.props.companies[i].Notes.length;j++){
-                        if(this.props.companies[i].Notes[j].noteID === this.state.noteID){
-                            companies[i].Notes[j] = {
-                                noteID: this.state.noteID,
-                                Detail: {
-                                    noteID: this.state.noteID,
-                                    Time: this.state.noteDate,
-                                    Title: this.state.noteName
-                                },
-                                Contents: newNoteContent
-                            }
+                    const note =   
+                    {
+                        noteID: this.state.noteID,
+                        detail: {
+                            noteID: this.state.noteID,
+                            time: this.state.noteDate,
+                            title: this.state.noteName
+                        },
+                        contents: newNoteContent,
+                        files:[]
+                    }
+                    let result = {}
+                    if(this.state.creating){
+                        result = await createNote('company', note)
+                    }
+                    else{
+                        result = await updateNote('company', note)
+                    }
+                    if (this.props.connection){
+                        try {
+                            console.log("Triggered")
+                            await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                            await this.props.connection.invoke('Company_Notes_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.companyID, result.noteID)  
+                        } catch(e) {
+                            console.log(e);
                         }
                     }
+
                 }
             }
-            this.props._handleChange(this.state.editorState)
-            this.props.setCompany(companies)
-            this.props.onSaveNote()
         }
         this.props.handleClose()
     }
@@ -230,6 +202,41 @@ export class CreateEditNote extends Component {
       }
     }
 
+    onDelete = async() =>{
+        if(this.state.type ==='application'){
+            if(this.state.creating){
+                this.props.handleClose()
+            }else{
+                await deleteNote("application",this.props.applicationID,this.state.noteID)
+                if (this.props.connection){
+                    try {
+                        console.log("Triggered")
+                        await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                        await this.props.connection.invoke('Application_Notes_Delete', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, this.state.noteID)  
+                    } catch(e) {
+                        console.log(e);
+                    }
+                }
+            }
+        }
+        else if(this.state.type ==='company'){
+            if(this.state.creating){
+                this.props.handleClose()
+            }else{
+                await deleteNote("company",this.props.companyID,this.state.noteID)
+                if (this.props.connection){
+                    try {
+                        console.log("Triggered")
+                        await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                        await this.props.connection.invoke('Company_Notes_Delete', JSON.parse(localStorage.getItem('user')).uID, this.props.companyID, this.state.noteID)  
+                    } catch(e) {
+                        console.log(e);
+                    }
+                }
+            }
+        }
+        this.props.handleClose()
+    }
     
     render(){
        return (
@@ -253,7 +260,7 @@ export class CreateEditNote extends Component {
             />
             </div>
             <div className = "sypp-event-bottom-options-container">
-                <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1">Delete</button>
+                <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1" onClick = {this.onDelete}>Delete</button>
                 <button className = "sypp-event-bottom-option sypp-option2 sypp-option2-page1" onClick = {this.onSaveButton}>Save</button>
                 <button className = "sypp-event-bottom-option sypp-option3 sypp-option3-page1" onClick = {this.props.handleClose}>Close</button>
             </div>
