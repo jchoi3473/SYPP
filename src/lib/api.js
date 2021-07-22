@@ -219,3 +219,37 @@ export const deleteNote = async function(type, typeID, noteID){
       return error
   } 
 }
+
+//Endpoints for Contact
+export const getContent = async function(type, typeID, contentType, contentID){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+      const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/'+type+'/'+uID+'/'+typeID+'/Get'+contentType+'/'+contentID)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+  } catch (error) {
+      return error
+  } 
+}
+
+export const deleteContent = async function(type, typeID, contentType, contentID){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+      const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/'+type+'/'+uID+'/'+typeID+'/Delete'+contentType+'/'+contentID)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+  } catch (error) {
+      return error
+  } 
+}
+
+export const editContent = async function(type,action,contentType,content){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/'+type+'/'+uID+'/'+action+contentType, content)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+  } catch (error) {
+      return error
+  } 
+}

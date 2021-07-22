@@ -78,7 +78,7 @@ export class CreateEditEvent extends Component {
 
     onSaveButton = async(editorState) => {
         // this.props.postNewApp(this.props.addApp)
-    var newNoteContent = []
+        var newNoteContent = []
 
         if(editorState !== ''){
             for(var i=0;i<editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
@@ -90,10 +90,8 @@ export class CreateEditEvent extends Component {
                 })
             }
         }
-        console.log(newNoteContent)
-        console.log(editorState)
+
         if(this.state.type ==='application'){
-            var apps = this.props.apps
             for(var i=0;i<this.props.apps.length;i++){
                 if(this.props.apps[i].applicationID === this.props.applicationID){
                     const event =   
@@ -120,7 +118,8 @@ export class CreateEditEvent extends Component {
                     if (this.props.connection){
                         try {
                             await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
-                            await this.props.connection.invoke('Application_Events_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, result.eventID)  
+                            await this.props.connection.invoke('Application_Events_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, result.eventID) 
+                            break; 
                         } catch(e) {
                             console.log(e);
                         }
