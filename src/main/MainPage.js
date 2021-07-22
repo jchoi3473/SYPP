@@ -10,7 +10,7 @@ import {setConnection} from '../redux/connection-reducer/connectionAction'
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import './MainPage.scss';
 import './../components/radio/RadioButtons.css'
-import {getApplication, getCompany, getEvent, getNote, getContent} from './../lib/api'
+import {getApplication, getCompany, getNote, getContent} from './../lib/api'
 import createConnection from './../lib/WebSocket'
 import {socketOnConnected} from './../lib/WebSocket'
 import ToggleButton from 'react-bootstrap/ToggleButton'
@@ -112,7 +112,8 @@ function MainPage(props){
         })
         connection.on('Application_Events_Update_Received', (applicationID, eventID) => {
           const apps = [...latestApp.current];
-          getEvent("application", applicationID, eventID).then(event => {
+          getContent("applications", applicationID,'Event',eventID).then(event => {
+          // getEvent("application", applicationID, eventID).then(event => {
             for(var i=0; i<apps.length;i++){
               if(apps[i].applicationID === applicationID){
                 for(var j=0; j<apps[i].events.length;j++){
@@ -135,7 +136,8 @@ function MainPage(props){
         })
         connection.on('Company_Events_Update_Received', (companyID, eventID) => {
           const companies = [...lastesCompany.current];
-          getEvent("company", companyID, eventID).then(event => {
+          getContent("company", companyID,'Event',eventID).then(event => {
+          // getEvent("company", companyID, eventID).then(event => {
             for(var i=0; i<companies.length;i++){
               if(companies[i].companyID === companyID){
                 for(var j=0; j<companies[i].events.length;j++){
@@ -264,6 +266,7 @@ function MainPage(props){
             }
           }
         })
+
         connection.on('Application_Contacts_Update_Received', (applicationID, contactID) => {
           const apps = [...latestApp.current];
           console.log("socket created")
@@ -343,6 +346,84 @@ function MainPage(props){
           }
         })
 
+        connection.on('Application_FollowUps_Update_Received', (applicationID, followUpID) => {
+          const apps = [...latestApp.current];
+          console.log("socket created")
+          getContent("applications", applicationID,'FollowUp',followUpID).then(followUp => {
+            for(var i=0; i<apps.length;i++){
+              if(apps[i].applicationID === applicationID){
+                for(var j=0; j<apps[i].followUps.length;j++){
+                  console.log(apps[i].followUps)
+                  if(apps[i].followUps[j].followUpID === followUpID){
+                    console.log("contact update")
+                    apps[i].followUps[j] = followUp
+                    props.setApps(apps)
+                    break;
+                  }else{
+                    console.log("contact created")
+                    apps[i].followUps.push(followUp)
+                    props.setApps(apps)
+                    break;
+                  }
+                }
+              }
+            }
+          })
+        })
+        connection.on('Company_FollowUps_Update_Received', (companyID, followUpID) => {
+          const companies = [...lastesCompany.current];
+          getNote("company", companyID, 'FollowUp',followUpID).then(followUp => {
+            for(var i=0; i<companies.length;i++){
+              if(companies[i].companyID === companyID){
+                for(var j=0; j<companies[i].followUps.length;j++){
+                  if(companies[i].followUps[j].followUpID === followUpID){
+                    console.log("contact update")
+                    companies[i].followUps[j] = followUp
+                    props.setCompany(companies)
+                    break;
+                  }else{
+                    console.log("contact created")
+                    companies[i].followUps.push(followUp)
+                    props.setCompany(companies)
+                    break;
+                  }
+                }
+              }
+            }
+          })
+        })
+        connection.on('Application_FollowUps_Delete_Received', (applicationID, followUpID) => {
+          const apps = [...latestApp.current];
+          for(var i=0; i<apps.length;i++){
+            if(apps[i].applicationID === applicationID){
+              for(var j=0; j<apps[i].followUps.length;j++){
+                console.log(apps[i].followUps)
+                if(apps[i].followUps[j].followUpID === followUpID){
+                  apps[i].followUps.splice(j, 1);
+                  console.log("contact update")
+                  props.setApps(apps)
+                  break;
+                }
+              }
+            }
+          }  
+        })
+        connection.on('Company_FollowUps_Delete_Received', (companyID, followUpID) => {
+          const companies = [...latestApp.current];
+          for(var i=0; i<companies.length;i++){
+            if(companies[i].companyID === companyID){
+              for(var j=0; j<companies[i].followUps.length;j++){
+                console.log(companies[i].followUps)
+                if(companies[i].followUps[j].followUpID === followUpID){
+                  companies[i].followUps.splice(j, 1);
+                  console.log("contact update")
+                  props.setApps(companies)
+                  break;
+                }
+              }
+            }
+          }
+        })
 
 
       }).catch(err => console.error('SignalR Connection Error: ', err));

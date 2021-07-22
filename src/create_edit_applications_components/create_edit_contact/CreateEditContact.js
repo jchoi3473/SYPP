@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 
-import { RichUtils, ContentBlock, genKey, ContentState, EditorState} from 'draft-js';
+import { RichUtils, ContentBlock, ContentState, EditorState} from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-import {getDefaultKeyBinding, KeyBindingUtil, keyBindingFn} from 'draft-js';
+import {getDefaultKeyBinding} from 'draft-js';
 import 'draft-js/dist/Draft.css';
 
-import { v4 as uuidv4 } from 'uuid';
 import {connect} from 'react-redux'
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {setCompany} from './../../redux/company-reducer/companyAction'
 import {updateApplicationDetail} from './../../redux/applicationDetail-reducer/ApplicationDetailAction'
-import { editContent } from '../../lib/api';
+import { editContent, deleteContent } from '../../lib/api';
 import './../create_edit_event/CreateEvent.scss'
 import './../CreateEditDetail.scss'
 
@@ -94,7 +93,7 @@ export class CreateEditContact extends Component {
         // this.props.postNewApp(this.props.addApp)
         const editorState = this.state.editorState
         var newNoteContent = []
-        if(editorState !== ''){
+        if(editorState){
             for(var i=0;i<editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
                 newNoteContent.push({
                 noteContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
@@ -114,7 +113,7 @@ export class CreateEditContact extends Component {
                     {
                         contactID: this.state.contactID,
                         detail: {
-                            applicationID: this.state.applicationID,
+                            applicationID: this.props.applicationID,
                             company: this.state.company,
                             companyID: this.state.companyID,
                             contactID: this.state.contactID,
@@ -264,6 +263,44 @@ export class CreateEditContact extends Component {
         this.setState({editorState});
       }
     }
+    onDelete = async() =>{
+        if(this.state.type ==='application'){
+            if(this.state.creating){
+                this.props.handleClose()
+            }else{
+                // await deleteEvent("application",this.props.applicationID,this.state.eventID)
+                await deleteContent("applications",this.props.applicationID,'Contact',this.state.contactID)
+                if (this.props.connection){
+                    try {
+                        console.log("Triggered")
+                        await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                        await this.props.connection.invoke('Application_Contacts_Delete', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, this.state.contactID)  
+                    } catch(e) {
+                        console.log(e);
+                    }
+                }
+            }
+        }
+        else if(this.state.type ==='company'){
+            if(this.state.creating){
+                this.props.handleClose()
+            }else{
+                // await deleteEvent("company",this.props.companyID,this.state.eventID)
+                await deleteContent("company",this.props.applicationID,'Contact',this.state.contactID)
+
+                if (this.props.connection){
+                    try {
+                        console.log("Triggered")
+                        await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                        await this.props.connection.invoke('Company_Contacts_Delete', JSON.parse(localStorage.getItem('user')).uID, this.props.companyID, this.state.contactID)  
+                    } catch(e) {
+                        console.log(e);
+                    }
+                }
+            }
+        }
+        this.props.handleClose()
+    }
 
     
     render(){
@@ -311,7 +348,7 @@ export class CreateEditContact extends Component {
             </div>
             </div>
             <div className = "sypp-event-bottom-options-container">
-                <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1">Delete</button>
+                <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1" onClick = {this.onDelete}>Delete</button>
                 <button className = "sypp-event-bottom-option sypp-option2 sypp-option2-page1" onClick = {this.onSaveButton}>Save</button>
                 <button className = "sypp-event-bottom-option sypp-option3 sypp-option3-page1" onClick = {this.props.handleClose}>Close</button>
             </div>

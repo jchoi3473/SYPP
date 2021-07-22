@@ -11,6 +11,7 @@ import {connect} from 'react-redux'
 import {setApps} from '../../redux/progress-reducer/progressAction'
 import {setCompany} from '../../redux/company-reducer/companyAction'
 import {updateApplicationDetail} from '../../redux/applicationDetail-reducer/ApplicationDetailAction'
+import { editContent, deleteContent } from '../../lib/api';
 
 const mapStatetoProps = state => {
     return{
@@ -18,6 +19,7 @@ const mapStatetoProps = state => {
         pending: state.progress.isPending,
         categories: state.categories.categories, 
         companies: state.companies.companies,
+        connection: state.connection.connection
     }
   }
   
@@ -36,11 +38,12 @@ export class CreateEditConversation extends Component {
         {
             step : 1,
             type: '',
-            followUpID : '',
+            followUpID : null,
             time : '',
             name : '',
             position : '',
-            editorState : ''
+            editorState : '',
+            creating: true
         }
     }
 
@@ -50,141 +53,119 @@ export class CreateEditConversation extends Component {
         this.setState({
             type : this.props.type
         })
-        if(this.props.FollowUp !== ''){
+        if(this.props.followUp !== ''){
             this.setState({
                 followUpID : this.props.followUp.followUpID,
                 name : this.props.followUp.detail.personnel.firstname,
                 time : this.props.followUp.detail.time,
                 position : this.props.followUp.detail.personnel.title,
-                editorState : this.props.editorState
+                editorState : this.props.editorState,
+                creating: false
             })
         }
-}
+    }
 
 //API CALL HERE
 // //Send Post request, close modal(save button)
 
-    onSaveButton = () => {
+    onSaveButton = async() => {
         // this.props.postNewApp(this.props.addApp)
-    var newNoteContent = []
-    if(this.state.editorState !== ''){
-        newNoteContent = [{
-        noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][0],
-        Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[0][1].text,
-        Contents_Text : []
-      }];
-      var tracker = 0;
-        for(var i=1;i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
-          if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth === 0){
-            tracker++;
-            newNoteContent.push({
-            noteContentsID : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
-              Header : this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
-              Contents_Text : []
-            })
-          }
-          else{
-            newNoteContent[tracker].Contents_Text.push(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text)
-          }
+        var newNoteContent = []
+        const editorState = this.state.editorState
+        if(editorState){
+            for(var i=0;i<editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
+                newNoteContent.push({
+                    noteContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
+                    content : editorState._immutable.currentContent.blockMap._list._tail.array[i][1].text,
+                    belongingID : this.state.followUpID,
+                    marginType : editorState._immutable.currentContent.blockMap._list._tail.array[i][1].depth
+                })
+            }
         }
-    }
         //Creating a new event
-        if(this.state.followUpID === '' && this.state.type ==='application'){
-            var apps = this.props.apps
+        if(this.state.type ==='application'){
             for(var i=0;i<this.props.apps.length;i++){
                 if(this.props.apps[i].applicationID === this.props.applicationID){
-                    const key = genKey()
-                    apps[i].FollowUps.push(  
-                        {
-                            followUpID : key,
-                            Time : this.state.time,
-                            Personnel: {
-                                followUpID : key,
-                                Name: this.state.name,
-                                Position: this.state.position,
+                    const followUp = 
+                    {
+                        followUpID : this.state.followUpID,
+                        detail:{
+                            followUpID : this.state.followUpID,
+                            companyID: null,
+                            applicationID: this.props.applicationID,
+                            personnel: {
+                                applicationID: this.props.applicationID,
+                                company: null, 
+                                companyID: null,
+                                firstname: this.state.name,
+                                lastname: null,
+                                title: this.state.position,
                             },
-                            Description: newNoteContent
-                        }
-                    )
-                }
-            }
-            this.props.setApps(apps)
-        }
-        //editing an existing event, app
-        else if(this.state.followUpID !== '' && this.state.type ==='application'){
-            var apps = this.props.apps 
-            for(var i=0;i<this.props.apps.length;i++){
-                if(this.props.apps[i].applicationID === this.props.applicationID){
-                    for(var j=0; j<this.props.apps[i].FollowUps.length;j++){
-                        if(this.props.apps[i].FollowUps[j].followUpID === this.state.followUpID){
-                            console.log("this one is triggeredd?")
-                            apps[i].FollowUps[j] = {
-                                followUpID: this.state.followUpID,
-                                Time : this.state.time,
-                                    Personnel: {
-                                        followUpID : this.state.followUpID,
-                                        Name: this.state.name,
-                                        Position: this.state.position,
-                                    },
-                                Description: newNoteContent
-                                }
+                            time : this.state.time,
+                        },
+                        description: newNoteContent,
+                        files:[]
+                    }
+                    let result = {}
+                    if(this.state.creating){
+                        result = await editContent('applications','Create','FollowUp',followUp)
+                    }
+                    else{
+                        result = await editContent('applications','Update','FollowUp',followUp)
+                    }
+                    if (this.props.connection){
+                        try {
+                            await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                            await this.props.connection.invoke('Application_FollowUps_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, result.followUpID) 
+                        } catch(e) {
+                            console.log(e);
                         }
                     }
+                    console.log(result)
                 }
             }
-            this.props.setApps(apps)
-            this.props.onSaveConversation()
-            this.props._handleChange(this.state.editorState)
-            this.setState({})
         }
-        else if(this.state.followUpID === '' && this.state.type ==='company'){
-            var companies = this.props.companies
+        else if(this.state.type ==='company'){
             for(var i=0;i<this.props.companies.length;i++){
                 if(this.props.companies[i].companyID === this.props.companyID){
-                    const key = genKey()
-                    companies[i].FollowUps.push(  
-                        {
-                            followUpID : key,
-                            Time : this.state.time,
-                            Personnel: {
-                                followUpID : key,
-                                Name: this.state.name,
-                                Position: this.state.position,
+                    const followUp = 
+                    {
+                        followUpID : this.state.followUpID,
+                        detail:{
+                            followUpID : this.state.followUpID,
+                            companyID: this.props.companyID,
+                            applicationID: null,
+                            personnel: {
+                                applicationID: null,
+                                company: null, 
+                                companyID: this.props.companyID,
+                                firstname: this.state.name,
+                                lastname: null,
+                                title: this.state.position,
                             },
-                            Description: newNoteContent
-                        }
-                    )
-                }
-            }
-            this.props.setCompany(companies)
-            this.setState({})
-        }
-        else if(this.state.followUpID !== '' && this.state.type ==='company'){
-            console.log(this.state.eventID)
-            var companies = this.props.companies 
-            for(var i=0;i<this.props.companies.length;i++){
-                if(this.props.companies[i].companyID === this.props.companyID){
-                    for(var j=0; j<this.props.companies[i].FollowUps.length;j++){
-                        if(this.props.companies[i].FollowUps[j].followUpID === this.state.followUpID){
-                            console.log("this one is triggeredd?")
-                            companies[i].FollowUps[j] = {
-                                followUpID : this.state.followUpID,
-                                Time : this.state.time,
-                                Personnel: {
-                                    followUpID : this.state.followUpID,
-                                    Name: this.state.name,
-                                    Position: this.state.position,
-                                },
-                                Description: newNoteContent
-                                }
+                            time : this.state.time,
+                        },
+                        description: newNoteContent,
+                        files:[]
+                    }
+                    let result = {}
+                    if(this.state.creating){
+                        result = await editContent('company','Create','FollowUp',followUp)
+                    }
+                    else{
+                        result = await editContent('company','Update','FollowUp',followUp)
+                    }
+                    if (this.props.connection){
+                        try {
+                            await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                            await this.props.connection.invoke('Company_FollowUps_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.companyID, result.followUpID) 
+                        } catch(e) {
+                            console.log(e);
                         }
                     }
+                    console.log(result)
                 }
             }
-            this.props.setCompany(companies)
-            this.props.onSaveConversation()
-            this.props._handleChange(this.state.editorState)
-            this.setState({})
         }
         this.props.handleClose()
     }
@@ -223,7 +204,44 @@ export class CreateEditConversation extends Component {
             editorState: editorState
         })
     }
-    
+    onDelete = async() =>{
+        if(this.state.type ==='application'){
+            if(this.state.creating){
+                this.props.handleClose()
+            }else{
+                // await deleteEvent("application",this.props.applicationID,this.state.eventID)
+                await deleteContent("applications",this.props.applicationID,'FollowUp',this.state.followUpID)
+                if (this.props.connection){
+                    try {
+                        console.log("Triggered")
+                        await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                        await this.props.connection.invoke('Application_FollowUps_Delete', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, this.state.followUpID)  
+                    } catch(e) {
+                        console.log(e);
+                    }
+                }
+            }
+        }
+        else if(this.state.type ==='company'){
+            if(this.state.creating){
+                this.props.handleClose()
+            }else{
+                // await deleteEvent("company",this.props.companyID,this.state.eventID)
+                await deleteContent("company",this.props.applicationID,'FollowUp',this.state.followUpID)
+
+                if (this.props.connection){
+                    try {
+                        console.log("Triggered")
+                        await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                        await this.props.connection.invoke('Company_FollowUps_Delete', JSON.parse(localStorage.getItem('user')).uID, this.props.companyID, this.state.followUpID)  
+                    } catch(e) {
+                        console.log(e);
+                    }
+                }
+            }
+        }
+        this.props.handleClose()
+    }
     render(){
         const{step} = this.state;
         switch(step){
@@ -240,6 +258,7 @@ export class CreateEditConversation extends Component {
                             time = {this.state.time}
                             editorState = {this.props.editorState}
                             handleEditorState = {this.handleEditorState}
+                            onDelete = {this.onDelete}
                             onSaveButton = {this.onSaveButton}
                         />
                     </div>
@@ -255,6 +274,8 @@ export class CreateEditConversation extends Component {
                         />
                     </div>
                 )
+            default:
+                return <></>
         }
     }
 }

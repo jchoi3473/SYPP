@@ -47,6 +47,7 @@ class EventDetail extends Component {
               return null;
             }
           }
+          break;
           default: 
             return getDefaultKeyBinding(e);      
       }

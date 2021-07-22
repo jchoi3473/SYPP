@@ -8,7 +8,7 @@ import {connect} from 'react-redux'
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {setCompany} from './../../redux/company-reducer/companyAction'
 import {updateApplicationDetail} from './../../redux/applicationDetail-reducer/ApplicationDetailAction'
-import { createEvent, updateEvent, deleteEvent } from '../../lib/api';
+import { editContent, deleteContent } from '../../lib/api';
 
 const mapStatetoProps = state => {
     return{
@@ -80,7 +80,7 @@ export class CreateEditEvent extends Component {
         // this.props.postNewApp(this.props.addApp)
         var newNoteContent = []
 
-        if(editorState !== ''){
+        if(editorState){
             for(var i=0;i<editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
                 newNoteContent.push({
                 noteContentsID : editorState._immutable.currentContent.blockMap._list._tail.array[i][0],
@@ -110,10 +110,12 @@ export class CreateEditEvent extends Component {
                         }
                     let result = {}
                     if(this.state.creating){
-                        result = await createEvent('application', event)
+                        // result = await createEvent('application', event)
+                        result = await editContent('applications','Create','Event',event)
                     }
                     else{
-                        result = await updateEvent('application', event)
+                        // result = await updateEvent('application', event)
+                        result = await editContent('applications','Update','Event',event)
                     }
                     if (this.props.connection){
                         try {
@@ -146,10 +148,10 @@ export class CreateEditEvent extends Component {
                         }
                     let result = {}
                     if(this.state.creating){
-                        result = await createEvent('company', event)
+                        result = await editContent('company','Create','Event',event)
                     }
                     else{
-                        result = await updateEvent('company', event)
+                        result = await editContent('company','Create','Event',event)
                     }
                     if (this.props.connection){
                         try {
@@ -216,7 +218,8 @@ export class CreateEditEvent extends Component {
             if(this.state.creating){
                 this.props.handleClose()
             }else{
-                await deleteEvent("application",this.props.applicationID,this.state.eventID)
+                // await deleteEvent("application",this.props.applicationID,this.state.eventID)
+                await deleteContent("applications",this.props.applicationID,'Event',this.state.eventID)
                 if (this.props.connection){
                     try {
                         console.log("Triggered")
@@ -232,7 +235,9 @@ export class CreateEditEvent extends Component {
             if(this.state.creating){
                 this.props.handleClose()
             }else{
-                await deleteEvent("company",this.props.companyID,this.state.eventID)
+                // await deleteEvent("company",this.props.companyID,this.state.eventID)
+                await deleteContent("company",this.props.applicationID,'Event',this.state.eventID)
+
                 if (this.props.connection){
                     try {
                         console.log("Triggered")
@@ -284,6 +289,8 @@ export class CreateEditEvent extends Component {
                         />
                     </div>
                 )
+            default:
+                return <></>
         }
     }
 }

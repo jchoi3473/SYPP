@@ -33,7 +33,7 @@ class ConversationDetail extends Component {
     myKeyBindingFn = (e) => {
         switch (e.keyCode) {
           case 9: // TAB
-            if(this.currentBlockIndex() == 0){
+            if(this.currentBlockIndex() === 0){
               return undefined
             }
             else {
@@ -49,6 +49,7 @@ class ConversationDetail extends Component {
               return null;
             }
           }
+          break;
           default: 
             return getDefaultKeyBinding(e);      
       }
@@ -111,7 +112,7 @@ class ConversationDetail extends Component {
                 </div>
                 </div>
                 <div className = "sypp-event-bottom-options-container">
-                    <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1">Delete</button>
+                    <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1" onClick = {this.props.onDelete}>Delete</button>
                     <button className = "sypp-event-bottom-option sypp-option2 sypp-option2-page1" onClick = {this.onSave}>Save</button>
                     <button className = "sypp-event-bottom-option sypp-option3 sypp-option3-page1" onClick = {this.props.handleClose}>Close</button>
                 </div>
