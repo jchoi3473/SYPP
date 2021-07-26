@@ -111,6 +111,8 @@ export class NewTask extends Component {
                         </div>
                     </div>
                 )
+            default: 
+            return <></>
         }
     }
 }

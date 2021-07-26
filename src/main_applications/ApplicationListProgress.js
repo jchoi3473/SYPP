@@ -18,6 +18,7 @@ import {updateFilteredProgress, updateFilteredProgressTitle, updateFilteredProgr
 import {connect} from 'react-redux'
 import 'font-awesome/css/font-awesome.min.css';
 
+import { createTask } from './../lib/api';
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
@@ -72,7 +73,7 @@ export class ApplicationListProgress extends Component{
         for(var i=0; i<apps.length;i++){
             if(apps[i].applicationID+"" === applicationID+""){
                 apps[i].detail.isFavorite = !apps[i].detail.isFavorite
-                this.props.setApps(apps)                
+                // this.props.setApps(apps)                
                 await updateFavorite(JSON.parse(localStorage.getItem('user')).uID, "application", applicationID, apps[i].detail.isFavorite)
                 if (this.props.connection) {
                     try {
@@ -85,23 +86,32 @@ export class ApplicationListProgress extends Component{
                 break;
             }
         }
-        this.setState({})
+        // this.setState({})
     }
     //mid task add, need to make fetch call
-    onClickAdd = (applicationID, title, date, isVisible) => {
+    onClickAdd = async(applicationID, title, date, isVisible) => {
         const apps = this.props.apps
-        apps.map((data) => {
-            if(data.applicationID === applicationID){
-                data.tasks = data.tasks.concat({
-                    time: date,
-                    title: title,
-                    isVisible : isVisible,
-                    status: false
-                })
+        const task = {
+            applicationID: applicationID,
+            companyID: "",
+            time: date,
+            midTaskID: null, 
+            title: '',
+            type: title,
+            isVisible : isVisible,
+            isFavorite: false, 
+            status: false
             }
-        })
-        this.props.setApps(apps)
-        this.setState({})
+        const result = await createTask(task)
+        if (this.props.connection){
+            try {
+                console.log("Triggered")
+                await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                await this.props.connection.invoke('Application_Task_Update', JSON.parse(localStorage.getItem('user')).uID, applicationID, result.midTaskID)  
+            } catch(e) {
+                console.log(e);
+            }
+        }
     }
 
     onSearchChange = (e) =>{
@@ -123,8 +133,7 @@ export class ApplicationListProgress extends Component{
                         for(var k=0; k<this.props.apps[i].detail.categories[j].suggestionsOrSeleceted.length;k++){
                             if(!temp.includes(this.props.apps[i].detail.categories[j].suggestionsOrSeleceted[k].content)){
                                 console.log("triggered")
-                                temp = temp.concat(this.props.apps[i].detail.categories[j].suggestionsOrSeleceted[k].content)
-                                
+                                temp.push(this.props.apps[i].detail.categories[j].suggestionsOrSeleceted[k].content)
                             }
                           }    
                     }

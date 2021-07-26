@@ -10,7 +10,7 @@ import {setConnection} from '../redux/connection-reducer/connectionAction'
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import './MainPage.scss';
 import './../components/radio/RadioButtons.css'
-import {getApplication, getCompany, getNote, getContent} from './../lib/api'
+import {getApplication, getCompany, getNote, getContent, getTask} from './../lib/api'
 import createConnection from './../lib/WebSocket'
 import {socketOnConnected} from './../lib/WebSocket'
 import ToggleButton from 'react-bootstrap/ToggleButton'
@@ -103,6 +103,7 @@ function MainPage(props){
         connection.on("Company_IsFavorite_Update_Received", (companyID, isFavorite) => {
           const companies = [...lastesCompany.current];
           for(var i=0; i<companies.length;i++){
+            console.log("Triggered socket")
             if(companies[i].companyID === companyID){
               companies[i].detail.isFavorite = isFavorite
               props.setCompany(companies)
@@ -110,8 +111,38 @@ function MainPage(props){
             }
           }
         })
+
+        connection.on("Application_Task_Update_Received", (applicationID, midTaskID) => {
+          const apps = [...latestApp.current];
+          var abort = false
+          getTask(applicationID, midTaskID).then(midTask => {
+            for(var i=0; i<apps.length;i++){
+              if(apps[i].applicationID === applicationID){
+                for(var j=0; j<apps[i].tasks.length;j++){
+                  console.log(apps[i].tasks)
+                  if(apps[i].tasks[j].midTaskID === midTaskID){
+                    console.log("event update")
+                    apps[i].tasks[j] = midTask
+                    props.setApps(apps)
+                    abort = true
+                    break;
+                  }
+                }
+                if(!abort){
+                  console.log("event created")
+                  apps[i].tasks.push(midTask)
+                  props.setApps(apps)
+                  break;
+                }
+              }
+            }
+          })
+        })
+
+
         connection.on('Application_Events_Update_Received', (applicationID, eventID) => {
           const apps = [...latestApp.current];
+          var abort = false
           getContent("applications", applicationID,'Event',eventID).then(event => {
           // getEvent("application", applicationID, eventID).then(event => {
             for(var i=0; i<apps.length;i++){
@@ -122,13 +153,15 @@ function MainPage(props){
                     console.log("event update")
                     apps[i].events[j] = event
                     props.setApps(apps)
-                    break;
-                  }else{
-                    console.log("event created")
-                    apps[i].events.push(event)
-                    props.setApps(apps)
+                    abort = true
                     break;
                   }
+                }
+                if(!abort){
+                  console.log("event created")
+                  apps[i].events.push(event)
+                  props.setApps(apps)
+                  break;
                 }
               }
             }
@@ -136,7 +169,9 @@ function MainPage(props){
         })
         connection.on('Company_Events_Update_Received', (companyID, eventID) => {
           const companies = [...lastesCompany.current];
-          getContent("company", companyID,'Event',eventID).then(event => {
+          var abort = false
+          console.log("company update triggered")
+          getContent("company",companyID,'Event',eventID).then(event => {
           // getEvent("company", companyID, eventID).then(event => {
             for(var i=0; i<companies.length;i++){
               if(companies[i].companyID === companyID){
@@ -145,13 +180,15 @@ function MainPage(props){
                     console.log("event update")
                     companies[i].events[j] = event
                     props.setCompany(companies)
-                    break;
-                  }else{
-                    console.log("event created")
-                    companies[i].events.push(event)
-                    props.setCompany(companies)
+                    abort = true
                     break;
                   }
+                }
+                if(!abort){
+                  console.log("event created")
+                  companies[i].events.push(event)
+                  props.setCompany(companies)
+                  break;
                 }
               }
             }
@@ -174,7 +211,7 @@ function MainPage(props){
           }  
         })
         connection.on('Company_Events_Delete_Received', (companyID, eventID) => {
-          const companies = [...latestApp.current];
+          const companies = [...lastesCompany.current];
           for(var i=0; i<companies.length;i++){
             if(companies[i].companyID === companyID){
               for(var j=0; j<companies[i].events.length;j++){
@@ -191,6 +228,7 @@ function MainPage(props){
         })
         connection.on('Application_Notes_Update_Received', (applicationID, noteID) => {
           const apps = [...latestApp.current];
+          var abort = false
           getNote("application", applicationID, noteID).then(note => {
             for(var i=0; i<apps.length;i++){
               if(apps[i].applicationID === applicationID){
@@ -200,13 +238,15 @@ function MainPage(props){
                     console.log("note update")
                     apps[i].notes[j] = note
                     props.setApps(apps)
-                    break;
-                  }else{
-                    console.log("note created")
-                    apps[i].notes.push(note)
-                    props.setApps(apps)
+                    abort = true
                     break;
                   }
+                }
+                if(!abort){
+                  console.log("note created")
+                  apps[i].notes.push(note)
+                  props.setApps(apps)
+                  break;
                 }
               }
             }
@@ -214,6 +254,7 @@ function MainPage(props){
         })
         connection.on('Company_Notes_Update_Received', (companyID, noteID) => {
           const companies = [...lastesCompany.current];
+          var abort = false
           getNote("company", companyID, noteID).then(note => {
             for(var i=0; i<companies.length;i++){
               if(companies[i].companyID === companyID){
@@ -222,13 +263,15 @@ function MainPage(props){
                     console.log("note update")
                     companies[i].notes[j] = note
                     props.setCompany(companies)
-                    break;
-                  }else{
-                    console.log("note created")
-                    companies[i].notes.push(note)
-                    props.setCompany(companies)
+                    abort = true
                     break;
                   }
+                }
+                if(!abort){
+                  console.log("note created")
+                  companies[i].notes.push(note)
+                  props.setCompany(companies)
+                  break;
                 }
               }
             }
@@ -269,6 +312,7 @@ function MainPage(props){
 
         connection.on('Application_Contacts_Update_Received', (applicationID, contactID) => {
           const apps = [...latestApp.current];
+          var abort = false
           console.log("socket created")
           getContent("applications", applicationID,'Contact',contactID).then(contact => {
             for(var i=0; i<apps.length;i++){
@@ -279,13 +323,15 @@ function MainPage(props){
                     console.log("contact update")
                     apps[i].contacts[j] = contact
                     props.setApps(apps)
-                    break;
-                  }else{
-                    console.log("contact created")
-                    apps[i].contacts.push(contact)
-                    props.setApps(apps)
+                    abort = true
                     break;
                   }
+                }
+                if(!abort){
+                  console.log("contact created")
+                  apps[i].contacts.push(contact)
+                  props.setApps(apps)
+                  break;
                 }
               }
             }
@@ -293,6 +339,7 @@ function MainPage(props){
         })
         connection.on('Company_Contacts_Update_Received', (companyID, contactID) => {
           const companies = [...lastesCompany.current];
+          var abort = false
           getNote("company", companyID, 'Contact',contactID).then(contact => {
             for(var i=0; i<companies.length;i++){
               if(companies[i].companyID === companyID){
@@ -301,13 +348,15 @@ function MainPage(props){
                     console.log("contact update")
                     companies[i].contacts[j] = contact
                     props.setCompany(companies)
-                    break;
-                  }else{
-                    console.log("contact created")
-                    companies[i].contacts.push(contact)
-                    props.setCompany(companies)
+                    abort = true
                     break;
                   }
+                }
+                if(!abort){
+                  console.log("contact created")
+                  companies[i].contacts.push(contact)
+                  props.setCompany(companies)
+                  break;
                 }
               }
             }
@@ -348,7 +397,7 @@ function MainPage(props){
 
         connection.on('Application_FollowUps_Update_Received', (applicationID, followUpID) => {
           const apps = [...latestApp.current];
-          console.log("socket created")
+          var abort = false
           getContent("applications", applicationID,'FollowUp',followUpID).then(followUp => {
             for(var i=0; i<apps.length;i++){
               if(apps[i].applicationID === applicationID){
@@ -358,13 +407,15 @@ function MainPage(props){
                     console.log("contact update")
                     apps[i].followUps[j] = followUp
                     props.setApps(apps)
-                    break;
-                  }else{
-                    console.log("contact created")
-                    apps[i].followUps.push(followUp)
-                    props.setApps(apps)
+                    abort = true
                     break;
                   }
+                }
+                if(!abort){
+                  console.log("contact created")
+                  apps[i].followUps.push(followUp)
+                  props.setApps(apps)
+                  break;
                 }
               }
             }
@@ -372,6 +423,7 @@ function MainPage(props){
         })
         connection.on('Company_FollowUps_Update_Received', (companyID, followUpID) => {
           const companies = [...lastesCompany.current];
+          var abort = false
           getNote("company", companyID, 'FollowUp',followUpID).then(followUp => {
             for(var i=0; i<companies.length;i++){
               if(companies[i].companyID === companyID){
@@ -380,13 +432,15 @@ function MainPage(props){
                     console.log("contact update")
                     companies[i].followUps[j] = followUp
                     props.setCompany(companies)
-                    break;
-                  }else{
-                    console.log("contact created")
-                    companies[i].followUps.push(followUp)
-                    props.setCompany(companies)
+                    abort = true
                     break;
                   }
+                }
+                if(!abort){
+                  console.log("contact created")
+                  companies[i].followUps.push(followUp)
+                  props.setCompany(companies)
+                  break;
                 }
               }
             }
@@ -425,6 +479,92 @@ function MainPage(props){
           }
         })
 
+
+        connection.on('Application_Checklists_Update_Received', (applicationID, checklistID) => {
+          const apps = [...latestApp.current];
+          var abort = false
+          console.log("socket created")
+          getContent("applications", applicationID,'Checklist',checklistID).then(checklist => {
+            for(var i=0; i<apps.length;i++){
+              if(apps[i].applicationID === applicationID){
+                for(var j=0; j<apps[i].checklists.length;j++){
+                  console.log(checklistID)
+                  console.log(apps[i].checklists[j])
+                  if(apps[i].checklists[j].checklistID === checklistID){
+                    console.log("checklist update")
+                    apps[i].checklists[j] = checklist
+                    props.setApps(apps)
+                    abort = true
+                    break;
+                  }
+                }
+                if(!abort){
+                  console.log("checklist created")
+                  apps[i].checklists.push(checklist)
+                  props.setApps(apps)
+                  break;
+                }
+              }
+            }
+          })
+        })
+        connection.on('Company_Checklists_Update_Received', (companyID, checklistID) => {
+          const companies = [...lastesCompany.current];
+          var abort = false
+          getNote("company", companyID, 'Contact',checklistID).then(checklist => {
+            for(var i=0; i<companies.length;i++){
+              if(companies[i].companyID === companyID){
+                for(var j=0; j<companies[i].checklists.length;j++){
+                  if(companies[i].checklists[j].checklistID === checklistID){
+                    console.log("contact update")
+                    companies[i].checklists[j] = checklist
+                    props.setCompany(companies)
+                    abort = true
+                    break;
+                  }
+                }
+                if(!abort){
+                  console.log("contact created")
+                  companies[i].checklists.push(checklist)
+                  props.setCompany(companies)
+                  break;
+                }
+              }
+            }
+          })
+        })
+        connection.on('Application_Checklists_Delete_Received', (applicationID, checklistID) => {
+          const apps = [...latestApp.current];
+          for(var i=0; i<apps.length;i++){
+            if(apps[i].applicationID === applicationID){
+              for(var j=0; j<apps[i].checklists.length;j++){
+                console.log(apps[i].checklists)
+                if(apps[i].checklists[j].checklistID === checklistID){
+                  apps[i].checklists.splice(j, 1);
+                  console.log("contact update")
+                  props.setApps(apps)
+                  break;
+                }
+              }
+            }
+          }  
+        })
+        connection.on('Company_Checklists_Delete_Received', (companyID, checklistID) => {
+          const companies = [...latestApp.current];
+          for(var i=0; i<companies.length;i++){
+            if(companies[i].companyID === companyID){
+              for(var j=0; j<companies[i].checklists.length;j++){
+                console.log(companies[i].checklists)
+                if(companies[i].checklists[j].checklistID === checklistID){
+                  companies[i].checklists.splice(j, 1);
+                  console.log("contact update")
+                  props.setApps(companies)
+                  break;
+                }
+              }
+            }
+          }
+        })
 
       }).catch(err => console.error('SignalR Connection Error: ', err));
       /*

@@ -106,7 +106,6 @@ export class CreateEditContact extends Component {
 
         //Creating a new event
         if(this.state.type ==='application'){
-            var apps = this.props.apps
             for(var i=0;i<this.props.apps.length;i++){
                 if(this.props.apps[i].applicationID === this.props.applicationID){
                     const contact = 
@@ -156,7 +155,6 @@ export class CreateEditContact extends Component {
         //editing an existing event, app
         else if(this.state.type ==='company'){
             for(var i=0;i<this.props.companies.length;i++){
-                console.log("this one is triggeredd?")
                 if(this.props.companies[i].companyID === this.props.companyID){
                     const contact = 
                     {

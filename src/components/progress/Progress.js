@@ -102,7 +102,7 @@ export class Progress extends Component{
                 {this.props.completed?
                 <div>
                 <div className="sypp-applicationFirst sypp-completed"  
-                onClick = {() => this.props.handleCompleted(this.props.date, this.props.date. title)}
+                onClick = {() => this.props.handleCompleted(this.props.date, this.props.date.title)}
                 ></div>
                 <div className="sypp-date-font">{Moment(this.props.date.time).format('MMM DD')}</div>
                 </div>:
@@ -117,7 +117,7 @@ export class Progress extends Component{
                 {
                 this.state.isHovering &&this.props.completed?
                     <div className = "sypp-task-tooltip-completed">
-                        <div>{this.props.date.title}</div>
+                        <div>{this.props.date.type}</div>
                         <Popup
                         trigger={
                             <div className ="sypp-task-tooltip-more">
@@ -140,7 +140,7 @@ export class Progress extends Component{
                 {
                 this.state.isHovering &&!this.props.completed?
                     <div className = "sypp-task-tooltip-notcompleted">
-                        <div>{this.props.date.title}</div>
+                        <div>{this.props.date.type}</div>
                         <Popup
                         trigger={
                             <div className ="sypp-task-tooltip-more">

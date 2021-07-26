@@ -253,3 +253,36 @@ export const editContent = async function(type,action,contentType,content){
       return error
   } 
 }
+
+export const getTask = async function(applicationID, midTaskID){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+      const res = await axios.get('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/GetApplications/'+applicationID+'/GetMidTask/'+midTaskID)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+  } catch (error) {
+      return error
+  } 
+}
+
+export const updateTask = async function(task){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/UpdateTasks', task)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+  } catch (error) {
+      return error
+  } 
+}
+
+export const createTask = async function(task){
+  const uID = JSON.parse(localStorage.getItem('user')).uID
+  try {
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/CreateTask', task)
+      console.log(res)
+      return res.status === 200 ? res.data : "error";
+  } catch (error) {
+      return error
+  } 
+}

@@ -26,7 +26,7 @@ function Login(props){
     const onClickLogIn = async e => {
 
       // e.preventDefault();
-      const data = localLogin(idValue, passwordValue)
+      const data = await localLogin(idValue, passwordValue)
       if (data){
         props.history.push('/main');
       }

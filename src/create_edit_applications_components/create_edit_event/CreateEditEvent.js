@@ -141,7 +141,7 @@ export class CreateEditEvent extends Component {
                                 time: this.state.eventDate,
                                 location: this.state.eventLocation,
                                 title: this.state.eventName,
-                                companyID: this.state.companyID
+                                companyID: this.props.companyID
                             },
                             contents: newNoteContent,
                             files: []
@@ -151,7 +151,7 @@ export class CreateEditEvent extends Component {
                         result = await editContent('company','Create','Event',event)
                     }
                     else{
-                        result = await editContent('company','Create','Event',event)
+                        result = await editContent('company','Update','Event',event)
                     }
                     if (this.props.connection){
                         try {
@@ -236,13 +236,13 @@ export class CreateEditEvent extends Component {
                 this.props.handleClose()
             }else{
                 // await deleteEvent("company",this.props.companyID,this.state.eventID)
-                await deleteContent("company",this.props.applicationID,'Event',this.state.eventID)
+                await deleteContent("company",this.props.companyID,'Event',this.state.eventID)
 
                 if (this.props.connection){
                     try {
                         console.log("Triggered")
                         await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
-                        await this.props.connection.invoke('Company_Event_Delete', JSON.parse(localStorage.getItem('user')).uID, this.props.companyID, this.state.eventID)  
+                        await this.props.connection.invoke('Company_Events_Delete', JSON.parse(localStorage.getItem('user')).uID, this.props.companyID, this.state.eventID)  
                     } catch(e) {
                         console.log(e);
                     }

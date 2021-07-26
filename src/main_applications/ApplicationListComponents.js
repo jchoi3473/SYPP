@@ -91,8 +91,8 @@ function CategoryButtons(props) {
               if(props.apps[i].detail.categories[j].type === targetName){
                 for(var k=0; k<props.apps[i].detail.categories[j].suggestionsOrSeleceted.length;k++){
                   if(!temp.includes(props.apps[i].detail.categories[j].suggestionsOrSeleceted[k])){
-                    temp = temp.concat(props.apps[i].detail.categories[j].suggestionsOrSeleceted[k])
                     console.log(props.apps[i].detail.categories[j].suggestionsOrSeleceted[k])
+                    temp = temp.concat(props.apps[i].detail.categories[j].suggestionsOrSeleceted[k])
                   }
                 }    
               }

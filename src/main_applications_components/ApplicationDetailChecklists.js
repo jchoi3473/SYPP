@@ -12,6 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { faListAlt} from "@fortawesome/free-solid-svg-icons";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import Modal from 'react-bootstrap/Modal';
+import { editContent, deleteContent } from '../lib/api';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 // import { Checkbox } from 'semantic-ui-react'
@@ -23,7 +24,15 @@ import {connect} from 'react-redux'
 
   const {hasCommandModifier} = KeyBindingUtil;
   
-
+const mapStatetoProps = state => {
+  return{
+      apps: state.progress.applications,
+      pending: state.progress.isPending,
+      categories: state.categories.categories, 
+      companies: state.companies.companies,
+      connection: state.connection.connection
+  }
+}
 class ApplicationDetailChecklists extends React.Component {
     constructor(props) {
         super(props);
@@ -34,7 +43,7 @@ class ApplicationDetailChecklists extends React.Component {
             if(this.props.checklist.options.length !== 0){
                 contentBlocksArray.push(
                     new ContentBlock({
-                        key: this.props.checklist.options[i].checklistID,
+                        key: this.props.checklist.options[i].checkOptionID,
                         type: 'unstyled',
                         depth: 0,
                         text: this.props.checklist.options[i].content
@@ -42,8 +51,8 @@ class ApplicationDetailChecklists extends React.Component {
                 )
             }
             checkboxArray.push({
-                checklistID : this.props.checklist.options[i].checklistID,
-                checkboxBoolean: this.props.checklist.options[i].isChecked
+              checkOptionID : this.props.checklist.options[i].checkOptionID,
+              checkboxBoolean: this.props.checklist.options[i].isChecked
             })
         }
         for(var i=0;i<this.props.checklist.notes.length;i++){
@@ -68,17 +77,52 @@ class ApplicationDetailChecklists extends React.Component {
       }
     
     //API calls here, need to save the checkbox status to the application
-    onCheckBoxClick = (checkboxID) => {
-        var tempCheckbox = this.state.checkboxState
-        for(var i=0;i<this.state.checkboxState.length;i++){
-            if(checkboxID === this.state.checkboxState[i].checklistID){
-                tempCheckbox[i].checkboxBoolean = !tempCheckbox[i].checkboxBoolean
+    onCheckBoxClick = async(checkOptionID) => {
+      var tempCheckbox = this.state.checkboxState
+        if(this.props.type==='application'){
+          var checklistAppEntity = this.props.checklist
+          for(var i=0;i<this.state.checkboxState.length;i++){
+            if(checkOptionID === this.state.checkboxState[i].checkOptionID){
+              tempCheckbox[i].checkboxBoolean = !tempCheckbox[i].checkboxBoolean
+              checklistAppEntity.options[i].isChecked = !this.props.checklist.options[i].isChecked
             }
             this.setState({
-                checkboxState : tempCheckbox 
+              checkboxState : tempCheckbox 
             })
+          }
+          console.log(checklistAppEntity)
+          var result = await editContent('applications','Update','Checklist',checklistAppEntity)
+          if (this.props.connection){
+            try {
+                await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                await this.props.connection.invoke('Application_Checklists_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, result.checklistID) 
+            } catch(e) {
+                console.log(e);
+            }
         }
+        }else if(this.props.type==='company'){          
+          var checklistCompanyEntity = this.props.checklist
+          for(var i=0;i<this.state.checkboxState.length;i++){
+            if(checkOptionID === this.state.checkboxState[i].checkOptionID){
+              tempCheckbox[i].checkboxBoolean = !tempCheckbox[i].checkboxBoolean
+              checklistCompanyEntity.options[i].isChecked = !this.props.checklist.options[i].isChecked
+            }
+            this.setState({
+              checkboxState : tempCheckbox 
+            })
+          }
+          var result = await editContent('company','Update','Checklist',checklistCompanyEntity)
+          if (this.props.connection){
+            try {
+                await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                await this.props.connection.invoke('Application_Checklists_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.companyID, result.checklistID) 
+            } catch(e) {
+                console.log(e);
+            }
+        }
+        console.log(result)
       }
+    }
     _handleChange = (editorState) =>{
       this.setState({
         editorState: editorState
@@ -123,7 +167,7 @@ class ApplicationDetailChecklists extends React.Component {
                     checkedIcon= {<FontAwesomeIcon className = "sypp-CheckBox-icon sypp-checked" icon={faCheckSquare}/> }
                     className = "sypp-Checkbox-padding sypp-Checkbox-padding2"
                     checked = {checkbox.checkboxBoolean} 
-                    onChange = {() => this.onCheckBoxClick(checkbox.checklistID)}/>}
+                    onChange = {() => this.onCheckBoxClick(checkbox.checkOptionID)}/>}
                     />
                     // </FormGroup>
                 ))
@@ -176,4 +220,4 @@ class ApplicationDetailChecklists extends React.Component {
         );
       }
 }
-export default connect(null, null)(ApplicationDetailChecklists)
+export default connect(mapStatetoProps, null)(ApplicationDetailChecklists)
