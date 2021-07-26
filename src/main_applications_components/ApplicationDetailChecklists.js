@@ -28,26 +28,41 @@ class ApplicationDetailChecklists extends React.Component {
     constructor(props) {
         super(props);
         const contentBlocksArray = []
+        const notesArray = []
         const checkboxArray =[]
-        for (var i=0;i<this.props.checklist.contents.length;i++){
-            if(this.props.checklist.contents.length !== 0){
+        for (var i=0;i<this.props.checklist.options.length;i++){
+            if(this.props.checklist.options.length !== 0){
                 contentBlocksArray.push(
                     new ContentBlock({
-                        key: this.props.checklist.contents[i].checklistID,
+                        key: this.props.checklist.options[i].checklistID,
                         type: 'unstyled',
                         depth: 0,
-                        text: this.props.checklist.contents[i].type
+                        text: this.props.checklist.options[i].content
                       })
                 )
             }
             checkboxArray.push({
-                checklistID : this.props.checklist.contents[i].checklistID,
-                checkboxBoolean: this.props.checklist.contents[i].submission
+                checklistID : this.props.checklist.options[i].checklistID,
+                checkboxBoolean: this.props.checklist.options[i].isChecked
             })
         }
+        for(var i=0;i<this.props.checklist.notes.length;i++){
+          if(this.props.checklist.notes.length !== 0){
+            notesArray.push(
+              new ContentBlock({
+                  key: this.props.checklist.notes[i].noteContentsID,
+                  type: 'unordered-list-item',
+                  depth: this.props.checklist.notes[i].marginType,
+                  text: this.props.checklist.notes[i].content
+                })
+            )
+          }
+        }
           this.state = {
-          editorState: EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray)),
+          checkboxEditorState: EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray)),
+          noteEditorState: EditorState.createWithContent(ContentState.createFromBlockArray(notesArray)),
           checkboxState : checkboxArray,
+          noteState: notesArray,
           show : false
         };
       }
@@ -92,7 +107,7 @@ class ApplicationDetailChecklists extends React.Component {
         return (
           <div className="sypp-ApplicationDetailNote-container ">
             <div className="sypp-ApplicationDetailNote-title-container">
-            <div className = "sypp-applicationDetailTextTitle">{this.props.checklist.detail.title}</div>
+            <div className = "sypp-applicationDetailTextTitle">{this.props.checklist.type}</div>
             </div>
             <div className = "sypp-ApplicationDetailChecklists-container">
             <div className = "sypp-CheckList-Container" style = {{"height":""+this.state.checkboxState.length*16.363333333}}>
@@ -116,10 +131,32 @@ class ApplicationDetailChecklists extends React.Component {
             </div>
             <div className = "sypp-Editor-Container" onClick = {this.handleOpen}>
             {
-              this.props.Checklist.Contents.map((data) => (
-                <div className = "sypp-checklist-body">{data.type}</div>
+              this.props.checklist.options.map((data) => (
+                <div className = "sypp-checklist-body">{data.content}</div>
               ))
             }
+
+              {/* <div>
+              {
+                //section for notes in the checkllist
+              this.props.checklist.notes.map((data) => (               
+                <div>   
+                {
+                data.length !== 0 ?  
+                  <div>
+                  {
+                    data.marginType === 0? 
+                    <div className = "sypp-note-text-header">{' • ' +data.content}</div> :
+                    <div className = "sypp-note-text-subText">{' • ' +data.content}</div>
+                  }
+                  </div>
+                  : undefined
+                }
+                </div>
+              ))
+              }
+              </div> */}
+
             </div>
             </div>
             <Modal 
@@ -132,7 +169,7 @@ class ApplicationDetailChecklists extends React.Component {
                 <div className = 'sypp-create-detail-modal-container'>
                     <button className ="sypp-button-close" onClick={this.handleClose}>X</button>
                     <CreateEditChecklist _handleChange = {this._handleChange} onSaveChecklist = {this.props.onSaveChecklist} handleCheckbox = {this.handleCheckbox} checklist = {this.props.checklist} handleClose = {this.handleClose} type ={this.props.type} companyID = {this.props.companyID} applicationID = {this.props.applicationID}
-                    checkboxState = {this.state.checkboxState} editorState = {this.state.editorState}/>
+                    checkboxState = {this.state.checkboxState} checkboxEditorState = {this.state.checkboxEditorState} noteEditorState = {this.state.noteEditorState}/>
                 </div>
             </Modal>
           </div>

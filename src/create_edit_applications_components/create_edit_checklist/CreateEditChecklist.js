@@ -26,6 +26,7 @@ const mapStatetoProps = state => {
         pending: state.progress.isPending,
         categories: state.categories.categories, 
         companies: state.companies.companies,
+        connection: state.connection.connection
     }
   }
   
@@ -43,9 +44,9 @@ export class CreateEditChecklist extends Component {
     state = {
         type: '',
         checkListsID : '',
-        Title : '',
-        Time : '',
-        editorState : '',
+        title : '',
+        checkboxEditorState : '',
+        noteEditorState : '',
         checkboxState : []
     }
 
@@ -57,10 +58,10 @@ export class CreateEditChecklist extends Component {
         })
         if(this.props.Checklist !== ''){
             this.setState({
-                checkListsID : this.props.Checklist.checkListsID,
-                Title : this.props.Checklist.Detail.Title,
-                Time : this.props.Checklist.Detail.Time,
-                editorState : this.props.editorState,
+                checkListsID : this.props.checklist.checkListsID,
+                title : this.props.checklist.type,
+                checkboxEditorState : this.props.checkboxEditorState,
+                noteEditorState : this.props.noteEditorState,
                 checkboxState : this.props.checkboxState
             })
         }
@@ -181,7 +182,7 @@ export class CreateEditChecklist extends Component {
 
     onChangeTitle = (e) =>{
         this.setState({
-            Title : e.currentTarget.value
+            type : e.currentTarget.value
         })
     }
 
@@ -190,20 +191,57 @@ export class CreateEditChecklist extends Component {
             editorState: editorState
         })
     }
-    currentBlockKey = () => this.state.editorState.getSelection().getStartKey()
-      
-    currentBlockIndex = () => this.state.editorState.getCurrentContent().getBlockMap().keySeq().findIndex(k => k === this.currentBlockKey())
-      
+
+    myKeyBindingFn = (e) => {
+        switch (e.keyCode) {
+          case 9: // TAB
+            if(this.currentBlockIndexNote() == 0){
+              return undefined
+            }
+            else {
+            const newEditorState = RichUtils.onTab(
+              e,
+              this.state.noteEditorState,
+              1 /* maxDepth */,
+            );
+            if (newEditorState !== this.state.noteEditorState) {
+              this.setState({
+                noteEditorState: newEditorState
+              })
+              return null;
+            }
+          }
+          default: 
+            return getDefaultKeyBinding(e);      
+      }
+    }
+
+    currentBlockKey = () => this.state.checkboxEditorState.getSelection().getStartKey()
+    currentBlockIndex = () => this.state.checkboxEditorState.getCurrentContent().getBlockMap().keySeq().findIndex(k => k === this.currentBlockKey())
+
+    currentBlockKeyNote = () => this.state.noteEditorState.getSelection().getStartKey()
+    currentBlockIndexNote = () => this.state.noteEditorState.getCurrentContent().getBlockMap().keySeq().findIndex(k => k === this.currentBlockKey())
+
+    _handleChangeNote = (editorState) => {
+        console.log(this.state.noteEditorState)
+        if(RichUtils.getCurrentBlockType(this.state.noteEditorState) !== 'unordered-list-item'){
+            const newEditorState = RichUtils.toggleBlockType(this.state.noteEditorState, 'unordered-list-item')
+            this.setState({noteEditorState: newEditorState})
+        }
+        else{
+            this.setState({noteEditorState:editorState});
+        }
+    }
     _handleChange = (editorState) => {      
-            this.setState({editorState});
+            this.setState({checkboxEditorState:editorState});
             console.log("editor state = ")
-            if(this.state.editorState!==''){
-            if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length > this.state.checkboxState.length){
+            if(this.state.checkboxEditorState!==''){
+            if(this.state.checkboxEditorState._immutable.currentContent.blockMap._list._tail.array.length > this.state.checkboxState.length){
                 var tempCheckbox = 
                 [
                     ...this.state.checkboxState.slice(0, this.currentBlockIndex()),
                     {
-                        checklistID: this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][0],
+                        checklistID: this.state.checkboxEditorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][0],
                         checkboxBoolean: false
                     },
                     ...this.state.checkboxState.slice(this.currentBlockIndex())
@@ -213,11 +251,11 @@ export class CreateEditChecklist extends Component {
                })
                console.log(this.state.checkboxState)
             }
-            else if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length < this.state.checkboxState.length){
+            else if(this.state.checkboxEditorState._immutable.currentContent.blockMap._list._tail.array.length < this.state.checkboxState.length){
                 var tempCheckbox = []
-                for(var i = 0; i<this.state.editorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
+                for(var i = 0; i<this.state.checkboxEditorState._immutable.currentContent.blockMap._list._tail.array.length;i++){
                     for(var j=0;j< this.state.checkboxState.length;j++){
-                        if(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[i][0]===this.state.checkboxState[j].checklistID){
+                        if(this.state.checkboxEditorState._immutable.currentContent.blockMap._list._tail.array[i][0]===this.state.checkboxState[j].checklistID){
                             tempCheckbox.push(this.state.checkboxState[j])
                         }
                     }
@@ -251,10 +289,10 @@ export class CreateEditChecklist extends Component {
                 className = "sypp-event-name"
                 placeholder="Checklist Name"
                 onChange={e => this.onChangeTitle(e)}
-                value={this.state.Title}
+                value={this.state.type}
                 />
              <div className ="sypp-event-seperateLine"></div>
-            <div className = "sypp-ApplicationDetailChecklists-container" style={{overflowY: 'scroll', height: '340px'}}>
+            <div className = "sypp-ApplicationDetailChecklists-container" style={{overflowY: 'scroll', height: '100px'}}>
             <div className = "sypp-CheckList-Container" style = {{"height":""+this.state.checkboxState.length*16.35}}>
             {
                 this.state.checkboxState.length === 0 ? 
@@ -291,12 +329,23 @@ export class CreateEditChecklist extends Component {
                 toolbarHidden
                 editorClassName="sypp-editor-class"
                 placeholder = "Checklist Items"
-                editorState={this.state.editorState}
+                editorState={this.state.checkboxEditorState}
                 onEditorStateChange={this._handleChange}
                 //   keyBindingFn={this.myKeyBindingFn}
                 />
             </div>
             </div>
+            </div>
+            <div>
+            <div className ="sypp-event-seperateLine"></div>
+            <Editor 
+                placeholder = "      Text Here"
+                toolbarHidden
+                editorClassName="sypp-editor-class"
+                editorState={this.state.noteEditorState}
+                onEditorStateChange={this._handleChangeNote}
+                keyBindingFn={this.myKeyBindingFn}
+            />
             </div>
             <div className = "sypp-event-bottom-options-container">
                 <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1">Delete</button>
