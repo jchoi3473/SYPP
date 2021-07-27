@@ -145,7 +145,7 @@ function CategoryButtons(props) {
           {radios.map((radio, idx) => (
               <div className="sypp-button-container">
                 <ToggleButton
-                className={"sypp-colorChange sypp-activeChange sypp-hoverChange sypp-text " + props.buttonContainerProps}
+                className={"sypp-colorChange2 sypp-activeChange2 sypp-hoverChange sypp-text1"}
                 key={idx}
                 type="radio"
                 variant="secondary"
@@ -161,7 +161,7 @@ function CategoryButtons(props) {
                     {radio.name}
                   </div>
                 </ToggleButton>
-
+{/* 
                 <ReactTooltip
                   id={(radioValue !== 0&&radioValue.value !== 1)?"radioTip":""}
                   className = "sypp-CategoryBox sypp-colorFix sypp-colorFixBottom sypp-colorFixBottomBefore sypp-colorFixBottomAfter"
@@ -171,7 +171,7 @@ function CategoryButtons(props) {
                   disable	={toolTip}
                   >
                     {categoryDivided()}
-                </ReactTooltip>
+                </ReactTooltip> */}
             </div>
           ))}
         </ButtonGroup>

@@ -10,6 +10,7 @@ import Dropdown from 'react-dropdown';
 import axios from 'axios';
 import {updateFavorite} from './../lib/api'
 import './ApplicationList.scss'
+import './CategoryButtons.scss'
 // import Rating from "@material-ui/lab/Rating";
  import Rating from 'react-rating';
 import {setApps} from './../redux/progress-reducer/progressAction'
@@ -262,41 +263,43 @@ export class ApplicationListProgress extends Component{
         })
 
         return(
-            <div  style = {{height : '100%'}}>
-            {/* <div style = {{width : '200px', overflowX : 'scroll'}}> */}
-                <ButtonGroup toggle className = "sypp-applicationList-radio-container">
-                {this.props.options.map((radio, idx) => (
-                    <ToggleButton
-                    className={"sypp-colorChange2 sypp-activeChange sypp-hoverChange sypp-text1"}
-                    key={idx}
-                    type="radio"
-                    variant="secondary"
-                    name="radio"
-                    value={radio.value}
-                    checked={this.state.radioValue === radio.value}
-                    onChange={(e) => this.radioChange(radio)}
-                    data-for="radioTip"
-                    data-tip = ''
-                    // onMouseEnter = {e => handleChange(e)}
-                    >
-                    <div className = "sypp-category-radio-padding" name = {radio.name} value = {radio.value}>
-                        <span style = {{minWidth : 'fit-content'}}>{radio.name}</span>
-                    </div>
-                    </ToggleButton>
-            ))}
-                </ButtonGroup>
-            {/* </div> */}
-            <div className ="sypp-searchBox-container">
-            <input 
-            className ="sypp-applicationlist-searchBox"
-            type='search' 
-            placeholder = '  Search application'
-            onChange = {e => this.onSearchChange(e)}
-            value = {this.state.searchField}
-            />
+            <div style = {{height : '100%'}}>
+            <div className = "sypp-application-category-container">
+                <div style = {{width : '290px', overflowX : 'scroll', paddingBottom: '5px'}}>
+                    <ButtonGroup toggle className = "sypp-applicationList-radio-container">
+                    {this.props.options.map((radio, idx) => (
+                        <ToggleButton
+                        className={"sypp-colorChange2 sypp-activeChange sypp-hoverChange sypp-text1"}
+                        key={idx}
+                        type="radio"
+                        variant="secondary"
+                        name="radio"
+                        value={radio.value}
+                        checked={this.state.radioValue === radio.value}
+                        onChange={(e) => this.radioChange(radio)}
+                        data-for="radioTip"
+                        data-tip = ''
+                        // onMouseEnter = {e => handleChange(e)}
+                        >
+                        <div className = "sypp-category-radio-padding" name = {radio.name} value = {radio.value}>
+                            <span style = {{minWidth : 'fit-content'}}>{radio.name}</span>
+                        </div>
+                        </ToggleButton>
+                ))}
+                    </ButtonGroup>
+                </div>
+                <div className ="sypp-searchBox-container">
+                    <input 
+                    className ="sypp-applicationlist-searchBox"
+                    type='search' 
+                    placeholder = '  Search application'
+                    onChange = {e => this.onSearchChange(e)}
+                    value = {this.state.searchField}
+                    />
+                </div>
             </div>
             {this.props.selectedTitle !== "" ? 
-            <>
+            <div className = "sypp-selectTitle-container">
                 {
                 (this.state.radioValue==='0'||this.state.radioValue==='1')? 
                 <div className ="sypp-selectedTitle">{this.props.selectedTitle}
@@ -307,7 +310,7 @@ export class ApplicationListProgress extends Component{
                     }
                 </> 
                 }
-            </>: undefined
+            </div>: undefined
             
             }
 
