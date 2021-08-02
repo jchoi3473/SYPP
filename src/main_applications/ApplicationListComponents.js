@@ -91,8 +91,8 @@ function CategoryButtons(props) {
               if(props.apps[i].detail.categories[j].type === targetName){
                 for(var k=0; k<props.apps[i].detail.categories[j].suggestionsOrSeleceted.length;k++){
                   if(!temp.includes(props.apps[i].detail.categories[j].suggestionsOrSeleceted[k])){
-                    temp = temp.concat(props.apps[i].detail.categories[j].suggestionsOrSeleceted[k])
                     console.log(props.apps[i].detail.categories[j].suggestionsOrSeleceted[k])
+                    temp = temp.concat(props.apps[i].detail.categories[j].suggestionsOrSeleceted[k])
                   }
                 }    
               }
@@ -126,13 +126,14 @@ function CategoryButtons(props) {
         //save i as an index
         for(var j=0;j<props.apps[i].detail.categories.length;j++){
           if(props.apps[i].detail.categories[j]){
-          if(props.apps[i].detail.categories[j].type === targetName){
-            for(var k=0; k<props.apps[i].detail.categories[j].suggestionsOrSeleceted.length;k++){
-              if(e.target.getAttribute('name') === props.apps[i].detail.categories[j].suggestionsOrSeleceted[k]){
-                filtered = filtered.concat(props.apps[i])
+            if(props.apps[i].detail.categories[j].type === targetName){
+              for(var k=0; k<props.apps[i].detail.categories[j].suggestionsOrSeleceted.length;k++){
+                if(e.target.getAttribute('name') === props.apps[i].detail.categories[j].suggestionsOrSeleceted[k]){
+                  filtered = filtered.concat(props.apps[i])
+                  console.log("hello..?")
+                }
               }
             }
-          }
         }
        }
     }
@@ -144,7 +145,7 @@ function CategoryButtons(props) {
           {radios.map((radio, idx) => (
               <div className="sypp-button-container">
                 <ToggleButton
-                className={"sypp-colorChange sypp-activeChange sypp-hoverChange sypp-text " + props.buttonContainerProps}
+                className={"sypp-colorChange2 sypp-activeChange2 sypp-hoverChange sypp-text1"}
                 key={idx}
                 type="radio"
                 variant="secondary"
@@ -160,7 +161,7 @@ function CategoryButtons(props) {
                     {radio.name}
                   </div>
                 </ToggleButton>
-
+{/* 
                 <ReactTooltip
                   id={(radioValue !== 0&&radioValue.value !== 1)?"radioTip":""}
                   className = "sypp-CategoryBox sypp-colorFix sypp-colorFixBottom sypp-colorFixBottomBefore sypp-colorFixBottomAfter"
@@ -170,7 +171,7 @@ function CategoryButtons(props) {
                   disable	={toolTip}
                   >
                     {categoryDivided()}
-                </ReactTooltip>
+                </ReactTooltip> */}
             </div>
           ))}
         </ButtonGroup>

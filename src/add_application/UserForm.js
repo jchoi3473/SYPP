@@ -8,12 +8,14 @@ import Page from '../components/page/Page'
 import {connect} from 'react-redux'
 import {postNewApp, setSelectedCategories} from './../redux/addApp-reducer/addAppAction'
 import {requestProgress} from './../redux/progress-reducer/progressAction'
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 
 
 const mapStatetoProps = state => {
     return{
         addApp: state.addApp,
-        categories: state.categories.categories
+        categories: state.categories.categories,
+        connection: state.connection.connection
     }
 } 
 
@@ -36,8 +38,22 @@ export class UserForm extends Component {
         // this.props.postNewApp(this.props.addApp)
         console.log("Triggered")
         const app = await this.props.postNewApp(this.props.addApp)
-        console.log("Triggered")
-        const app2 = setTimeout(()=> this.props.onRequestProgress(), 500) 
+        if (this.props.connection) {
+            try {
+                await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                await this.props.connection.invoke('Application_Add_Update', JSON.parse(localStorage.getItem('user')).uID, app.applicationID)  
+            } catch(e) {
+                console.log(e);
+            }
+        }
+        console.log("This was returned: ", app)
+
+        // const app2 = setTimeout(()=> this.props.onRequestProgress(), 500) 
+
+        // this.props.connection.on('Application_Checklists_Update_Received', applicationID => {
+        //     getApplication(applicationID).then(applications => props.setApps(applications))
+        //   })
+
         var newCategory = this.props.addApp.Categories;
         for (var i=0;i<this.props.addApp.Categories.length;i++){
         console.log(this.props.categories[i])

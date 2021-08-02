@@ -23,7 +23,6 @@ class EventDetail extends Component {
     onSave = () =>{
       this.props.handleEditorState(this.state.editorState);
       this.props.onSaveButton(this.state.editorState);
-      console.log(this.state.editorState)
     }
     currentBlockKey = () => this.state.editorState.getSelection().getStartKey()
       
@@ -32,7 +31,7 @@ class EventDetail extends Component {
     myKeyBindingFn = (e) => {
         switch (e.keyCode) {
           case 9: // TAB
-            if(this.currentBlockIndex() == 0){
+            if(this.currentBlockIndex() === 0){
               return undefined
             }
             else {
@@ -48,13 +47,13 @@ class EventDetail extends Component {
               return null;
             }
           }
+          break;
           default: 
             return getDefaultKeyBinding(e);      
       }
     }
         //       console.log(this.state.editorState._immutable.currentContent.blockMap._list._tail.array[this.currentBlockIndex()][1].depth)
     _handleChange = (editorState) => {
-      console.log(this.state.editorState)
       if(RichUtils.getCurrentBlockType(editorState) !== 'unordered-list-item'){
         const newEditorState = RichUtils.toggleBlockType(editorState, 'unordered-list-item')
         this.setState({editorState: newEditorState})
@@ -108,7 +107,7 @@ class EventDetail extends Component {
                 </div>
                 </div>
                 <div className = "sypp-event-bottom-options-container">
-                    <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1">Delete</button>
+                    <button className = "sypp-event-bottom-option sypp-option1 sypp-option1-page1" onClick = {this.props.onDelete}>Delete</button>
                     <button className = "sypp-event-bottom-option sypp-option2 sypp-option2-page1" onClick = {this.onSave}>Save</button>
                     <button className = "sypp-event-bottom-option sypp-option3 sypp-option3-page1" onClick = {this.props.handleClose}>Close</button>
                 </div>

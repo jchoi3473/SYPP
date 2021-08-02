@@ -1,35 +1,33 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+
+import {setApps} from './../redux/progress-reducer/progressAction'
+import {connect} from 'react-redux'
+// import ApplicationListComponents from './ApplicationListComponents'
+import ApplicationListProgress from './ApplicationListProgress'
 import ModalBox from './../add_application/ModalBox'
 import './../add_application/Modalbox.css'
-import './../components/progress/Progress.css'
-import ApplicationListComponents from './ApplicationListComponents'
-import ApplicationListProgress from './ApplicationListProgress'
-import './ApplicationList.scss'
-import {updateFilteredProgress} from '../redux/filteredProgress-reducer/filteredProgressAction'
-
-import {connect} from 'react-redux'
-
 
 
 const mapStatetoProps = state => {
     return{
         apps: state.progress.applications,
-        filteredProgress: state.filteredProgress.applications
     }
-}
-const mapDispatchToProps= dispatch =>{
-    return {
-        updateFilteredProgress: (applications) => dispatch(updateFilteredProgress(applications)),
+  }
+  const mapDispatchToProps = dispatch => {
+    return{
+        setApps: () => dispatch(setApps()),
     }
 }
 
-export class ApplicationList extends Component{
-    constructor(props){
-        super(props)
+class ApplicationList extends Component {
+
+    constructor() {
+        super();
         this.state = {
-            value : ""
+            applicationID : ''
         }
     }
+
     onChange = (value) => {
         console.log(value)
         var boolean = true;
@@ -40,52 +38,45 @@ export class ApplicationList extends Component{
             boolean = false;
         }   
     }
+    //yields the info about application detail to application detail section
 
-render(){
-    const radioValue =    
+    render(){
+        const radioValue =    
         [ 
         { name: 'All', value: '0' },
         { name: 'Starred', value: '1' },
         ]
-    const filteredProgress = []
-    const categoryDivided = () =>{
-        var apps = this.props.apps
-        var temp = []
-        if(apps.length > 0){
-            console.log("application list ", apps)
-            for(var i=0; i<apps.length; i++){
-                for(var j=0; j<apps[i].detail.categories.length;j++){
-                    if(apps[i].detail.categories[j]){
-                        console.log(apps[i].detail.categories[j].type)
-                    if(!temp.includes(apps[i].detail.categories[j].type) && apps[i].detail.categories[j].suggestionsOrSeleceted.length>0){
-                        temp = temp.concat(apps[i].detail.categories[j].type)
+        const categoryDivided = () =>{
+            var temp = []
+            for(var i=0; i<this.props.apps.length; i++){
+                for(var j=0; j<this.props.apps[i].detail.categories.length;j++){
+                    if(this.props.apps[i].detail.categories[j]){
+                        if(!temp.includes(this.props.apps[i].detail.categories[j].type) && this.props.apps[i].detail.categories[j].suggestionsOrSeleceted.length>0){
+                                temp = temp.concat(this.props.apps[i].detail.categories[j].type)}
+                        }
                     }
-                }
-                }
+            }
+            for(var i=0;i<temp.length;i++){
+                radioValue.push({
+                    name : temp[i],
+                    value: i+2+""
+                })
             }
         }
-        for(var i=0;i<temp.length;i++){
-            radioValue.push({
-                name : temp[i],
-                value: i+2+""
-            })
-        }
+
+        return(
+            <div>
+            {/* <div style = {{height : '100%'}}> */}
+                {categoryDivided()}
+                
+                {/* <ApplicationListComponents options = {radioValue} onChange = {this.onChange}/> */}
+                {console.log(radioValue)}
+                <ApplicationListProgress options = {radioValue} toApplicationDetail = {this.props.toApplicationDetail} />
+                <div className = 'sypp-modalButton'>
+                    <ModalBox/>
+                </div>
+            </div>
+        );
     }
-
-
-    return(
-        <div>
-        <div className ="sypp-mainpage-container">
-        {categoryDivided()}
-        <ApplicationListComponents options = {radioValue} onChange = {this.onChange}/>
-        <ApplicationListProgress toApplicationDetail = {this.props.toApplicationDetail}/>
-        </div>
-        <div className = 'sypp-modalButton'>
-            <ModalBox/>
-        </div>
-        </div>
-    )
-}
 }
 export default connect(mapStatetoProps, mapDispatchToProps)(ApplicationList)
-

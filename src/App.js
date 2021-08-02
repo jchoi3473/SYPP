@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import MainPage from './main/MainPage';
 import Login from './login/Login';
+import SignUp from './login/SignUp';
 import {connect} from 'react-redux';
 import {requestProgress} from './redux/progress-reducer/progressAction';
 import {setSelectedCategories} from './redux/addApp-reducer/addAppAction';
@@ -77,6 +78,7 @@ const mapDispatchToProps= dispatch =>{
         <BrowserRouter>
           <Switch>
             <Route path = "/login" component = {Login}/>
+            <Route path = "/signup" component = {SignUp}/>
             <Route path = "/main" component = {MainPage}/>
             <Route path="/">
               <Redirect to="/login" />

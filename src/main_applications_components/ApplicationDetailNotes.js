@@ -42,7 +42,7 @@ class ApplicationDetailNotes extends React.Component {
             if(this.props.note.contents.length !== 0){
                 contentBlocksArray.push(
                     new ContentBlock({
-                        key: this.props.Note.contents[i].noteContentsID,
+                        key: this.props.note.contents[i].noteContentsID,
                         type: 'unordered-list-item',
                         depth: this.props.note.contents[i].marginType,
                         text: this.props.note.contents[i].content

@@ -31,17 +31,21 @@ class ApplicationDetailEvents extends React.Component {
     constructor(props) {
         super(props);
         const contentBlocksArray = []
-        for (var i=0;i<this.props.event.contents.length;i++){
+        console.log("this is event")
+        console.log(this.props.event)
+        if(this.props.event.contents){
+          for (var i=0;i<this.props.event.contents.length;i++){
             if(this.props.event.contents.length !== 0){
-                contentBlocksArray.push(
-                    new ContentBlock({
-                        key: this.props.event.contents[i].noteContentsID,
-                        type: 'unordered-list-item',
-                        depth: this.props.event.contents[i].marginType,
-                        text: this.props.event.contents[i].content
-                      })
-                )
+              contentBlocksArray.push(
+                new ContentBlock({
+                    key: this.props.event.contents[i].noteContentsID,
+                    type: 'unordered-list-item',
+                    depth: this.props.event.contents[i].marginType,
+                    text: this.props.event.contents[i].content
+                })
+              )
             }
+          }
         }
         this.state = {
           editorState: EditorState.createWithContent(ContentState.createFromBlockArray(contentBlocksArray)),
@@ -55,7 +59,7 @@ class ApplicationDetailEvents extends React.Component {
       myKeyBindingFn = (e) => {
         switch (e.keyCode) {
           case 9: // TAB
-            if(this.currentBlockIndex() == 0){
+            if(this.currentBlockIndex() === 0){
               return undefined
             }
             else {

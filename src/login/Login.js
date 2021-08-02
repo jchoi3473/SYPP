@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {postLogin} from './../redux/user-reducer/userAction'
 import axios from "axios";
 import {localLogin} from './../lib/api'
+import './Login.scss'
 const mapDispatchToProps= dispatch =>{
   return {
     postLogin: (email, password) => dispatch(postLogin(email, password))
@@ -24,44 +25,43 @@ function Login(props){
     },[])
     
     const onClickLogIn = async e => {
-
       // e.preventDefault();
-      const data = localLogin(idValue, passwordValue)
+      const data = await localLogin(idValue, passwordValue)
       if (data){
         props.history.push('/main');
       }
-
-      // const userInfo = { Email : idValue, Password: passwordValue };
-      // const response = await axios.post(
-      //   "https://saveyourappdevelopment.azurewebsites.net/auth/authenticate",3
-      //   userInfo
-      // );
-      // if(response.data.token){
-      //   localStorage.setItem('jwt-token', response.data.token);
-      //   props.history.push('/main');
-      // }
-      // localStorage.setItem('user', JSON.stringify(response.data));
-      // console.log(response.data)
-
     };
+    const redirectSignup = () => {
+      props.history.push('signup')
+    }
 
     return (
-      <div>
+      <div className="sypp-login-container">
+        <div className="sypp-login-Title">Log In</div>
         <form>
+          <div className="sypp-login-subTitle">Email Address</div>
          <input
-            // className ="sypp-modal-input company"
-            placeholder="Enter Your Email"
+            className ="sypp-login-input"
+            placeholder="Email Address"
             onChange={e => setIdValue(e.target.value)}
             value={idValue}
           />
+          <div className="sypp-login-subTitle">Password</div>
           <input
-            // className ="sypp-modal-input company"
-            placeholder="Enter Your Email"
+            type="password"
+            className ="sypp-login-input"
+            placeholder="Password"
             onChange={e => setPasswordValue(e.target.value)}
             value={passwordValue}
           />
           </form>
-        <button onClick = {e => onClickLogIn()}>LogIn</button>
+        <button className="sypp-login-button" onClick = {e => onClickLogIn()}>LogIn</button>
+        <div className="sypp-login-query-container">
+          <div className="sypp-login-query">
+            Don't have an account? 
+          </div>
+          <div className="sypp-login-query-button" onClick = {() => redirectSignup()}>Create an account</div>
+        </div>
       </div>
     );  
 }

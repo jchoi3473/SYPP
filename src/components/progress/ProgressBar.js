@@ -11,13 +11,15 @@ import NewTask from '../../add_application_task/NewTask.js'
 import ArchiveTask from './../../archive_application_task/ArchiveTask'
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {connect} from 'react-redux'
+import { updateTask } from '../../lib/api';
 import Progress from './Progress'
 
 
 const mapStatetoProps = state => {
     return{
         apps: state.progress.applications,
-        filteredProgress: state.filteredProgress.applications
+        filteredProgress: state.filteredProgress.applications,
+        connection: state.connection.connection
     }
 }
 
@@ -54,13 +56,23 @@ export class ProgressBar extends Component{
     }
 
     //Task click function to handle completed
-    handleCompleted = (date, title) => {
+    handleCompleted = async(date, title) => {
         const apps = this.props.apps
         for(var i=0;i<apps.length;i++){
             if(apps[i].applicationID === this.props.applicationID){
                 for(var j=0;j<apps[i].tasks.length;j++){
                     if(apps[i].tasks[j].midTaskID === date.midTaskID){
                         apps[i].tasks[j].status = !apps[i].tasks[j].status
+                        const result = await updateTask(apps[i].tasks[j])
+                        if (this.props.connection){
+                            try {
+                                console.log("Triggered")
+                                await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                                await this.props.connection.invoke('Application_Task_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, result.midTaskID)  
+                            } catch(e) {
+                                console.log(e);
+                            }
+                        }
                         break;
                     }
                 }
@@ -73,6 +85,7 @@ export class ProgressBar extends Component{
     }
 
     //Task click function for applied task
+    //Make sure to call the api call here, and activate the socket
     handleCompletedApplied = () => {
         console.log("Clicked")
         const apps = this.props.filteredProgress
@@ -120,11 +133,13 @@ export class ProgressBar extends Component{
         this.props.onClickAdd(this.props.applicationID, title, date, dateShow)
         this.handleClose()
     }
+
+
     //use if clause to determine what color to use.
     render(){
         const dates = this.props.dates
         const detailStatus = this.props.details
-        const sortedDates = dates.sort((a, b) => a.Time - b.Time)
+        const sortedDates = dates.sort((a, b) => a.time - b.time)
         return(
                 <div className = "sypp-progressbar-container">
                     <div className = "sypp-progressLine"/>
@@ -132,14 +147,14 @@ export class ProgressBar extends Component{
                         {
                         // sortedDates.map((date) => (
                         //     (date != null)?
-                                (detailStatus.Status)?
+                                (detailStatus.status)?
                                     <div className = "sypp-application-status-container">
                                         <div className="sypp-applicationFirst sypp-completed" onClick = {()=>this.handleCompletedApplied()}></div>
-                                        <div className="sypp-date-font">{Moment(detailStatus.Time).format('MMM DD')}</div>
+                                        <div className="sypp-date-font">{Moment(detailStatus.time).format('MMM DD')}</div>
                                     </div>:
                                     <div className = "sypp-application-status-container">
                                         <div className="sypp-applicationFirst sypp-notCompleted" onClick = {()=>this.handleCompletedApplied()}></div>
-                                        <div className="sypp-date-font">{Moment(detailStatus.Time).format('MMM DD')}</div>
+                                        <div className="sypp-date-font">{Moment(detailStatus.time).format('MMM DD')}</div>
                                     </div>
                             // :undefined
                         // ))
@@ -148,9 +163,9 @@ export class ProgressBar extends Component{
                             {
                             sortedDates.map((date) => (
                                 <div>
-                                {(date.Title!=="Applied")?
-                                    ((date.showDate)?
-                                        ((date.Status)?
+                                {(date.title!=="Applied")?
+                                    ((date.isVisible)?
+                                        ((date.status)?
                                             <div className = "sypp-application-status-container">
                                                 <Progress applicationID = {this.props.applicationID} completed = {true} handleCompleted = {this.handleCompleted} date = {date}/>
                                             </div>: 

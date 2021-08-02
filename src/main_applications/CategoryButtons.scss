@@ -4,8 +4,8 @@
     pointer-events: auto !important;
     background: #363C46 !important;
     &:hover {
-   visibility: visible !important;
-   opacity: 1 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     }
     &.place-bottom {
         &::after {
@@ -47,3 +47,26 @@
         font-weight: bold;
     }
 }
+
+.btn-secondary.sypp-colorChange2{
+    background: #363C46;
+    border-radius: 26px !important;
+    border: none;
+    margin-right: 10px;
+}
+.btn-secondary:not(:disabled):not(.disabled).active.sypp-activeChange{
+    background: #C2DBFF;
+    border:none;
+    color: black;
+    font-family: Assistant;
+    font-style: normal;
+}
+.btn.sypp-text1{
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-family: Assistant;
+    font-style: normal;
+    color: rgba(194, 219, 255, 1);
+}
+
