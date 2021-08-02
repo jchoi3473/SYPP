@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "SYPP",
-  "description": "This extension is a starting point to create a real Chrome extension",
+  "description": "This is an extension of SYPP",
   "version": "1.0.0",
   "background": {
     "scripts": [

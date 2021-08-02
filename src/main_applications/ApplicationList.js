@@ -65,7 +65,8 @@ class ApplicationList extends Component {
         }
 
         return(
-            <div style = {{height : '100%'}}>
+            <div>
+            {/* <div style = {{height : '100%'}}> */}
                 {categoryDivided()}
                 
                 {/* <ApplicationListComponents options = {radioValue} onChange = {this.onChange}/> */}

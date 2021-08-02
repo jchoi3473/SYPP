@@ -146,7 +146,7 @@ export class ApplicationListProgress extends Component{
         return(
             <>
                 <Dropdown 
-                className = "sypp-category-dropdown sypp-category-dropdown-arrowdiv"
+                className = "sypp-category-dropdown sypp-category-dropdown-arrowdiv sypp-selectedTitle "
                 arrowClassName = "sypp-category-dropdown-arrowdiv"
                 controlClassName = "sypp-Dropdown-control"
                 menuClassName = "sypp-Dropdown-menu"
@@ -263,7 +263,8 @@ export class ApplicationListProgress extends Component{
         })
 
         return(
-            <div style = {{height : '100%'}}>
+            <div>
+            {/* <div style = {{height : '100%'}}> */}
             <div className = "sypp-application-category-container">
                 <div style = {{width : '290px', overflowX : 'scroll', paddingBottom: '5px'}}>
                     <ButtonGroup toggle className = "sypp-applicationList-radio-container">
@@ -320,7 +321,7 @@ export class ApplicationListProgress extends Component{
                 <div className="sypp-taskEntity">Task</div>
                 <div className="sypp-taskEntity">Result</div>
             </div>
-                <div className = "sypp-applicationList-container" style={this.props.extended?{overflowY: 'scroll', height: '80%'}:{overflowY: 'scroll', height: '75%'}}>
+                <div className = "sypp-applicationList-container" style={this.props.extended?{overflowY: 'scroll', height: '80%'}:{overflowY: 'scroll', height: '73%'}}>
                 {
                 (searchFilteredProgress.length > 0)?
                 searchFilteredProgress.map((data) => (

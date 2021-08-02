@@ -320,7 +320,7 @@ export class CreateEditChecklist extends Component {
                 />
              <div className ="sypp-event-seperateLine"></div>
             <div className = "sypp-ApplicationDetailChecklists-container" style={{overflowY: 'scroll', height: '100px'}}>
-            <div className = "sypp-CheckList-Container" style = {{"height":""+this.state.checkboxState.length*16.35}}>
+            <div className = "sypp-CheckList-Container" style = {{"height":""+this.state.checkboxState.length*16}}>
             {
                 this.state.checkboxState.length === 0 ? 
                 <div className = "sypp-emptybody-checkbox-container">
@@ -354,7 +354,7 @@ export class CreateEditChecklist extends Component {
             <div className = "sypp-Editor-Container">
                 <Editor 
                 toolbarHidden
-                editorClassName="sypp-editor-class"
+                editorClassName="sypp-editor-class sypp-editor-class-checklist"
                 placeholder = "Checklist Items"
                 editorState={this.state.checkboxEditorState}
                 onEditorStateChange={this._handleChange}

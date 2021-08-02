@@ -16,6 +16,26 @@ export const localLogin = async function(idValue, passwordValue){
   }
 };
 
+export const userSignUp = async function(idValue, passwordValue, firstName, lastName){
+  const userInfo = { Email : idValue, Password: passwordValue, Firstname: firstName, Lastname: lastName };
+  const response = await axios.post(
+    "https://saveyourappdevelopment.azurewebsites.net/auth/register",
+    userInfo
+  );
+  //need to do something so that we can validate user(correctness)
+  if(response.data.token){
+    console.log(response.data.token)
+    localStorage.setItem('jwt-token', response.data.token);
+    localStorage.setItem('user', JSON.stringify(response.data));
+    console.log(response.data)
+    return response.data
+    // props.history.push('/main');
+  }else{
+    return response.data
+  }
+};
+
+
 export const getApplication = async function(uID){
     console.log(uID)
     try {

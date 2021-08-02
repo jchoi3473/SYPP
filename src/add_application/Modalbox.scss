@@ -1,8 +1,8 @@
 .sypp-newapp-button{
     display: flex;
     position: absolute;
-    bottom: 5px;
-    left: 5px;
+    // bottom: 13px;
+    left: 10px;
     border: none;
     width: 101px;
     height: 44px;
@@ -25,9 +25,7 @@
     font-weight: bold;
     color: #212832;
     font-size: 23px;
-    margin-bottom: 4px;
     cursor: pointer;
-
 }
 .sypp-newapp-button-body{
     padding: 0;

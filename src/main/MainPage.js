@@ -79,7 +79,7 @@ function MainPage(props){
         //List of Socket Listeners
         connection.on('Application_Add_Update_Received', applicationID => {
           setAppLoaded(false)
-          getApplication(applicationID).then(applications => {
+          getApplication(JSON.parse(localStorage.getItem('user')).uID).then(applications => {
             props.setApps(applications)
             setAppLoaded(true)})
         })
@@ -654,7 +654,8 @@ function MainPage(props){
         }     
         else {
           return(
-            <div>more to go</div>
+            <></>
+            // <div>more to go</div>
           )
       }
     }

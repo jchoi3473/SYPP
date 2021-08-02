@@ -154,7 +154,7 @@ class ApplicationDetailChecklists extends React.Component {
             <div className = "sypp-applicationDetailTextTitle">{this.props.checklist.type}</div>
             </div>
             <div className = "sypp-ApplicationDetailChecklists-container">
-            <div className = "sypp-CheckList-Container" style = {{"height":""+this.state.checkboxState.length*16.363333333}}>
+            <div className = "sypp-CheckList-Container" style = {{"height":""+this.state.checkboxState.length*16}}>
             {
                 // className = "Checkbox-padding checkbox-root checkboxIcomButton-root Icon-root Checkbox-Checked" 
                 this.state.checkboxState.map((checkbox) => (

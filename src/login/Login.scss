@@ -1,0 +1,99 @@
+.sypp-login-container{
+    width: fit-content;
+    margin: 0 auto;
+    padding-top: 25%;
+}
+.sypp-signup-container{
+    width: fit-content;
+    margin: 0 auto;
+    padding-top: 12%;
+}
+.sypp-login-subContainer{
+    display: flex;
+}
+.sypp-login-Title{
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    color: #C2DBFF;
+    margin-bottom: 25px;
+}
+.sypp-login-subTitle{
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    /* identical to box height */
+    color: rgba(255, 255, 255, 0.9);
+}
+.sypp-login-input{
+    width: 251px;
+    height: 32px;
+    background: #474F5C;
+    border-radius: 5px;
+    border: none;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    margin-bottom: 20px;
+    /* identical to box height */
+    color: #FFE9D6;
+    &:hover{
+        border: 1px solid rgba(255, 233, 214, 0.4);
+    }
+}
+.sypp-login-nameInput{
+    width: 121px !important;
+}
+.sypp-login-button{
+    width: 71px;
+    height: 32px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 17px;
+    background: #5E6A7E;
+    border-radius: 26px;
+    border: none;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    display: block;
+    /* identical to box height */
+    color: #C2DBFF;
+    &:hover{
+        background: #7D8CA8;
+    }
+    &:focus{
+        background: #94A5C5;
+    }
+}
+.sypp-login-query-container{
+    width: fit-content;
+    margin: 0 auto;
+}
+.sypp-login-query{
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    /* identical to box height */
+    color: rgba(255, 255, 255, 0.9);
+    display: inline-block;
+    width: fit-content;
+}
+.sypp-login-query-button{
+    cursor: pointer;
+    margin-left: 3px;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    /* identical to box height */
+    color: #C2DBFF;
+    width: fit-content;
+    display: inline-block;
+}

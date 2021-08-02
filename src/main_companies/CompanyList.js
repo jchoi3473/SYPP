@@ -7,6 +7,8 @@ import {setCompany} from './../redux/company-reducer/companyAction'
 import {connect} from 'react-redux'
 import Modal from 'react-bootstrap/Modal';
 import { updateFavorite, postCompany } from '../lib/api';
+import '../main_applications/ApplicationList.scss'
+
 
 
 const mapStatetoProps = state => {
@@ -100,28 +102,27 @@ export class CompanyList extends Component{
             <div>
             <div className ="sypp-searchBox-container">
             <input 
-            className ="sypp-searchBox"
+            className ="sypp-applicationlist-searchBox sypp-applicationlist-searchBox-company"
             type='search' 
             placeholder = '  Search company'
             onChange = {e => this.onSearchChange(e)}
             value = {this.state.searchField}
             />
             </div>
-            <div className = "sypp-company-sortby">
-              Testing
-            </div>
-            {
-              (searchFilteredProgress.length > 0)?
-              searchFilteredProgress.map((data) => (
-                <div className = "sypp-Company-container">
-                  <Rating className ="sypp-starIcon" companyName = {data.companyID} stop={1} initialRating = {data.detail.isFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.companyID)}
-                  emptySymbol="fa fa-star-o starSize starIcon"
-                  fullSymbol = "fa fa-star starSize starIcon"
-                  />
-                <div className = "sypp-CompanyList" onClick = {() => this.props.toCompanyDetail(data.companyID)}>{data.detail.companyName}</div>
-                </div>
-              )):undefined
-            }
+            <div className = "sypp-Company-body" style={{height: "500px", overflowY:"scroll", width:"fitContent"}}>
+              {
+                (searchFilteredProgress.length > 0)?
+                searchFilteredProgress.map((data) => (
+                  <div className = "sypp-Company-container">
+                    <Rating className ="sypp-starIcon" companyName = {data.companyID} stop={1} initialRating = {data.detail.isFavorite?1:0} onClick = {() => this.onClickIsFavorite(data.companyID)}
+                    emptySymbol="fa fa-star-o starSize starIcon"
+                    fullSymbol = "fa fa-star starSize starIcon"
+                    />
+                  <div className = "sypp-CompanyList" onClick = {() => this.props.toCompanyDetail(data.companyID)}>{data.detail.companyName}</div>
+                  </div>
+                )):undefined
+              }
+            </div>    
             <div onClick = {this.handleShow} className = {"sypp-newcompany-button"}>
                 <div className = "sypp-newapp-button-plus">+</div>
                 <div className = "sypp-newapp-button-body">New Company</div>
