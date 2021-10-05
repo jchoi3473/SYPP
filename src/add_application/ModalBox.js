@@ -5,9 +5,7 @@ import './Modalbox.css';
 import './Modalbox.scss';
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import { makeStyles } from '@material-ui/core/styles';
+
 
 
 
@@ -39,17 +37,3 @@ const ModalBox = (props) => {
     )
 };
 export default ModalBox;
-
-
-// const ModalBox = (props) => {
-//     const [modalIsOpen, setModalIsOpen] = useState(false) 
-//     return (
-//         <div>
-//             <button onClick={() => setModalIsOpen(true)}>Open modal</button>
-//             <Modal className = 'Modal-small' closeTimeoutMS={300} isOpen = {modalIsOpen} onRequestClose={() => setModalIsOpen(false)}> 
-//                 <UserForm/>
-//                 <button onClick={() => setModalIsOpen(false)}>close modal</button>
-//             </Modal>
-//         </div>
-//     )
-// };

@@ -177,7 +177,6 @@ export class ChipAutocomplete extends Component {
   };
 
   handleDeleteTags = (tag) => {
-   
     const delectedCategory = this.props.selectedCategories[this.props.index].SuggestionsOrSeleceted.filter(state => state !== tag)
     const newSelectedCategory = this.props.selectedCategories
     newSelectedCategory[this.props.index].SuggestionsOrSeleceted = this.props.selectedCategories[this.props.index].SuggestionsOrSeleceted.filter(state => state !== tag)

@@ -19,6 +19,15 @@ export class RoleLocationAdd extends Component{
             show : false,
         };
     }
+    // ==TODO== 
+    // Need to update the personal preferene by gathering the preference data from the local storage
+    // componentDidMount = () =>{
+    //     userPreferece = JSON.parse(localStorage.getItem('user')).preferencesca
+    //     for(var i=0;i<userPreferece.length;i++){
+
+    //     }
+    //     console.log()
+    // }
     continue = e => {
         e.preventDefault();
         this.props.nextStep();
