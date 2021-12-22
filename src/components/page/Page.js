@@ -9,11 +9,11 @@ export class Page extends Component{
         return(
             <div className = "sypp-circle-container">
                 {  
-                    pageCount.map(i =>{
+                    pageCount.map((i,idx) =>{
                         if(i === this.props.pageNumber){
-                            return <div className="sypp-circle"/>
+                            return <div className="sypp-circle" key={idx}/>
                         }else{
-                            return <div className="sypp-other-circles"/>
+                            return <div className="sypp-other-circles" key={idx}/>
                         }
                     })    
                 }

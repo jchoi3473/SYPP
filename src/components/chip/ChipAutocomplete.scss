@@ -26,6 +26,7 @@
 .sypp-suggestion{
     outline: none;
     outline-style: none;
+    cursor: pointer;
     &:disabled{
         color: #C2DBFF;
         background: #5E6A7E;
@@ -38,7 +39,8 @@
         background: #94A5C5;
     }
     background-color: transparent;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     margin-left: 3px;
     margin-right: 3px;
     margin-bottom: 3px;
@@ -48,5 +50,9 @@
     border-radius: 26px;
     font-size: 10px;
     text-align: center;
+    justify-content: space-around;
     border-color: transparent;
+    height: 21px;
+    padding-left: 7px;
+    padding-right: 7px;
 }

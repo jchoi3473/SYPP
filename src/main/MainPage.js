@@ -72,7 +72,6 @@ function MainPage(props){
         .withAutomaticReconnect()
         .build();
       props.setConnection(connection);
-
       connection.start()
       .then(result =>{
         console.info('SignalR Connected')
@@ -666,7 +665,7 @@ function MainPage(props){
         <div className = "sypp-main-button-container">
           <ButtonGroup toggle className = {props.classContainerProps}>
           {radios.map((radio, idx) => (
-            <div className="sypp-button-container">
+            <div className="sypp-button-container" key = {idx}>
                 <ToggleButton
                 className={"sypp-mainButtonGroups sypp-activeChange sypp-hoverChange sypp-text"}
                 key={idx}

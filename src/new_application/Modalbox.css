@@ -1,0 +1,133 @@
+.sypp-button{
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+.sypp-Modal-align{
+    top: 20%;
+    left: 20%;
+}
+.sypp-no-border{
+    border:none;
+}
+
+.sypp-ModalMain{
+    width: 320px !important;
+    height: 320px ;
+    margin: 0 auto;
+    padding: 0;
+    border: none !important;
+}
+.sypp-radio-container{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    /* text-align: center; */
+}
+
+.sypp-Modal-Category{
+    width: 250px !important;
+    margin: 0 auto;
+    padding: 0;
+}
+.sypp-submodal-container{
+    height: 150px;
+    padding-top: 30px;
+    background: #343B46}
+
+.sypp-Modal-container{
+    /* display: block; */
+    margin: 0;
+    padding: 0;
+    max-width: 320px;
+    min-height: 320px;
+    background: #343B46;
+    border-radius: 15px;
+}
+.sypp-modal-text{
+    text-align: center;
+    font-size: 12px;
+    color: #ffffff;
+}
+.sypp-modal-text-company-margin{
+    margin-bottom: 9px;
+}
+
+.sypp-button-close{
+    position: absolute;
+    font-size: 5px;
+    right: 15px;
+    top: 15px;
+    border: none;
+    background: none;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+
+
+.sypp-next-button-container{
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    bottom: 10px;
+}
+.sypp-Calendar-container{
+    padding: 20px ;
+    padding-top: 0;
+}
+.sypp-Calendar-main{
+    background: white;
+}    
+
+.sypp-create-category{
+    padding: 0px;
+    margin-left: 10%;
+    display: flex;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10px;
+    border: none;
+    background: none;
+    color: #C2DBFF;
+}
+.sypp-category-container{
+    display: block;
+    margin-top: 3%;
+}
+.sypp-newCategory{
+    width: 200px !important;
+}
+
+.sypp-applied-container{
+    margin: 0 auto;
+    margin-top: 25%;
+    display: block;
+    justify-content: center;
+}
+
+.sypp-button-choice-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 10;
+    margin-bottom: 50px;
+}
+
+.MuiButton-root.sypp-button-choice{
+    padding: 0;
+    margin: 5px;
+    min-width: 55 !important;
+    height: 32;
+    font-size: 12px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    border: transparent;
+    border-radius: 26px;
+    outline: none;
+    text-transform: none;
+}
+
+.MuiButton-contained.sypp-changeShadow{
+    box-shadow: none;
+}	
+

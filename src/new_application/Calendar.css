@@ -1,0 +1,29 @@
+.sypp-main{
+    border:transparent !important ;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    background: transparent;
+
+}
+.react-calendar__tile.sypp-customTile{
+    padding: 0.5em 0.5em;
+    color: rgba(255, 255, 255, 0.4);
+    outline: none;
+    /* background: tomato !important; */
+}
+.react-calendar__tile--active.sypp-background{
+    background: transparent;
+    color: rgba(255, 255, 255, 0.1);
+    border: transparent;
+    outline: none;
+}
+
+
+
+.react-calendar.sypp-changeMargin{
+    max-width: 84%;
+    margin: 0 auto;
+}
+.react-calendar__year-view.sypp-changeSize{
+    padding: 1em 0.5em;
+}
