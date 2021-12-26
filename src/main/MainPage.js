@@ -113,7 +113,9 @@ function MainPage(props){
 
         connection.on("Application_Task_Update_Received", (applicationID, midTaskID) => {
           const apps = [...latestApp.current];
-          var abort = false
+          var abort = false;
+          console.log(applicationID);
+          console.log(midTaskID);
           getTask(applicationID, midTaskID).then(midTask => {
             for(var i=0; i<apps.length;i++){
               if(apps[i].applicationID === applicationID){

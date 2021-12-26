@@ -154,7 +154,8 @@ export class ChipAutocomplete extends Component {
   onChange = (e) => {
     const { suggestions } = this.props.categories[this.props.index];
     const userInput = e.currentTarget.value;
-    const filteredSuggestions = suggestions.filter(
+    const filteredSuggestions = 
+    suggestions.filter(
       (suggestion) =>
         suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );

@@ -11,6 +11,14 @@ function NewAppPage1(props){
         }
         return(
             <div className='sypp-NewApp1'>
+                 <div className='sypp-pagecircle-container'>
+                    <div className='sypp-pagecircle-subContainer'>
+                        <div className='Sypp-pagecircle Sypp-pagecircle-active'/>
+                        <div className='Sypp-pagecircle'/>
+                        <div className='Sypp-pagecircle'/>
+                    </div>
+                </div>
+                <div className='sypp-NewApp1-conatiner'>
                 <div className = "sypp-company-position-container">
                     <div className="sypp-modal-text sypp-modal-text-company-margin">What company are you applying for?</div>
                     <input
@@ -36,7 +44,7 @@ function NewAppPage1(props){
                     </button>
                     </div>
             </div>
-           
+        </div>
         );
     }
 export default NewAppPage1

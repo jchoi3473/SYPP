@@ -1,10 +1,16 @@
 .sypp-NewAppCategory-Container{
-
+    width: 225px;
+}
+.sypp-NewApp1-conatiner{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
 }
 .sypp-NewAppCategory-Title-Container{
     display: flex;
-    width: 100%;
-    align-items: center;
+    width: 225px;
 }
 .sypp-NewAppCategory-Title{
     font-family: Assistant;
@@ -12,7 +18,6 @@
     font-weight: 600;
     font-size: 12px;
     line-height: 16px;
-    margin-left: 47px;
     width: 64px;
     /* identical to box height */
     color: rgba(255, 255, 255, 0.98);
@@ -32,13 +37,50 @@
     line-height: 16px;
     /* identical to box height */
     color: #FFE9D6;
-
+}
+.sypp-NewAppCategory-div{
+    padding-left: 8px;
+    text-align: left !important;
+    display: flex;
+    align-items: center;
+    flex-flow: wrap;
+    height: fit-content;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
+.sypp-NewAppCategory-div-container{
+    background: #525A68;
+    border-radius: 10px;
+    height: 18px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: fit-content;
+}
+.sypp-NewAppCategory-div-text{
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 13px;
+    background: #525A68;
+    /* identical to box height */
+    color: #C2DBFF;
+}
+
+.sypp-NewAppCategory-div-x{
+    font-size: 12px;
+    color: #C2DBFF;
+    cursor: pointer;
+}
 .sypp-NewAppCategory-suggestion-cotainer{
     padding-top: 5px;
     padding-bottom: 5px;
     width: 160px;
+    margin-left: 63px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -71,6 +113,7 @@
     font-weight: 600;
     font-size: 10px;
     line-height: 13px;
+    margin-right: 5px;
     /* identical to box height */
     color: #C2DBFF;
     &:hover{
@@ -78,13 +121,121 @@
         color: #363C46;
     }
 }
-// .sypp-NewAppCategory-suggestion-item-text{
-    
-//     font-family: Assistant;
-//     font-style: normal;
-//     font-weight: 600;
-//     font-size: 10px;
-//     line-height: 13px;
-//     /* identical to box height */
-//     color: #C2DBFF;
-// }
+
+.sypp-NewApp3{
+    min-height: 322px;
+    height: 100%;
+    max-height: 490px;
+    background: #1E2127;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.sypp-NewApp3-subcontainer{
+    min-height: 290px;
+    padding-top: 37px;
+    padding-bottom: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.sypp-pagecircle-container{
+
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+.sypp-pagecircle-subContainer{
+    width: 60px;
+    display: flex;
+    justify-content: space-between;
+}
+.Sypp-pagecircle{
+    width: 10px;
+    height: 10px;
+    background: #363C46;
+    border-radius: 5px;
+}
+.Sypp-pagecircle-active{
+    background: #C2DBFF !important;
+}
+.sypp-radiobutton-container{
+    width: 115px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.sypp-radiobutton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 47px !important;
+    min-width: 47px !important;
+    height: 26px;
+    // margin-right: 20px;
+    padding: 0;
+    margin: 0;
+    border-radius: 26px !important;
+    background: rgba(54, 60, 70, 0.8);    
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    /* identical to box height */
+    color: #C2DBFF;
+    border: none !important;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active{
+    background: #C2DBFF !important;    
+    color: rgba(54, 60, 70, 0.8) !important;
+}
+.sypp-newapp-button-container{
+    display: flex;
+    height: 48px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.sypp-save-container{
+    margin: 0 auto;
+    position: relative;
+    bottom: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    width: 90px;
+}
+.sypp-NewAppCategory-extendedInput{
+    // max-width: 10px;
+}
+#hide {
+    position: absolute;
+    opacity: 0;
+    z-index: -100;
+    white-space: pre;
+  }
+.sypp-NewAppCategory-MultiInput{
+    max-width: 145px;
+    height: 26px;
+    background-color: transparent;
+}
+
+input[name="sypp-NewAppCategory-MultiInput"]{
+    width: 165px;
+    max-width: 140px;
+    height: 26px;
+    background: #363C46;
+    border: none;
+    border-radius: 26px;
+    text-align: center;
+    font-family: Assistant;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    /* identical to box height */
+    color: #FFE9D6;
+    outline: none;
+}

@@ -8,13 +8,14 @@ import Modal from 'react-bootstrap/Modal';
 import NewTask from '../../add_application_task/NewTask.js'
 import {setApps} from './../../redux/progress-reducer/progressAction'
 import {connect} from 'react-redux'
+import { updateTask } from '../../lib/api';
 
 
 
 const mapStatetoProps = state => {
     return{
         apps: state.progress.applications,
-        filteredProgress: state.filteredProgress.applications
+        connection: state.connection.connection
     }
 }
 
@@ -72,27 +73,42 @@ export class Progress extends Component{
         this.props.handleCompleted(this.props.date, this.props.date.Title)
     }
 
-    onClickSave = (title, date, dateShow) =>{
-        var applications = this.props.apps
-        for(var i=0 ; i<applications.length;i++){
-            if(this.props.applicationID === applications[i].applicationID){
-                console.log(applications[i].Tasks.length)
-                for(var j=0; j<applications[i].Tasks.length;j++){
-                    console.log(applications[i].Tasks[j])
-                    if(applications[i].Tasks[j].midTaskID === this.props.date.midTaskID){
-                        applications[i].Tasks[j].Title = title
-                        applications[i].Tasks[j].Time = date
-                        applications[i].Tasks[j].showDate = dateShow
-                    }
-                }
+    onClickSave = async(title, date, dateShow) =>{
+        let midTask = this.props.task;
+        midTask.type = title;
+        midTask.time = date;
+        midTask.isVisible = dateShow;
+        const result = await updateTask(midTask)
+        if (this.props.connection){
+            try {
+                console.log("Triggered")
+                await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
+                await this.props.connection.invoke('Application_Task_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, midTask.midTaskID)  
+            } catch(e) {
+                console.log(e);
             }
         }
+        // var applications = this.props.apps
+        // for(var i=0 ; i<applications.length;i++){
+        //     if(this.props.applicationID === applications[i].applicationID){
+        //         console.log(applications[i].Tasks.length)
+        //         for(var j=0; j<applications[i].Tasks.length;j++){
+        //             console.log(applications[i].Tasks[j])
+        //             if(applications[i].Tasks[j].midTaskID === this.props.date.midTaskID){
+        //                 applications[i].Tasks[j].Title = title
+        //                 applications[i].Tasks[j].Time = date
+        //                 applications[i].Tasks[j].showDate = dateShow
+        //             }
+        //         }
+        //     }
+        // }
         // this.props.setApps(applications)
         this.setState({})
         this.handleClose()
     }
 
     render(){
+        console.log(this.props.task);
         return(
             <div
             // onBlur = {() => {ReactTooltip.hide(this.fooRef)}}
@@ -130,7 +146,7 @@ export class Progress extends Component{
                             <div className = "sypp-progress-tooltip-options-container">
                             <button className = "sypp-progress-tooltip-option" onClick = {this.onClickMark}>Mark Incomplete</button>
                             <button className = "sypp-progress-tooltip-option" onClick = {() => {this.onClickEdit()}}>Edit</button>
-                            <button className = "sypp-progress-tooltip-option" onClick = {() => {this.onClick()}}>Add Note</button>
+                            <button className = "sypp-progress-tooltip-option" onClick = {() => {this.onClick()}}>Delete Task</button>
                             </div>
                         </Popup>
                         </div>:

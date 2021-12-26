@@ -45,23 +45,14 @@
     text-align: center;
     padding-top: 3px;
     padding-bottom: 3px;
-    width: 240px;
-    min-height: 35px;
-    background: rgba(255, 255, 255, 0.15);
+    width: 165px;
+    min-height: 26px;
+    background: #363C46;
     color: #FFE9D6;
     border: none;
     border-radius: 26px;
     font-size: 12px;
     outline: none;
-    &:hover{
-        border: solid 1px #918D8D;
-    }
-    &:active{
-        border: solid  1px #DACABD
-    }
-    &:focus{
-        border: solid  1px #DACABD
-    }
 }
 .sypp-company-position-container{
     display: flex;

@@ -288,7 +288,7 @@ export const getTask = async function(applicationID, midTaskID){
 export const updateTask = async function(task){
   const uID = JSON.parse(localStorage.getItem('user')).uID
   try {
-      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/UpdateTasks', task)
+      const res = await axios.post('https://saveyourappdevelopment.azurewebsites.net/applications/'+uID+'/UpdateMidTask', task)
       console.log(res)
       return res.status === 200 ? res.data : "error";
   } catch (error) {

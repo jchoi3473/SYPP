@@ -31,6 +31,7 @@
     padding: 0;
 }
 .sypp-submodal-container{
+    border-radius: 15px;
     height: 150px;
     padding-top: 30px;
     background: #343B46}
@@ -81,7 +82,6 @@
 
 .sypp-create-category{
     padding: 0px;
-    margin-left: 10%;
     display: flex;
     font-family: Assistant;
     font-style: normal;

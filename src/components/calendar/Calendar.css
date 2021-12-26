@@ -11,7 +11,7 @@
 .react-calendar__tile--active.sypp-background{
     /* background: rgba(255, 255, 255, 0.4); */
     background: transparent;
-    color: #FFE9D6 !important;
+    color: #C2DBFF !important;
     font-weight: bold;
     border: transparent;
     outline: none;
@@ -41,4 +41,9 @@
 .react-calendar__tile--now{
     /* background: rgba(255, 255, 255, 0.4) !important; */
     background: transparent !important;
+}
+
+
+.react-calendar__navigation__arrow{
+    min-width: 15px !important;
 }

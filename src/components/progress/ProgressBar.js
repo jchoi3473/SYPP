@@ -64,11 +64,12 @@ export class ProgressBar extends Component{
                     if(apps[i].tasks[j].midTaskID === date.midTaskID){
                         apps[i].tasks[j].status = !apps[i].tasks[j].status
                         const result = await updateTask(apps[i].tasks[j])
+                        console.log(result)
                         if (this.props.connection){
                             try {
                                 console.log("Triggered")
                                 await this.props.connection.invoke('UpdateConnectionID', JSON.parse(localStorage.getItem('user')).uID, this.props.connection.connection.connectionId)
-                                await this.props.connection.invoke('Application_Task_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, result.midTaskID)  
+                                await this.props.connection.invoke('Application_Task_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, date.midTaskID)  
                             } catch(e) {
                                 console.log(e);
                             }
@@ -167,11 +168,11 @@ export class ProgressBar extends Component{
                                     ((date.isVisible)?
                                         ((date.status)?
                                             <div className = "sypp-application-status-container">
-                                                <Progress applicationID = {this.props.applicationID} completed = {true} handleCompleted = {this.handleCompleted} date = {date}/>
+                                                <Progress applicationID = {this.props.applicationID} task = {date} completed = {true} handleCompleted = {this.handleCompleted} date = {date}/>
                                             </div>: 
 
                                             <div className = "sypp-application-status-container">
-                                                <Progress applicationID = {this.props.applicationID} completed = {false} handleCompleted = {this.handleCompleted} date = {date}/>
+                                                <Progress applicationID = {this.props.applicationID} task = {date} completed = {false} handleCompleted = {this.handleCompleted} date = {date}/>
                                             </div>)
                                     : undefined):undefined}
                                    
