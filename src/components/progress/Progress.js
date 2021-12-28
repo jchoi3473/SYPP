@@ -78,6 +78,8 @@ export class Progress extends Component{
         midTask.type = title;
         midTask.time = date;
         midTask.isVisible = dateShow;
+        console.log(midTask)
+        // midTask.sort((a, b) => a.time - b.time)
         const result = await updateTask(midTask)
         if (this.props.connection){
             try {
@@ -88,27 +90,11 @@ export class Progress extends Component{
                 console.log(e);
             }
         }
-        // var applications = this.props.apps
-        // for(var i=0 ; i<applications.length;i++){
-        //     if(this.props.applicationID === applications[i].applicationID){
-        //         console.log(applications[i].Tasks.length)
-        //         for(var j=0; j<applications[i].Tasks.length;j++){
-        //             console.log(applications[i].Tasks[j])
-        //             if(applications[i].Tasks[j].midTaskID === this.props.date.midTaskID){
-        //                 applications[i].Tasks[j].Title = title
-        //                 applications[i].Tasks[j].Time = date
-        //                 applications[i].Tasks[j].showDate = dateShow
-        //             }
-        //         }
-        //     }
-        // }
-        // this.props.setApps(applications)
         this.setState({})
         this.handleClose()
     }
 
     render(){
-        console.log(this.props.task);
         return(
             <div
             // onBlur = {() => {ReactTooltip.hide(this.fooRef)}}
@@ -169,7 +155,7 @@ export class Progress extends Component{
                             <div className = "sypp-progress-tooltip-options-container">
                             <button className = "sypp-progress-tooltip-option"  onClick = {this.onClickMark}>Mark Complete</button>
                             <button className = "sypp-progress-tooltip-option"  onClick = {() => {this.onClickEdit()}}>Edit</button>
-                            <button className = "sypp-progress-tooltip-option"  onClick = {() => {this.onClick()}}>Add Note</button>
+                            <button className = "sypp-progress-tooltip-option"  onClick = {() => {this.onClick()}}>Delete Task</button>
                             </div>
                         </Popup>
                     </div>:

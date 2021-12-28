@@ -140,7 +140,11 @@ export class ProgressBar extends Component{
     render(){
         const dates = this.props.dates
         const detailStatus = this.props.details
-        const sortedDates = dates.sort((a, b) => a.time - b.time)
+        // const sortedDates = dates.sort((a, b) => a.time - b.time)
+        dates.sort(function (a, b) {
+            return a.time.localeCompare(b.time);
+        });
+        console.log(dates)
         return(
                 <div className = "sypp-progressbar-container">
                     <div className = "sypp-progressLine"/>
@@ -162,7 +166,7 @@ export class ProgressBar extends Component{
                         }
                             <div className ="sypp-progress-inner-container">
                             {
-                            sortedDates.map((date) => (
+                            dates.map((date) => (
                                 <div>
                                 {(date.title!=="Applied")?
                                     ((date.isVisible)?
