@@ -24,3 +24,6 @@ Categorization of applications, email template features
 
 Recruiting is one of the biggest aspects of college and students gets stressed during their recruiting processes. They spend many hours organizing their application processes but it is always hard to keep track of them. Based on the needs of students, we came up with a platform that will organize all recruiting-related processes and information.SYPP provides helpful components such as monthly/weekly calendar, process tracker, note, contacts, checklist, event/conversation-note tracker and add/edit of such components.
 
+## Web to Chrome Extension :
+The chrome extension part of the SYPP aims to reduce the complexity of managing the application process. With help of the SYPP chrome extension feature, users can perform the same tasks without leaving the browser or relocating the tab.Users can manage(add/edit/delete) their application processes and their notes on the application. SYPP helps users to not lose their focus while recruiting for their jobs.
+
