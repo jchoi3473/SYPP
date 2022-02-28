@@ -28,7 +28,9 @@ const mapDispatchToProps= dispatch =>{
 export class Progress extends Component{
     constructor(props){
         super(props)
-        this.handleMouseHover = this.handleMouseHover.bind(this);
+        this.handleMouseHoverEnter = this.handleMouseHoverEnter.bind(this);
+        this.handleMouseHoverLeave = this.handleMouseHoverLeave.bind(this);
+
         this.state = {
             isHovering : false, 
             isHoveringMore: false, 
@@ -42,14 +44,21 @@ export class Progress extends Component{
         this.setState({show: true});
     }
 
-    handleMouseHover(){
-        this.setState(this.toggleHoverState);
+    handleMouseHoverEnter(){
+        this.setState({
+            isHovering: true
+        });
     }
-    toggleHoverState(state) {
-        return{
-            isHovering: !state.isHovering,
-        };
+    handleMouseHoverLeave(){
+        this.setState({
+            isHovering: false
+        });
     }
+    // toggleHoverState(state) {
+    //     return{
+    //         isHovering: !state.isHovering,
+    //     };
+    // }
 
     onClickEdit = () =>{
         this.handleShow()
@@ -73,6 +82,7 @@ export class Progress extends Component{
         this.props.handleCompleted(this.props.date, this.props.date.Title)
     }
 
+// <<<<<<< application_refactor
     onClickSave = async(title, date, dateShow) =>{
         let midTask = this.props.task;
         midTask.type = title;
@@ -88,6 +98,21 @@ export class Progress extends Component{
                 await this.props.connection.invoke('Application_Task_Update', JSON.parse(localStorage.getItem('user')).uID, this.props.applicationID, midTask.midTaskID)  
             } catch(e) {
                 console.log(e);
+// =======
+//     onClickSave = (title, date, dateShow) =>{
+//         var applications = this.props.apps
+//         for(var i=0 ; i<applications.length;i++){
+//             if(this.props.applicationID === applications[i].applicationID){
+//                 console.log(applications[i].tasks.length)
+//                 for(var j=0; j<applications[i].tasks.length;j++){
+//                     console.log(applications[i].tasks[j])
+//                     if(applications[i].tasks[j].midTaskID === this.props.date.midTaskID){
+//                         applications[i].tasks[j].title = title
+//                         applications[i].tasks[j].time = date
+//                         applications[i].tasks[j].showDate = dateShow
+//                     }
+//                 }
+// >>>>>>> master
             }
         }
         this.setState({})
@@ -100,25 +125,58 @@ export class Progress extends Component{
             // onBlur = {() => {ReactTooltip.hide(this.fooRef)}}
             // onMouseLeave = {this.handleMouseHover}
             >
-            <div className = "sypp-progress-general-container" onMouseEnter = {this.handleMouseHover} onMouseLeave = {this.handleMouseHover}>
+            <div className = "sypp-progress-general-container" 
+            onMouseLeave = {this.handleMouseHoverLeave}>
                 {this.props.completed?
-                <div>
-                <div className="sypp-applicationFirst sypp-completed"  
-                onClick = {() => this.props.handleCompleted(this.props.date, this.props.date.title)}
-                ></div>
-                <div className="sypp-date-font">{Moment(this.props.date.time).format('MMM DD')}</div>
-                </div>:
+                    <>{this.state.isHovering? <div>
+                        <div className="sypp-applicationFirst sypp-notCompleted"  
+                        onClick = {() => this.props.handleCompleted(this.props.date, this.props.date.title)}
+                        onMouseEnter = {this.handleMouseHoverEnter} 
+                        ></div>
+                        <div className="sypp-date-font"
+                        >{Moment(this.props.date.time).format('MMM DD')}</div>
+                        </div>:
+                    <div>
+                    <div className="sypp-applicationFirst sypp-completed"  
+                    onClick = {() => this.props.handleCompleted(this.props.date, this.props.date.title)}
+                    onMouseEnter = {this.handleMouseHoverEnter} 
+                    ></div>
+                    <div className="sypp-date-font"
+                    >{Moment(this.props.date.time).format('MMM DD')}</div>
+                    </div>
+                    }</>
+                :
+                <>
+                {this.state.isHovering? 
+                 <div>
+                 <div className="sypp-applicationFirst sypp-completed" 
+                 onClick = {() =>  this.props.handleCompleted(this.props.date, this.props.date.title)}
+                 onMouseEnter = {this.handleMouseHoverEnter} 
+                 ></div>
+                 <div className="sypp-date-font"
+                 >{Moment(this.props.date.time).format('MMM DD')}</div>
+                 </div>
+                :
                 <div>
                 <div className="sypp-applicationFirst sypp-notCompleted" 
                 onClick = {() =>  this.props.handleCompleted(this.props.date, this.props.date.title)}
+                onMouseEnter = {this.handleMouseHoverEnter} 
                 ></div>
-                <div className="sypp-date-font">{Moment(this.props.date.time).format('MMM DD')}</div>
-
-                </div>
+                <div className="sypp-date-font"
+                >{Moment(this.props.date.time).format('MMM DD')}</div>
+                </div>               
+                
+                
+                }
+                
+                </>
+               
                 }
                 {
                 this.state.isHovering &&this.props.completed?
-                    <div className = "sypp-task-tooltip-completed">
+                    <div className = "sypp-task-tooltip-completed"
+                    onMouseEnter = {this.handleMouseHoverEnter} onMouseLeave = {this.handleMouseHoverLeave}
+                    >
                         <div>{this.props.date.type}</div>
                         <Popup
                         trigger={

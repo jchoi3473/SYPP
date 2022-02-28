@@ -50,6 +50,9 @@
     min-height: 0;
     min-width: 0;
 }
+.sypp-addTask:hover{
+    background: #C1C3C6;
+}
 
 .MuiSvgIcon-root.sypp-sizeChange{
     height: 1.3em;
