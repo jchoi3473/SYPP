@@ -72,7 +72,6 @@ function MainPage(props){
         .withAutomaticReconnect()
         .build();
       props.setConnection(connection);
-
       connection.start()
       .then(result =>{
         console.info('SignalR Connected')
@@ -114,7 +113,9 @@ function MainPage(props){
 
         connection.on("Application_Task_Update_Received", (applicationID, midTaskID) => {
           const apps = [...latestApp.current];
-          var abort = false
+          var abort = false;
+          console.log(applicationID);
+          console.log(midTaskID);
           getTask(applicationID, midTaskID).then(midTask => {
             for(var i=0; i<apps.length;i++){
               if(apps[i].applicationID === applicationID){
@@ -666,7 +667,7 @@ function MainPage(props){
         <div className = "sypp-main-button-container">
           <ButtonGroup toggle className = {props.classContainerProps}>
           {radios.map((radio, idx) => (
-            <div className="sypp-button-container">
+            <div className="sypp-button-container" key = {idx}>
                 <ToggleButton
                 className={"sypp-mainButtonGroups sypp-activeChange sypp-hoverChange sypp-text"}
                 key={idx}

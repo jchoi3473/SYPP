@@ -23,7 +23,8 @@
 
 .sypp-container-suggestion{
     background-color: transparent;
-    display: inline;
+    display: flex;
+    align-items: center;
     padding: 0px;
     margin-left: 33%;
     margin-right: 15%;

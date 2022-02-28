@@ -16,6 +16,7 @@
     height: 320px ;
     margin: 0 auto;
     padding: 0;
+    border: none !important;
 }
 .sypp-radio-container{
     display: flex;
@@ -30,6 +31,7 @@
     padding: 0;
 }
 .sypp-submodal-container{
+    border-radius: 15px;
     height: 150px;
     padding-top: 30px;
     background: #343B46}

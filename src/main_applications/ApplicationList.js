@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import ApplicationListProgress from './ApplicationListProgress'
 import ModalBox from './../add_application/ModalBox'
 import './../add_application/Modalbox.css'
-
+import NewApp from './../new_application/NewApplication'
 
 const mapStatetoProps = state => {
     return{
@@ -73,7 +73,7 @@ class ApplicationList extends Component {
                 {console.log(radioValue)}
                 <ApplicationListProgress options = {radioValue} toApplicationDetail = {this.props.toApplicationDetail} />
                 <div className = 'sypp-modalButton'>
-                    <ModalBox/>
+                    <NewApp/>
                 </div>
             </div>
         );

@@ -154,7 +154,8 @@ export class ChipAutocomplete extends Component {
   onChange = (e) => {
     const { suggestions } = this.props.categories[this.props.index];
     const userInput = e.currentTarget.value;
-    const filteredSuggestions = suggestions.filter(
+    const filteredSuggestions = 
+    suggestions.filter(
       (suggestion) =>
         suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
@@ -205,6 +206,10 @@ export class ChipAutocomplete extends Component {
   onClickAccordion = (e) => {
     this.props.handleAccordion(this.props.index)
   }
+  onClickDeleteChip = (suggestion) =>{
+    //Delete from filter suggestion? 
+    console.log(suggestion)
+  }
 
   static defaultProperty={
     suggestions: []
@@ -236,11 +241,11 @@ export class ChipAutocomplete extends Component {
             <ul className = "sypp-ul">
               {filteredSuggestions.map((suggestion, index) => {
                 return (
-                  <div class ="sypp-suggestion sypp-chipbutton">
-                  <button  key={suggestion} onClick={onClick}>
-                    {suggestion}
-                  </button>
-                  <div>X</div>
+                  <div className ="sypp-suggestion sypp-chipbutton" key ={index}>
+                    <div  key={suggestion} onClick={onClick} style={{marginRight : '5px'}}>
+                      {suggestion}
+                    </div>
+                    <div onClick={() => this.onClickDeleteChip(suggestion)}>X</div>
                   </div>
                 );
               })}

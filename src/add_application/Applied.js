@@ -14,7 +14,7 @@ import {setDates} from './../redux/addApp-reducer/addAppAction'
 
 export class Applied extends Component{
     state = {
-        option: '1'
+        option: '2'
         }
 
     onChange = (value) => {

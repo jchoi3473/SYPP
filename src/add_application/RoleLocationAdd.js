@@ -108,8 +108,8 @@ export class RoleLocationAdd extends Component{
                     <div className="sypp-modal-text">Feel free to leave categories empty if desired!</div>
                     <div className = "sypp-scroll" style={{overflowY: 'scroll', height: '160px'}}>
                     {   
-                        this.props.categories.map((data) => (
-                        <div>
+                        this.props.categories.map((data, idx) => (
+                        <div key={idx}>
                             <ChipAutocomplete
                             className ="sypp-modal-input sypp-position"
                             name = {data.name}
