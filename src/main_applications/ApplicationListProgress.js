@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ProgressBar from './../components/progress/ProgressBar'
+import ProgressBar from '../components/progress/ProgressBar'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import './../components/progress/Progress.css'
@@ -8,18 +8,18 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Dropdown from 'react-dropdown';
 import axios from 'axios';
-import {updateFavorite} from './../lib/api'
+import {updateFavorite} from '../lib/api'
 import './ApplicationList.scss'
 import './CategoryButtons.scss'
 // import Rating from "@material-ui/lab/Rating";
  import Rating from 'react-rating';
-import {setApps} from './../redux/progress-reducer/progressAction'
-import {updateFilteredProgress, updateFilteredProgressTitle, updateFilteredProgressButtonValue} from './../redux/filteredProgress-reducer/filteredProgressAction'
+import {setApps} from '../redux/progress-reducer/progressAction'
+import {updateFilteredProgress, updateFilteredProgressTitle, updateFilteredProgressButtonValue} from '../redux/filteredProgress-reducer/filteredProgressAction'
 
 import {connect} from 'react-redux'
 import 'font-awesome/css/font-awesome.min.css';
 
-import { createTask } from './../lib/api';
+import { createTask } from '../lib/api';
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";

@@ -1,20 +1,16 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
 
   "name": "SYPP",
   "description": "This is an extension of SYPP",
   "version": "1.0.0",
   "background": {
-    "scripts": [
-        "background.js"
-    ],
-    "persistent": true
-},
-  "browser_action": {
+    "service_worker" :"background.js"
+  },
+  "action": {
     "default_icon": "favicon.ico",
     "default_popup": "index.html",
     "default_title": "SYPP Production"
-
   },
  "icons": {
   "16": "logo192.png",

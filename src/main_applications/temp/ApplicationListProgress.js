@@ -91,6 +91,7 @@ export class Progress extends Component{
     }
 
     render(){
+        console.log(this.props.filteredProgress);
         const searchFilteredProgress = this.props.filteredProgress.filter(application => {
             return (application.detail.companyName.toLowerCase().includes(this.state.searchField.toLowerCase())||application.detail.positionName.toLowerCase().includes(this.state.searchField.toLowerCase()) )
         })
